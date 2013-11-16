@@ -5,12 +5,18 @@
     <link rel="stylesheet" href="css/main.css"/>
 </head>
 <body>
-<button onclick="addShape()">Add a shape!</button>
+<button onclick="addComponent()">Add a component!</button>
 <div class="chart"></div>
-<svg id="workspace"></svg>
-
+<g id="workspace-container">
+    <svg id="workspace"></svg>
+</g>
+<script src="js/circuits.js"></script>
 <script src="js/d3.v3.js"></script>
 <script src="js/workspace.js"></script>
+
+<script>
+    console.log("hello, world.");
+</script>
 
 </body>
 </html>

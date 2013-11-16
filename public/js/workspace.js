@@ -1,23 +1,78 @@
-var data =
-    {
-        components: {
-            1:{
-                display: {x: 50, y: 50, size: 50},
-                outConnect: [2]
+var data = {
+    1: {
+        id: 1,
+        species: "mux",
+        display: {x: 250, y: 150, size: 50},
+        outputs: {
+            q: {wordLength : 1, "num-pins": 2}
+        },
+        state: {},
+        inputs: {
+            data: {
+                "num-inputs": 4,
+                "word-length": 1,
+                connections: [
+                    {"source-id": 2, "source-field": "q"},
+                    {"source-id": 2, "source-field": "q"},
+                    {"source-id": 2, "source-field": "q"},
+                    {"source-id": 2, "source-field": "q"}
+                ]
             },
-            2:{
-                display: {x: 150, y: 200, size: 50},
-                outConnect: [3]
-            },
-            3:{
-                display: {x: 250, y: 200, size: 50},
-                outConnect: []
+            control: {
+                "num-inputs": 1,
+                "word-length": 2,
+                connections: [
+                    {"source-id": 3, "source-field": "q"}
+                ]
+
             }
         }
-    };
+    },
 
+    2: {
+        id: 2,
+        display: {x: 150, y: 150, size: 50},
+        species: "ip",
+        outputs: {
+            q: {"word-length": 1, "num-pins":1}
+        },
+        state: {
+            data: [true]
+        }
+    },
+    3: {
+        id: 3,
+        species: "flipflop",
+        display: {x: 350, y: 150, size: 50},
+        outputs: {
+            q: {"word-length": 1, "num-pins": 1},
+            qbar: {"word-length": 1, "num-pins": 1}
+        },
+        inputs: {
+            data: {
+                "num-inputs" : 4,
+                "word-length": 1,
+                connections: [
+                    {"source-id": 1, "source-field": "zero?"}
+                ]
+            },
+            enable: {
+                "num-inputs": 1,
+                "word-length": 1,
+                connections: [
+                    {"source-id":2, "source-field": "q"}
+                ]
+            }
+        },
+        state: {
+            data: [false]
+        }
+    }
+}
 var width = 500;
 var height = 500;
+
+
 
 setup();
 drawComponents();
@@ -26,18 +81,23 @@ drawLines();
 function drawComponents() {
     removeComponent("rect");
 
-    var components = d3.select("#workspace")
+    var component = d3.select("#workspace")
         .selectAll("g.component")
-        .data(d3.values(data.components))
+        .data(d3.values(data))
         .enter().append("svg:g");
 
-    components.append("svg:rect").attr("class", "component")
+    component.append("svg:rect").attr("class", "component")
         .attr("width", function(d) {return d.display.size})
         .attr("height", function(d) {return d.display.size})
         .attr("x", function(d) {return d.display.x})
         .attr("y", function(d) {return d.display.y})
         .call(d3.behavior.drag().on("drag", move))
         .on("click", selectComponent);
+/*
+    component.data(function(d) {
+        var pins = [];
+        pins.forEach()
+    })*/
 }
 
 function removeComponent(type) {
@@ -95,28 +155,30 @@ function move(){
 
 function makeLinks() {
     var links = [];
-    d3.values(data.components).forEach(function (component) {
-        component.outConnect.forEach(function (id) {
-            var component2 = data.components[id]
-            links.push(
-                [
-                    {x: component.display.x + component.display.size/2, y: component.display.y + component.display.size/2},
-                    {x: component2.display.x + component2.display.size/2, y: data.components[id].display.y + component2.display.size/2}
-                ]);
+    d3.values(data).forEach(function (target) {
+        d3.values(target.inputs).forEach(function (input) {
+            input.connections.forEach(function(pin) {
+                var source = data[pin["source-id"]];
+                links.push(
+                    [
+                        {x: target.display.x + target.display.size/2, y: target.display.y + target.display.size/2},
+                        {x: source.display.x + source.display.size/2, y: source.display.y + source.display.size/2}
+                    ]);
+            });
         })
     });
-    return links
+    return links;
 }
 
 var lastConnected = 3;
 
 function addComponent() {
     var current = lastConnected + 1;
-    data.components[current] = {
+    data[current] = {
         display: {x: 250, y: 200, size: 50},
         outConnect: []
     };
-    data.components[lastConnected].outConnect.push(current);
+    data[lastConnected].outConnect.push(current);
     lastConnected = current;
 
     drawComponents();
@@ -140,7 +202,7 @@ function selectComponent() {
 }
 
 function setup() {
-    d3.select("#workspace").on("click", function() {
+    d3.select("#workspace-container").on("click", function() {
         console.log("click!");
         if(currentSelection != -1) {
             d3.select(".selected").classed("selected", false);
@@ -152,70 +214,3 @@ function setup() {
 
 //Spec
 
-var data = {
-    1: {
-        id: 1,
-        type: "mux",
-        output: {
-            q: {wordLength : 1}
-        },
-        state: {},
-        connections: {
-            data: {
-                numInputs: 4,
-                wordLength: 1,
-                connections: [
-                    {"source-id": 0, "source-field": "q"},
-                    {"source-id": 1, "source-field": "q"},
-                    {"source-id": 2, "source-field": "q"},
-                    {"source-id": 3, "source-field": "q"}
-                ]
-            },
-            control: {
-                numInputs: 1,
-                wordLength: 2,
-                connections: [
-                    {"source-id": 3, "source-field": "q"}
-                ]
-
-            }
-        }
-    },
-    2: {
-        id: 2,
-        type: "ip",
-        output: {
-            q: {wordLength: 1}
-        },
-        state: {
-            data: [true]
-        }
-    },
-    3: {
-        id: 3,
-        type: "flipflop",
-        output: {
-            q: {wordLength: 1},
-            qbar: {wordLength: 1}
-        },
-        connections: {
-            data: {
-                numInputs : 4,
-                    wordLength: 1,
-                    connections: [
-                        {"source-id": 6, "source-field": "zero?"}
-                    ]
-            },
-            enable: {
-                numInputs: 1,
-                wordLength: 1,
-                connections: [
-                    {"source-id":7, "source-field": "q"}
-                ]
-            }
-        },
-        state: {
-            data: [false]
-        }
-    }
-}
