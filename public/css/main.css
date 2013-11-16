@@ -1,0 +1,44 @@
+chart div {
+    font: 10px sans-serif;
+    background-color: steelblue;
+    text-align: right;
+    padding: 3px;
+    margin: 1px;
+    color: white;
+}
+
+#workspace rect {
+    stroke: #555;
+    stroke-width: 2px;
+    background-color: white;
+    text-align: center;
+    padding: 5px;
+    fill: #666;
+}
+
+#workspace rect.selected {
+    fill: #777;
+    stroke: #666;
+}
+
+#workspace line {
+    stroke: steelblue;
+    stroke-width: 2;
+}
+
+#workspace circle {
+    fill: steelblue;
+    r: 3;
+}
+
+#workspace {
+    background: #2B2B2B;
+    border: 1px solid #555555;
+    height: 400px;
+    width: 500px;
+    display: block;
+    margin: 0 auto;
+}
+html {
+    background: #444444;
+}
