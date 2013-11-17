@@ -149,24 +149,27 @@ function drawLinks(links) {
 var selectedPin;
 
 function selectPin(pin) {
-    if(pin === selectedPin)
+    if(pin === selectedPin) {
         selectedPin = null;
-
+        return;
+    }
     else if (!selectedPin) {
         selectedPin = pin;
+        return;
     }
-    else if (!!selectedPin.field && !pin.field) {
+    else if ((typeof pin.index !== "undefined") && (typeof selectedPin.index === "undefined") ) {
         addConnection(pin, selectedPin);
     }
-    else if (!!pin.field && !selectedPin.field)
+    else if ((typeof pin.index === "undefined") && (typeof selectedPin.index !== "undefined"));
         addConnection(selectedPin, pin);
-
-    console.log(selectedPin);
 }
 
 function addConnection(target, source) {
     console.log("Connecting",source,"to",target);
-    data = circuits.core.add_connection_js(source, target, data);
+    var src={id: source.parent, field: source.field}
+    var dst = {id: target.parent, field: target.field, index: target.index}
+    console.log(src,dst,data);
+    data = circuits.core.add_connection_js(src, dst, data);
     selectedPin = null;
 }
 
@@ -187,9 +190,13 @@ function drawPins(pinTrist) {
         });
     p.append("circle")
         .attr("cx", function(d) {
+            if(typeof d.x1 === "undefined")
+                return -100;
             return (d.x1+ d.x2)/2;
         })
         .attr("cy", function(d) {
+            if(typeof d.x1 === "undefined")
+                return -100;
             return (d.y1+ d.y2)/2;
         })
         .attr("r", 10)
@@ -202,6 +209,7 @@ function drawPins(pinTrist) {
 
 function makeComponentPins(component) {
     var len = 5;
+
     var pins;
     if (component.species == "mux")
         pins = makeMuxPins(component);
@@ -267,34 +275,43 @@ function addComponent(name) {
     draw();
 }
 
+function addFieldAndIndex(connections, field) {
+    for(var x = 0; x < connections.length; x++) {
+        connections[x].field = field;
+        connections[x].index = x;
+    }
+    return connections;
+}
+
 function makeRegisterPins(reg) {
     var r = reg.outputs.q;
-    return {left: reg.inputs.data.connections, bottom: {}, right: [r]};
+    return {left: addFieldAndIndex(reg.inputs.data.connections, "data"),bottom: {}, right: [r]};
 }
 
 function makeLogicGatePins(gate) {
     var r = gate.outputs.q;
     r.field = "q";
-    return {left: gate.inputs.data.connections, bottom: {}, right: [r]};
+    return {left:  addFieldAndIndex(gate.inputs.data.connections, "data"),bottom: {}, right: [r]};
 }
 
 function makeDecoderPins(dec) {
     var r = dec.outputs.q;
     r.field = "q";
-    return {left: dec.inputs.data.connections, bottom: dec.inputs.enable.connections, right: [r]}
+    return {left:  addFieldAndIndex(dec.inputs.data.connections, "data"),
+        bottom:  addFieldAndIndex(dec.inputs.enable.connections, "enable"), right: [r]}
 
 }
 
 function makeNotPins(not) {
     var r = not.outputs.q;
     r.field = "q";
-    return {left: not.inputs.data.connections, bottom: {}, right: [r]}
+    return {left:  addFieldAndIndex(not.inputs.data.connections, "data"), bottom: {}, right: [r]}
 }
 
 function makeMuxPins(mux) {
     var r = mux.outputs.q;
     r.field = "q";
-    return {left: mux.inputs.data.connections, bottom: mux.inputs.control.connections, right: [r]};
+    return {left:  addFieldAndIndex(mux.inputs.data.connections, "data"), bottom:  addFieldAndIndex(mux.inputs.control.connections, "control"), right: [r]};
 }
 
 function makeIpPins(ip) {
@@ -307,7 +324,7 @@ function makeFlipFlopPins(ff) {
     var r = [ff.outputs.q, ff.outputs["q-bar"]];
     r[0].field = "q";
     r[1].field = "qbar";
-    return {left: ff.inputs.data.connections, bottom: ff.inputs.enable.connections, right: r};
+    return {left:  addFieldAndIndex(ff.inputs.data.connections, "data"), bottom:  addFieldAndIndex(ff.inputs.enable.connections, "enable"), right: r};
 };
 
 var currentSelection;
@@ -317,8 +334,6 @@ function selectComponent() {
     var selectTarget = d3.select(this);
 
     setTimeout(function () {
-        console.log("Triggered!");
-
         selectTarget.classed("selected", true);
 
         currentSelection = selectTarget.id;
