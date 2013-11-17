@@ -1,78 +1,5 @@
-//var data = {};
-var data = {
- 1: {
- id: 1,
- species: "mux",
- display: {x: 250, y: 150, size: 60},
- outputs: {
- q: {wordLength : 1, "num-pins": 2}
- },
- state: {},
- inputs: {
- data: {
- "num-inputs": 4,
- "word-length": 1,
- connections: [
- {"source-id": 2, "source-field": "q"},
- {"source-id": 2, "source-field": "q"},
- {},
- {}
- ]
- },
- control: {
- "num-inputs": 1,
- "word-length": 2,
- connections: [
- {"source-id": 3, "source-field": "q"}
- ]
+var data = {};
 
- }
- }
- },
-
- 2: {
- id: 2,
- display: {x: 150, y: 150, size: 50},
- species: "nandgate",
- outputs: {
- q: {"word-length": 1, "num-pins":1}
- },
- state: {
- data: [true]
- }
- },
- 3: {
- id: 3,
- species: "dflipflop",
- display: {x: 350, y: 150, size: 60},
- outputs: {
- q: {"word-length": 1, "num-pins": 1},
- qbar: {"word-length": 1, "num-pins": 1}
- },
- inputs: {
- data: {
- "num-inputs" : 4,
- "word-length": 1,
- connections: [
- {"source-id": 1, "source-field": "q"}
- ]
- },
- enable: {
- "num-inputs": 1,
- "word-length": 1,
- connections: [
- {"source-id":2, "source-field": "q"}
- ]
- }
- },
- state: {
- data: [false]
- }
- }
- }
-// source-id, source-field
-// target-id, target-index, target-field
-// entire everything
 setup();
 
 function draw() {
@@ -101,18 +28,18 @@ function drawComponents() {
         .enter().append("svg:g");
 
     var map = {
-        "notgate": "../svg/00-not.svg",
-        "andgate": "../svg/01-and.svg",
-        "orgate": "../svg/02-or.svg",
-        "nandgate": "../svg/03-nand.svg",
-        "norgate": "../svg/04-nor.svg",
-        "xorgate": "../svg/05-xor.svg",
-        "xnorgate": "../svg/06-xnor.svg",
-        "mux": "../svg/07-mux.svg",
-        "dflipflop": "../svg/08-dff.svg",
-        "tflipflop": "../svg/09-tff.svg",
-        "decoder": "../svg/10-decoder.svg",
-        "register": "../svg/11-register.svg"
+        "notgate": "../svg/default/00-not.svg",
+        "andgate": "../svg/default/01-and.svg",
+        "orgate": "../svg/default/02-or.svg",
+        "nandgate": "../svg/default/03-nand.svg",
+        "norgate": "../svg/default/04-nor.svg",
+        "xorgate": "../svg/default/05-xor.svg",
+        "xnorgate": "../svg/default/06-xnor.svg",
+        "mux": "../svg/default/07-mux.svg",
+        "dflipflop": "../svg/default/08-dff.svg",
+        "tflipflop": "../svg/default/09-tff.svg",
+        "decoder": "../svg/default/10-decoder.svg",
+        "register": "../svg/default/11-register.svg"
     };
 
     component.append("svg:image")
