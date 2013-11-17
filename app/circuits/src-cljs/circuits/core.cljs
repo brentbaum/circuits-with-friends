@@ -5,7 +5,8 @@
 (ns circuits.core
   (:require [circuits.validate :as valid]
             [circuits.comp-logic :as logic]
-            [circuits.comp-builder :as build]))
+            [circuits.comp-builder :as build]
+            [circuits.test-data :as t]))
 (def circuit  (atom {}))
 
 (defn set-state  [component-map]
@@ -83,6 +84,8 @@
   (clj->js (add-connection (js->clj src) (js->clj dst) (js->clj circuit)))) 
 (defn remove-connection-js [src dst circuit]
   )
+(defn get-test-circuit-js []
+  (clj->js t/t1-set))
 ;; End External Interface FNs
 
 (defn inner-fn  [mapping]
@@ -197,4 +200,5 @@
                     "dflipflop" d-flipflop-eval
                     "tflipflop" t-flipflop-eval
                     "inputpin" inputpin-eval
+                    "outputpin" outputpin-eval
                     })
