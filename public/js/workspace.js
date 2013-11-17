@@ -1,3 +1,4 @@
+var data = {}/*s
 var data = {
     1: {
         id: 1,
@@ -68,15 +69,11 @@ var data = {
             data: [false]
         }
     }
-}
+}*/
 var width = 500;
 var height = 500;
 
-
-
 setup();
-drawComponents();
-drawLines();
 
 function drawComponents() {
     removeComponent("rect");
@@ -178,11 +175,11 @@ function addComponent() {
         display: {x: 250, y: 200, size: 50},
         outConnect: []
     };
-    data[lastConnected].outConnect.push(current);
     lastConnected = current;
 
     drawComponents();
     drawLines();
+    circuitRef.set(data);
 }
 
 var currentSelection;
@@ -202,6 +199,16 @@ function selectComponent() {
 }
 
 function setup() {
+    var circuitRef = new Firebase('https://circuitswithfriends.firebaseIO.com/');
+    circuitRef.on('value', function(snapshot) {
+    //console.log(snapshot.val());
+        data = snapshot.val();
+        drawComponents();
+        drawLines();
+    });
+    d3.select("#workspace-container").on("mouseup", function() {
+       circuitRef.set(data);
+    });
     d3.select("#workspace-container").on("click", function() {
         console.log("click!");
         if(currentSelection != -1) {
@@ -209,7 +216,6 @@ function setup() {
             currentSelection = -1;
         }
     });
-
 }
 
 //Spec
