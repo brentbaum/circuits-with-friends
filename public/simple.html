@@ -3,17 +3,59 @@
 <head>
     <meta charset="utf-8">
     <script src='https://cdn.firebase.com/v0/firebase.js'></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js'></script>
+    <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro:300,400' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="css/main.css"/>
 </head>
 <body>
-<button onclick="addComponent()">Add a component!</button>
+<button onclick="addComponent('notgate')">Add a not gate!</button>
+<button onclick="addComponent('andgate')">Add an and gate!</button>
+<button onclick="addComponent('orgate')">Add an or gate!</button>
+<button onclick="addComponent('nandgate')">Add a nand gate!</button>
+<button onclick="addComponent('norgate')">Add a nor gate!</button>
+<button onclick="addComponent('xorgate')">Add a xor gate!</button>
+<button onclick="addComponent('xnorgate')">Add an xnor gate!</button>
+<button onclick="addComponent('mux')">Add a mux!</button>
+<button onclick="addComponent('dflipflop')">Add a dff!</button>
+<button onclick="addComponent('tflipflop')">Add a tff!</button>
+<button onclick="addComponent('decoder')">Add a decoder!</button>
+<button onclick="addComponent('register')">Add a register!</button>
 <div class="chart"></div>
+<div class="main">
 <g id="workspace-container">
     <svg id="workspace"></svg>
 </g>
+</div>
+<!--<div id="chat">
+	<input type='text' id='nameInput' placeholder='Name'>
+    <input type='text' id='messageInput' placeholder='Message'>
+    <script>
+      var myDataRef = new Firebase('https://circuitswithfriends.firebaseIO.com/chat/');
+      $('#messageInput').keypress(function (e) {
+        if (e.keyCode == 13) {
+          var name = $('#nameInput').val();
+          var text = $('#messageInput').val();
+          myDataRef.push({name: name, text: text});
+          $('#messageInput').val('');
+        }
+      });
+      myDataRef.on('child_added', function(snapshot) {
+        var message = snapshot.val();
+        displayChatMessage(message.name, message.text);
+      });
+      function displayChatMessage(name, text) {
+        $('<div/>').text(text).prepend($('<em/>').text(name+': ')).appendTo($('#messagesDiv'));
+        $('#messagesDiv')[0].scrollTop = $('#messagesDiv')[0].scrollHeight;
+      };
+    </script>
+</div>-->
 <script src="js/circuits.js"></script>
 <script src="js/d3.v3.js"></script>
 <script src="js/workspace.js"></script>
+
+<script>
+    console.log("hello, world.");
+</script>
 
 </body>
 </html>
