@@ -80,7 +80,7 @@
 (defn add-component-js [species circuit display]
   (let [circuit-map (map-json circuit)
         display-map (map-json display)]
-    (add-component species circuit-map display-map))
+    (clj->js (add-component species circuit-map display-map)))
 (defn add-connection-js [src dst circuit]
   (add-connection (map-json src) (map-json dst) (map-json circuit))) 
 (defn remove-connection-js [src dst circuit]
