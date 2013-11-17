@@ -1,3 +1,7 @@
+body {
+    font-family: 'Source Code Pro', sans-serif;
+}
+
 chart div {
     font: 10px sans-serif;
     background-color: steelblue;
@@ -24,6 +28,15 @@ chart div {
 #workspace line {
     stroke: steelblue;
     stroke-width: 2;
+}
+
+#workspace line.pin {
+    stroke: #555;
+    stroke-width: 4;
+}
+
+#workspace line.pin.connected {
+    stroke: steelblue;
 }
 
 #workspace circle {

@@ -14,8 +14,8 @@ var data = {
                 connections: [
                     {"source-id": 2, "source-field": "q"},
                     {"source-id": 2, "source-field": "q"},
-                    {"source-id": 2, "source-field": "q"},
-                    {"source-id": 2, "source-field": "q"}
+                    {},
+                    {}
                 ]
             },
             control: {
@@ -75,8 +75,6 @@ var height = 500;
 setup();
 
 function drawComponents() {
-    removeComponent("rect");
-
     var component = d3.select("#workspace")
         .selectAll("g.component")
         .data(d3.values(data))
@@ -91,19 +89,10 @@ function drawComponents() {
         .on("click", selectComponent);
 }
 
-function muxPins(mux) {
-    var pins = {left: [], bottom: []};
-    console.log(mux);
-    dataPins = mux.inputs.data;
-    dataPins.forEach(function(pin) {
-        console.log(pin);
-        pins.left.push(pin);
-    })
-    dataPins.forEach(function(pin) {
-        console.log(pin);
-        pins.bottom.push(pin);
-    });
-    return pins;
+function clearCanvas() {
+    removeComponent("rect");
+    removeComponent("circle");
+    removeComponent("line");
 }
 
 function removeComponent(type) {
@@ -115,30 +104,15 @@ function removeComponent(type) {
 function drawLines() {
     var links = makeLinks();
 
-    removeComponent("circle");
-    removeComponent("line");
-
     var connection = d3.select("#workspace")
         .selectAll("line.link")
         .data(links);
 
     line(connection);
-
-    var c1 = connection.enter()
-        .append("svg:circle")
-        .attr("r", 3)
-        .attr("cx", function(d) {return d.x1;})
-        .attr("cy", function(d) {return d.y1;})
-
-    var c2 = connection.enter()
-        .append("svg:circle")
-        .attr("r", 3)
-        .attr("cx", function(d) {return d.x2;})
-        .attr("cy", function(d) {return d.y2;})
 }
 
 function line(container) {
-    container.append("svg:line")
+    return container.append("svg:line")
         .attr("x1", function(d) {return d.x1;})
         .attr("y1", function(d) {return d.y1;})
         .attr("x2", function(d) {return d.x2;})
@@ -160,6 +134,7 @@ function move(){
     this.__data__.display.y = newY;
 
     drawLines();
+    drawPins();
 };
 
 function makeLinks() {
@@ -167,27 +142,61 @@ function makeLinks() {
     d3.values(data).forEach(function (target) {
         d3.values(target.inputs).forEach(function (input) {
             input.connections.forEach(function(pin) {
-                var source = data[pin["source-id"]];
-                links.push({
-                        x1: target.display.x + target.display.size/2, y1: target.display.y + target.display.size/2,
-                        x2: source.display.x + source.display.size/2, y2: source.display.y + source.display.size/2
-                });
+                if(!!pin.source) {
+                    var source = data[pin["source-id"]];
+                    links.push({
+                            x1: target.display.x + target.display.size/2, y1: target.display.y + target.display.size/2,
+                            x2: source.display.x + source.display.size/2, y2: source.display.y + source.display.size/2
+                    });
+                }
             });
         })
     });
     return links;
 }
 
+function draw() {
+    clearCanvas();
+    drawComponents();
+    drawLinks();
+    drawPins();
+}
+
+function drawLinks() {
+    var c1 = connection.enter()
+        .append("svg:circle")
+        .attr("r", 3)
+        .attr("cx", function(d) {return d.x1;})
+        .attr("cy", function(d) {return d.y1;})
+
+    var c2 = connection.enter()
+        .append("svg:circle")
+        .attr("r", 3)
+        .attr("cx", function(d) {return d.x2;})
+        .attr("cy", function(d) {return d.y2;})
+}
+
+function makePins() {
+    return d3.values(data).map(function(component) {
+        return makeComponentPins(component);
+    });
+}
+
 function drawPins() {
-    d3.values(data).forEach(function(component) {
-        var pins = makePins(component);
-        var c = d3.select("#workspace")
-            .data(pins).enter();
-        line(c);
+    var pinTrist = makePins();
+    pinTrist.forEach(function(pins) {
+        var p = d3.select("#workspace")
+            .selectAll("g.p")
+            .data(pins)
+            .enter().append("svg:g");
+        line(p).classed("pin", true)
+            .classed("connected", function(d) {
+                return !!d["source-id"];
+            });
     })
 }
 
-function makePins(component) {
+function makeComponentPins(component) {
     var len = 5;
     var pins;
     if(component.species == "mux")
@@ -197,27 +206,27 @@ function makePins(component) {
     if(component.species == "flipflop")
         pins = makeFlipFlopPins(component);
 
-    var leftDistance = component.display.size / (pins.left.length * 2 + 1);
+    var leftDistance = component.display.size / (pins.left.length * 2 );
     for(var index = 0; index < pins.left.length; index++) {
         pins.left[index].y1 = pins.left[index].y2 = component.display.y + leftDistance * (2 * index + 1);
         pins.left[index].x1 = component.display.x-len;
-        pins.left[index].x2 = component.display.y+len;
+        pins.left[index].x2 = component.display.x+len;
         pins.left[index].parent = component.id;
     }
 
-    var botDistance = component.display.size / (pins.bottom.length * 2 + 1);
+    var botDistance = component.display.size / (pins.bottom.length * 2);
     for(var index = 0; index < pins.bottom.length; index++) {
         pins.bottom[index].x1 = pins.bottom[index].x2 = component.display.x + botDistance * (2 * index + 1);
-        pins.bottom[index].y1 = component.display.y + component.display.size - len;
-        pins.bottom[index].y2 = pins.bottom[index].y1 + len;
+        pins.bottom[index].y2 = component.display.y + component.display.size - len;
+        pins.bottom[index].y1 = pins.bottom[index].y2 + 2*len;
         pins.bottom[index].parent = component.id;
     }
 
-    var rightDistance = component.display.size / (pins.right.length * 2 + 1);
+    var rightDistance = component.display.size / (pins.right.length * 2);
     for(var index = 0; index < pins.right.length; index++) {
         pins.right[index].y1 = pins.right[index].y2 = component.display.y + rightDistance * (2 * index + 1);
-        pins.right[index].x1 = component.display.x + component.display.size - len;
-        pins.right[index].x2 = pins.right[index].x1 + len;
+        pins.right[index].x2 = component.display.x + component.display.size - len;
+        pins.right[index].x1 = pins.right[index].x2 + 2*len;
         pins.right[index].parent = component.id;
     }
 
@@ -261,6 +270,7 @@ function addComponent() {
 
     drawComponents();
     drawLines();
+    drawPins();
     //circuitRef.set(data);
 }
 
