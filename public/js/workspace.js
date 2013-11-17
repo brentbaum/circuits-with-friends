@@ -1,4 +1,3 @@
-var data = {}/*s
 var data = {
     1: {
         id: 1,
@@ -69,7 +68,7 @@ var data = {
             data: [false]
         }
     }
-}*/
+}
 var width = 500;
 var height = 500;
 
@@ -90,21 +89,21 @@ function drawComponents() {
         .attr("y", function(d) {return d.display.y})
         .call(d3.behavior.drag().on("drag", move))
         .on("click", selectComponent);
-
-    /*component.data(function(d) {
-        if(d.type == "mux")
-            return muxPins(d);
-    })*/
 }
 
 function muxPins(mux) {
-    pins = {left: [], bottom: []};
-    mux.data(function(d) {
-        dataPins = d.inputs.data;
-        for(var x = 0; x < dataPins.length; x++) {
-            pins.left.push(dataPins[x]);
-        }
+    var pins = {left: [], bottom: []};
+    console.log(mux);
+    dataPins = mux.inputs.data;
+    dataPins.forEach(function(pin) {
+        console.log(pin);
+        pins.left.push(pin);
+    })
+    dataPins.forEach(function(pin) {
+        console.log(pin);
+        pins.bottom.push(pin);
     });
+    return pins;
 }
 
 function removeComponent(type) {
@@ -128,22 +127,22 @@ function drawLines() {
     var c1 = connection.enter()
         .append("svg:circle")
         .attr("r", 3)
-        .attr("cx", function(d) {return d[0].x;})
-        .attr("cy", function(d) {return d[0].y;})
+        .attr("cx", function(d) {return d.x1;})
+        .attr("cy", function(d) {return d.y1;})
 
     var c2 = connection.enter()
         .append("svg:circle")
         .attr("r", 3)
-        .attr("cx", function(d) {return d[1].x;})
-        .attr("cy", function(d) {return d[1].y;})
+        .attr("cx", function(d) {return d.x2;})
+        .attr("cy", function(d) {return d.y2;})
 }
 
 function line(container) {
     container.append("svg:line")
-        .attr("x1", function(d) {return d[0].x;})
-        .attr("y1", function(d) {return d[0].y;})
-        .attr("x2", function(d) {return d[1].x;})
-        .attr("y2", function(d) {return d[1].y;});
+        .attr("x1", function(d) {return d.x1;})
+        .attr("y1", function(d) {return d.y1;})
+        .attr("x2", function(d) {return d.x2;})
+        .attr("y2", function(d) {return d.y2;});
 }
 
 function move(){
@@ -169,16 +168,78 @@ function makeLinks() {
         d3.values(target.inputs).forEach(function (input) {
             input.connections.forEach(function(pin) {
                 var source = data[pin["source-id"]];
-                links.push(
-                    [
-                        {x: target.display.x + target.display.size/2, y: target.display.y + target.display.size/2},
-                        {x: source.display.x + source.display.size/2, y: source.display.y + source.display.size/2}
-                    ]);
+                links.push({
+                        x1: target.display.x + target.display.size/2, y1: target.display.y + target.display.size/2,
+                        x2: source.display.x + source.display.size/2, y2: source.display.y + source.display.size/2
+                });
             });
         })
     });
     return links;
 }
+
+function drawPins() {
+    d3.values(data).forEach(function(component) {
+        var pins = makePins(component);
+        var c = d3.select("#workspace")
+            .data(pins).enter();
+        line(c);
+    })
+}
+
+function makePins(component) {
+    var len = 5;
+    var pins;
+    if(component.species == "mux")
+        pins = makeMuxPins(component);
+    if(component.species == "ip")
+        pins = makeIpPins(component);
+    if(component.species == "flipflop")
+        pins = makeFlipFlopPins(component);
+
+    var leftDistance = component.display.size / (pins.left.length * 2 + 1);
+    for(var index = 0; index < pins.left.length; index++) {
+        pins.left[index].y1 = pins.left[index].y2 = component.display.y + leftDistance * (2 * index + 1);
+        pins.left[index].x1 = component.display.x-len;
+        pins.left[index].x2 = component.display.y+len;
+        pins.left[index].parent = component.id;
+    }
+
+    var botDistance = component.display.size / (pins.bottom.length * 2 + 1);
+    for(var index = 0; index < pins.bottom.length; index++) {
+        pins.bottom[index].x1 = pins.bottom[index].x2 = component.display.x + botDistance * (2 * index + 1);
+        pins.bottom[index].y1 = component.display.y + component.display.size - len;
+        pins.bottom[index].y2 = pins.bottom[index].y1 + len;
+        pins.bottom[index].parent = component.id;
+    }
+
+    var rightDistance = component.display.size / (pins.right.length * 2 + 1);
+    for(var index = 0; index < pins.right.length; index++) {
+        pins.right[index].y1 = pins.right[index].y2 = component.display.y + rightDistance * (2 * index + 1);
+        pins.right[index].x1 = component.display.x + component.display.size - len;
+        pins.right[index].x2 = pins.right[index].x1 + len;
+        pins.right[index].parent = component.id;
+    }
+
+    return Object.keys(pins).reduce(function(array, side) {
+        return array.concat(pins[side]);
+    }, []);
+}
+
+function makeMuxPins(mux) {
+    return {left: mux.inputs.data.connections, bottom: mux.inputs.control.connections, right: [mux.outputs.q]};
+}
+
+function makeIpPins(ip) {
+    return {left: [], bottom: [], right: [ip.outputs.q]};
+};
+
+function makeFlipFlopPins(ff) {
+    var r = [ff.outputs.q,ff.outputs.qbar];
+    r[0].type = "q";
+    r[1].type = "qbar";
+    return {left: ff.inputs.data.connections, bottom: ff.inputs.enable.connections, right: r};
+};
 
 var lastConnected = 3;
 
@@ -200,7 +261,7 @@ function addComponent() {
 
     drawComponents();
     drawLines();
-    circuitRef.set(data);
+    //circuitRef.set(data);
 }
 
 var currentSelection;
@@ -219,8 +280,8 @@ function selectComponent() {
 }
 
 function setup() {
-    var circuitRef = new Firebase('https://circuitswithfriends.firebaseIO.com/');
-    circuitRef.on('value', function(snapshot) {
+    //var circuitRef = new Firebase('https://circuitswithfriends.firebaseIO.com/');
+    /*circuitRef.on('value', function(snapshot) {
     //console.log(snapshot.val());
         data = snapshot.val();
         if(!data) {
@@ -228,17 +289,19 @@ function setup() {
         }
         drawComponents();
         drawLines();
-    });
-    d3.select("#workspace-container").on("mouseup", function() {
+        drawPins();
+    });*/
+    /*d3.select("#workspace-container").on("mouseup", function() {
        circuitRef.set(data);
-    });
+    });*/
     d3.select("#workspace-container").on("click", function() {
         if(currentSelection != -1) {
             d3.select(".selected").classed("selected", false);
             currentSelection = -1;
         }
     });
+    drawComponents();
+    drawLines();
+    drawPins();
 }
-
-//Spec
 
