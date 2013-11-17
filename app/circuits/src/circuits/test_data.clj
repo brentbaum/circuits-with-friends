@@ -1,6 +1,7 @@
 (ns circuits.test-data
   (:require [circuits.comp-builder :as build]))
 
+(def default-display {:x 30 :y 30 :size 70})
 (def myandgate  {:id :and0 :label "PcPlus4" 
                  :species "andgate"
                  :state  {}
@@ -14,7 +15,8 @@
                                                            :source-field :q}]}}
                  :outputs  {
                             :q  {:numPins 1
-                                 :wordLength 1}}})
+                                 :wordLength 1}}
+                 :display default-display})
 
 (def mymux  {:id :mux0 :label "RegWrite" 
              :species "mux"
@@ -71,6 +73,7 @@
 
 (def input-pin-0  {:id :ip0 :label "teh 1337 p1n"
                    :species "inputpin"
+                   :display default-display
                    :state  {:data  [true]}
                    :inputs  {}
                    :outputs  {:q  {
@@ -173,6 +176,7 @@
                                                       :source-field :q}]}}
                :outputs {:data {:num-pins 1
                                 :word-length 1}}})
+
 (def components  {:ip0 input-pin-0 :ip1 input-pin-1
                   :ip2 input-pin-2 :ip3 input-pin-3
                   :ip4 input-pin-4 :ip5 input-pin-5
@@ -185,13 +189,13 @@
                   :tff0 t-flip-flop
                   :ip14 eight-bit-pin
                   :not0 not-gate})
-
 (def t1-outputpin {:id 3 :species "outputpin"
                    :input {:data {:word-length 1
                                   :num-pins 1
                                   :connections [{:source-id :and0
                                                  :source-field :q}]}}
                    :output {:q {:word-length 1
-                                :num-pins 1}}})
+                                :num-pins 1}}
+                   :display default-display})
 (def t1-set {:ip0 input-pin-0 :ip1 input-pin-1
              :and0 myandgate 3 t1-outputpin})
