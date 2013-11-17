@@ -34,14 +34,20 @@
           ]
       ret-val)
     nil))
+
 (defn add-component-js [species circuit]
-  )
+  (clj->js (add-component species circuit)))
+
 (defn add-component [species circuit]
   (let [new-id (generate-id species circuit)
         new-component (build/build-component species new-id)
         new-state (assoc circuit new-id new-component)
         ]
     new-state))
+
+(defn add-component-js [species circuit]
+  (clj->js (add-component species circuit)))
+
 ;; src = {:id, :field}
 ;; dst = {:id, :field, index}
 (defn add-connection [src dst circuit]

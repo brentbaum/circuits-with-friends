@@ -22545,13 +22545,16 @@ circuits.core.evaluate = function evaluate(id, state) {
   }
 };
 circuits.core.add_component_js = function add_component_js(species, circuit) {
-  return null
+  return cljs.core.clj__GT_js.call(null, circuits.core.add_component.call(null, species, circuit))
 };
 circuits.core.add_component = function add_component(species, circuit) {
   var new_id = circuits.core.generate_id.call(null, species, circuit);
   var new_component = circuits.comp_builder.build_component.call(null, species, new_id);
   var new_state = cljs.core.assoc.call(null, circuit, new_id, new_component);
   return new_state
+};
+circuits.core.add_component_js = function add_component_js(species, circuit) {
+  return cljs.core.clj__GT_js.call(null, circuits.core.add_component.call(null, species, circuit))
 };
 circuits.core.add_connection = function add_connection(src, dst, circuit) {
   var dst_component = circuit.call(null, dst.call(null, new cljs.core.Keyword(null, "id", "id", 1013907597)));
