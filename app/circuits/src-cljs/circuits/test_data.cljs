@@ -22,6 +22,22 @@
                                  :wordLength 1}}
                  :display default-display})
 
+(def myorgate  {:id :or0 :label "PcPlus4" 
+                 :species "orgate"
+                 :state  {}
+                 :inputs  {:data  {
+                                   :numPins 2
+                                   :wordLength 1
+                                   :connections  [
+                                                          {:source-id :ip0
+                                                           :source-field :q}
+                                                          {:source-id :ip1
+                                                           :source-field :q}]}}
+                 :outputs  {
+                            :q  {:numPins 1
+                                 :wordLength 1}}
+                 :display default-display})
+
 (def mymux  {:id :mux0 :label "RegWrite" 
              :species "mux"
              :state  {}
@@ -194,12 +210,14 @@
                   :ip14 eight-bit-pin
                   :not0 not-gate})
 (def t1-outputpin {:id 3 :species "outputpin"
-                   :input {:data {:word-length 1
+                   :inputs {:data {:word-length 1
                                   :num-pins 1
                                   :connections [{:source-id :and0
                                                  :source-field :q}]}}
-                   :output {:q {:word-length 1
+                   :outputs {:q {:word-length 1
                                 :num-pins 1}}
                    :display default-display})
-(def t1-set {:ip0 input-pin-0 :ip1 input-pin-1
+(def and-set {:ip0 input-pin-0 :ip1 input-pin-1
              :and0 myandgate 3 t1-outputpin})
+(def or-set {:ip0 input-pin-0 :ip1 input-pin-1
+             :or0 myorgate 3 t1-outputpin})

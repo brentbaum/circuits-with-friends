@@ -22380,6 +22380,10 @@ circuits.test_data.myandgate = cljs.core.PersistentArrayMap.fromArray([new cljs.
 "data", "data", 1016980252), cljs.core.PersistentArrayMap.fromArray([new cljs.core.Keyword(null, "numPins", "numPins", 3307823510), 2, new cljs.core.Keyword(null, "wordLength", "wordLength", 2280059394), 1, new cljs.core.Keyword(null, "connections", "connections", 2738507975), cljs.core.PersistentVector.fromArray([cljs.core.PersistentArrayMap.fromArray([new cljs.core.Keyword(null, "source-id", "source-id", 3610412927), new cljs.core.Keyword(null, "ip0", "ip0", 1014008667), new cljs.core.Keyword(null, 
 "source-field", "source-field", 1240617018), new cljs.core.Keyword(null, "q", "q", 1013904355)], true), cljs.core.PersistentArrayMap.fromArray([new cljs.core.Keyword(null, "source-id", "source-id", 3610412927), new cljs.core.Keyword(null, "ip1", "ip1", 1014008668), new cljs.core.Keyword(null, "source-field", "source-field", 1240617018), new cljs.core.Keyword(null, "q", "q", 1013904355)], true)], true)], true)], true), new cljs.core.Keyword(null, "outputs", "outputs", 4202756868), cljs.core.PersistentArrayMap.fromArray([new cljs.core.Keyword(null, 
 "q", "q", 1013904355), cljs.core.PersistentArrayMap.fromArray([new cljs.core.Keyword(null, "numPins", "numPins", 3307823510), 1, new cljs.core.Keyword(null, "wordLength", "wordLength", 2280059394), 1], true)], true), new cljs.core.Keyword(null, "display", "display", 2685668404), circuits.test_data.default_display], true);
+circuits.test_data.myorgate = cljs.core.PersistentArrayMap.fromArray([new cljs.core.Keyword(null, "id", "id", 1013907597), new cljs.core.Keyword(null, "or0", "or0", 1014014495), new cljs.core.Keyword(null, "label", "label", 1116631654), "PcPlus4", new cljs.core.Keyword(null, "species", "species", 3300406446), "orgate", new cljs.core.Keyword(null, "state", "state", 1123661827), cljs.core.PersistentArrayMap.EMPTY, new cljs.core.Keyword(null, "inputs", "inputs", 4125005147), cljs.core.PersistentArrayMap.fromArray([new cljs.core.Keyword(null, 
+"data", "data", 1016980252), cljs.core.PersistentArrayMap.fromArray([new cljs.core.Keyword(null, "numPins", "numPins", 3307823510), 2, new cljs.core.Keyword(null, "wordLength", "wordLength", 2280059394), 1, new cljs.core.Keyword(null, "connections", "connections", 2738507975), cljs.core.PersistentVector.fromArray([cljs.core.PersistentArrayMap.fromArray([new cljs.core.Keyword(null, "source-id", "source-id", 3610412927), new cljs.core.Keyword(null, "ip0", "ip0", 1014008667), new cljs.core.Keyword(null, 
+"source-field", "source-field", 1240617018), new cljs.core.Keyword(null, "q", "q", 1013904355)], true), cljs.core.PersistentArrayMap.fromArray([new cljs.core.Keyword(null, "source-id", "source-id", 3610412927), new cljs.core.Keyword(null, "ip1", "ip1", 1014008668), new cljs.core.Keyword(null, "source-field", "source-field", 1240617018), new cljs.core.Keyword(null, "q", "q", 1013904355)], true)], true)], true)], true), new cljs.core.Keyword(null, "outputs", "outputs", 4202756868), cljs.core.PersistentArrayMap.fromArray([new cljs.core.Keyword(null, 
+"q", "q", 1013904355), cljs.core.PersistentArrayMap.fromArray([new cljs.core.Keyword(null, "numPins", "numPins", 3307823510), 1, new cljs.core.Keyword(null, "wordLength", "wordLength", 2280059394), 1], true)], true), new cljs.core.Keyword(null, "display", "display", 2685668404), circuits.test_data.default_display], true);
 circuits.test_data.mymux = cljs.core.PersistentArrayMap.fromArray([new cljs.core.Keyword(null, "id", "id", 1013907597), new cljs.core.Keyword(null, "mux0", "mux0", 1017267666), new cljs.core.Keyword(null, "label", "label", 1116631654), "RegWrite", new cljs.core.Keyword(null, "species", "species", 3300406446), "mux", new cljs.core.Keyword(null, "state", "state", 1123661827), cljs.core.PersistentArrayMap.EMPTY, new cljs.core.Keyword(null, "inputs", "inputs", 4125005147), cljs.core.PersistentArrayMap.fromArray([new cljs.core.Keyword(null, 
 "data", "data", 1016980252), cljs.core.PersistentArrayMap.fromArray([new cljs.core.Keyword(null, "numPins", "numPins", 3307823510), 4, new cljs.core.Keyword(null, "wordLength", "wordLength", 2280059394), 1, new cljs.core.Keyword(null, "connections", "connections", 2738507975), cljs.core.PersistentVector.fromArray([cljs.core.PersistentArrayMap.fromArray([new cljs.core.Keyword(null, "source-id", "source-id", 3610412927), new cljs.core.Keyword(null, "ip0", "ip0", 1014008667), new cljs.core.Keyword(null, 
 "source-field", "source-field", 1240617018), new cljs.core.Keyword(null, "q", "q", 1013904355)], true), cljs.core.PersistentArrayMap.fromArray([new cljs.core.Keyword(null, "source-id", "source-id", 3610412927), new cljs.core.Keyword(null, "ip1", "ip1", 1014008668), new cljs.core.Keyword(null, "source-field", "source-field", 1240617018), new cljs.core.Keyword(null, "q", "q", 1013904355)], true), cljs.core.PersistentArrayMap.fromArray([new cljs.core.Keyword(null, "source-id", "source-id", 3610412927), 
@@ -22429,10 +22433,11 @@ circuits.test_data.components = cljs.core.PersistentHashMap.fromArrays([new cljs
 "ip3", 1014008670), new cljs.core.Keyword(null, "ip2", "ip2", 1014008669), new cljs.core.Keyword(null, "ip4", "ip4", 1014008671), new cljs.core.Keyword(null, "ip1", "ip1", 1014008668), new cljs.core.Keyword(null, "ip5", "ip5", 1014008672), new cljs.core.Keyword(null, "ip0", "ip0", 1014008667), new cljs.core.Keyword(null, "ip6", "ip6", 1014008673), new cljs.core.Keyword(null, "reg0", "reg0", 1017400718), new cljs.core.Keyword(null, "and0", "and0", 1016902827), new cljs.core.Keyword(null, "ip8", "ip8", 
 1014008675), new cljs.core.Keyword(null, "tff0", "tff0", 1017461230), new cljs.core.Keyword(null, "ip7", "ip7", 1014008674)], [circuits.test_data.input_pin_9, circuits.test_data.d_flip_flop, circuits.test_data.myfatmux, circuits.test_data.eight_bit_pin, circuits.test_data.mymux, circuits.test_data.not_gate, circuits.test_data.register_enable_pin, circuits.test_data.input_pin_3, circuits.test_data.input_pin_2, circuits.test_data.input_pin_4, circuits.test_data.input_pin_1, circuits.test_data.input_pin_5, 
 circuits.test_data.input_pin_0, circuits.test_data.input_pin_6, circuits.test_data.register, circuits.test_data.myandgate, circuits.test_data.input_pin_8, circuits.test_data.t_flip_flop, circuits.test_data.input_pin_7]);
-circuits.test_data.t1_outputpin = cljs.core.PersistentArrayMap.fromArray([new cljs.core.Keyword(null, "id", "id", 1013907597), 3, new cljs.core.Keyword(null, "species", "species", 3300406446), "outputpin", new cljs.core.Keyword(null, "input", "input", 1114262332), cljs.core.PersistentArrayMap.fromArray([new cljs.core.Keyword(null, "data", "data", 1016980252), cljs.core.PersistentArrayMap.fromArray([new cljs.core.Keyword(null, "word-length", "word-length", 4354454139), 1, new cljs.core.Keyword(null, 
-"num-pins", "num-pins", 3373805271), 1, new cljs.core.Keyword(null, "connections", "connections", 2738507975), cljs.core.PersistentVector.fromArray([cljs.core.PersistentArrayMap.fromArray([new cljs.core.Keyword(null, "source-id", "source-id", 3610412927), new cljs.core.Keyword(null, "and0", "and0", 1016902827), new cljs.core.Keyword(null, "source-field", "source-field", 1240617018), new cljs.core.Keyword(null, "q", "q", 1013904355)], true)], true)], true)], true), new cljs.core.Keyword(null, "output", 
-"output", 4303359091), cljs.core.PersistentArrayMap.fromArray([new cljs.core.Keyword(null, "q", "q", 1013904355), cljs.core.PersistentArrayMap.fromArray([new cljs.core.Keyword(null, "word-length", "word-length", 4354454139), 1, new cljs.core.Keyword(null, "num-pins", "num-pins", 3373805271), 1], true)], true), new cljs.core.Keyword(null, "display", "display", 2685668404), circuits.test_data.default_display], true);
-circuits.test_data.t1_set = cljs.core.PersistentArrayMap.fromArray([new cljs.core.Keyword(null, "ip0", "ip0", 1014008667), circuits.test_data.input_pin_0, new cljs.core.Keyword(null, "ip1", "ip1", 1014008668), circuits.test_data.input_pin_1, new cljs.core.Keyword(null, "and0", "and0", 1016902827), circuits.test_data.myandgate, 3, circuits.test_data.t1_outputpin], true);
+circuits.test_data.t1_outputpin = cljs.core.PersistentArrayMap.fromArray([new cljs.core.Keyword(null, "id", "id", 1013907597), 3, new cljs.core.Keyword(null, "species", "species", 3300406446), "outputpin", new cljs.core.Keyword(null, "inputs", "inputs", 4125005147), cljs.core.PersistentArrayMap.fromArray([new cljs.core.Keyword(null, "data", "data", 1016980252), cljs.core.PersistentArrayMap.fromArray([new cljs.core.Keyword(null, "word-length", "word-length", 4354454139), 1, new cljs.core.Keyword(null, 
+"num-pins", "num-pins", 3373805271), 1, new cljs.core.Keyword(null, "connections", "connections", 2738507975), cljs.core.PersistentVector.fromArray([cljs.core.PersistentArrayMap.fromArray([new cljs.core.Keyword(null, "source-id", "source-id", 3610412927), new cljs.core.Keyword(null, "and0", "and0", 1016902827), new cljs.core.Keyword(null, "source-field", "source-field", 1240617018), new cljs.core.Keyword(null, "q", "q", 1013904355)], true)], true)], true)], true), new cljs.core.Keyword(null, "outputs", 
+"outputs", 4202756868), cljs.core.PersistentArrayMap.fromArray([new cljs.core.Keyword(null, "q", "q", 1013904355), cljs.core.PersistentArrayMap.fromArray([new cljs.core.Keyword(null, "word-length", "word-length", 4354454139), 1, new cljs.core.Keyword(null, "num-pins", "num-pins", 3373805271), 1], true)], true), new cljs.core.Keyword(null, "display", "display", 2685668404), circuits.test_data.default_display], true);
+circuits.test_data.and_set = cljs.core.PersistentArrayMap.fromArray([new cljs.core.Keyword(null, "ip0", "ip0", 1014008667), circuits.test_data.input_pin_0, new cljs.core.Keyword(null, "ip1", "ip1", 1014008668), circuits.test_data.input_pin_1, new cljs.core.Keyword(null, "and0", "and0", 1016902827), circuits.test_data.myandgate, 3, circuits.test_data.t1_outputpin], true);
+circuits.test_data.or_set = cljs.core.PersistentArrayMap.fromArray([new cljs.core.Keyword(null, "ip0", "ip0", 1014008667), circuits.test_data.input_pin_0, new cljs.core.Keyword(null, "ip1", "ip1", 1014008668), circuits.test_data.input_pin_1, new cljs.core.Keyword(null, "or0", "or0", 1014014495), circuits.test_data.myorgate, 3, circuits.test_data.t1_outputpin], true);
 goog.provide("circuits.comp_logic");
 goog.require("cljs.core");
 circuits.comp_logic.exp = function exp(x, n) {
@@ -22583,6 +22588,9 @@ circuits.core.add_connection_js = function add_connection_js(src, dst, circuit) 
 circuits.core.remove_connection_js = function remove_connection_js(src, dst, circuit) {
   return null
 };
+circuits.core.evaluate_js = function evaluate_js(id, circuit) {
+  return cljs.core.clj__GT_js.call(null, circuits.core.evaluate.call(null, id, cljs.core.js__GT_clj.call(null, circuit)))
+};
 circuits.core.get_test_circuit_js = function get_test_circuit_js() {
   return cljs.core.clj__GT_js.call(null, circuits.test_data.t1_set)
 };
@@ -22603,11 +22611,9 @@ circuits.core.gen_inputs = function gen_inputs(component) {
   var result = cljs.core.count.call(null, input_fields) > 1 ? cljs.core.apply.call(null, cljs.core.conj, input_fields) : cljs.core.first.call(null, input_fields);
   return result
 };
-1 > cljs.core.count.call(null, cljs.core.PersistentVector.fromArray([1, 2], true));
-cljs.core.count.call(null, cljs.core.PersistentVector.fromArray([1, 2], true));
 circuits.core.and_eval = function and_eval(andgate) {
   var inputs = circuits.core.gen_inputs.call(null, andgate);
-  return cljs.core.PersistentArrayMap.fromArray([new cljs.core.Keyword(null, "q", "q", 1013904355), circuits.comp_logic.do_and.call(null, inputs)], true)
+  return cljs.core.PersistentArrayMap.fromArray([new cljs.core.Keyword(null, "q", "q", 1013904355), circuits.comp_logic.do_and.call(null, inputs.call(null, new cljs.core.Keyword(null, "data", "data", 1016980252)))], true)
 };
 circuits.core.nand_eval = function nand_eval(nandgate) {
   var and_value = circuits.core.and_eval.call(null, nandgate);
@@ -22616,7 +22622,7 @@ circuits.core.nand_eval = function nand_eval(nandgate) {
 };
 circuits.core.or_eval = function or_eval(orgate) {
   var inputs = circuits.core.gen_inputs.call(null, orgate);
-  return circuits.comp_logic.do_or.call(null, inputs)
+  return cljs.core.PersistentArrayMap.fromArray([new cljs.core.Keyword(null, "q", "q", 1013904355), circuits.comp_logic.do_or.call(null, inputs.call(null, new cljs.core.Keyword(null, "data", "data", 1016980252)))], true)
 };
 circuits.core.nor_eval = function nor_eval(norgate) {
   var or_value = circuits.core.or_eval.call(null, norgate);
@@ -22625,7 +22631,7 @@ circuits.core.nor_eval = function nor_eval(norgate) {
 };
 circuits.core.xor_eval = function xor_eval(xorgate) {
   var inputs = circuits.core.gen_inputs.call(null, xorgate);
-  return cljs.core.PersistentArrayMap.fromArray([new cljs.core.Keyword(null, "q", "q", 1013904355), circuits.comp_logic.do_xor.call(null, inputs)], true)
+  return cljs.core.PersistentArrayMap.fromArray([new cljs.core.Keyword(null, "q", "q", 1013904355), circuits.comp_logic.do_xor.call(null, inputs.call(null, new cljs.core.Keyword(null, "data", "data", 1016980252)))], true)
 };
 circuits.core.xnor_eval = function xnor_eval(xnorgate) {
   var xor_value = circuits.core.xor_eval.call(null, xnorgate);
@@ -22634,7 +22640,7 @@ circuits.core.xnor_eval = function xnor_eval(xnorgate) {
 };
 circuits.core.decoder_eval = function decoder_eval(decoder) {
   var input = circuits.core.gen_inputs.call(null, decoder);
-  return cljs.core.PersistentArrayMap.fromArray([new cljs.core.Keyword(null, "q", "q", 1013904355), circuits.comp_logic.do_decode.call(null, input)], true)
+  return cljs.core.PersistentArrayMap.fromArray([new cljs.core.Keyword(null, "q", "q", 1013904355), circuits.comp_logic.do_decode.call(null, input.call(null, new cljs.core.Keyword(null, "data", "data", 1016980252)))], true)
 };
 circuits.core.mux_eval = function mux_eval(mux) {
   var inputs = circuits.core.gen_inputs.call(null, mux);
@@ -22695,6 +22701,7 @@ circuits.core.inputpin_eval = function inputpin_eval(inputpin) {
 };
 circuits.core.outputpin_eval = function outputpin_eval(outputpin) {
   var inputs = circuits.core.gen_inputs.call(null, outputpin);
+  var asdf = cljs.core.println.call(null, inputs);
   return inputs
 };
 circuits.core.function_map = cljs.core.PersistentHashMap.fromArrays(["andgate", "register", "decoder", "xnorgate", "xorgate", "tflipflop", "inputpin", "orgate", "mux", "outputpin", "nandgate", "dflipflop", "norgate", "notgate"], [circuits.core.and_eval, circuits.core.register_eval, circuits.core.decoder_eval, circuits.core.xnor_eval, circuits.core.xor_eval, circuits.core.t_flipflop_eval, circuits.core.inputpin_eval, circuits.core.or_eval, circuits.core.mux_eval, circuits.core.outputpin_eval, circuits.core.nand_eval, 
