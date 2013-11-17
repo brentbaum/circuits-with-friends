@@ -22544,9 +22544,6 @@ circuits.core.evaluate = function evaluate(id, state) {
     return null
   }
 };
-circuits.core.add_component_js = function add_component_js(species, circuit) {
-  return cljs.core.clj__GT_js.call(null, circuits.core.add_component.call(null, species, circuit))
-};
 circuits.core.add_component = function add_component(species, circuit) {
   var new_id = circuits.core.generate_id.call(null, species, circuit);
   var new_component = circuits.comp_builder.build_component.call(null, species, new_id);
@@ -22554,7 +22551,7 @@ circuits.core.add_component = function add_component(species, circuit) {
   return new_state
 };
 circuits.core.add_component_js = function add_component_js(species, circuit) {
-  return cljs.core.clj__GT_js.call(null, circuits.core.add_component.call(null, species, circuit))
+  return cljs.core.clj__GT_js.call(null, circuits.core.add_component.call(null, species, cljs.core.js__GT_clj.call(null, circuit)))
 };
 circuits.core.add_connection = function add_connection(src, dst, circuit) {
   var dst_component = circuit.call(null, dst.call(null, new cljs.core.Keyword(null, "id", "id", 1013907597)));
