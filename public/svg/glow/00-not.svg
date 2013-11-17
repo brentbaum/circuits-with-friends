@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 15.0.2, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="481px" height="433px" viewBox="0 0 481 433" enable-background="new 0 0 481 433" xml:space="preserve">
+
+	<defs>
+  		<filter id="fadingBlur" filterUnits="userSpaceOnUse" x="0" y="0" width="500" height="500">
+    		<feGaussianBlur in="SourceGraphic" stdDeviation="15" />
+  		</filter>
+		<g id="notGate">
+			<path fill="#0FF" d="M43.32,58.022l322.955,157.287L43.32,372.595V58.022z M16.5,15v21.51v357.597v21.513l19.277-9.5
+			l366.814-178.799v-24.025L35.777,24.499L16.5,15z"/>
+			<path fill="none" stroke="#0FF" stroke-width="7" d="M463.773,215.309
+			c0,19.748-16.01,35.76-35.76,35.76s-35.76-16.013-35.76-35.76c0-19.749,16.01-35.76,35.76-35.76S463.773,195.56,463.773,215.309
+			L463.773,215.309z"/>
+		</g>
+	</defs>
+
+	<g id="blurred">
+		<use xlink:href="#notGate" filter="url(#fadingBlur)" />
+  		<use xlink:href="#notGate" />
+	</g>
+</svg>
