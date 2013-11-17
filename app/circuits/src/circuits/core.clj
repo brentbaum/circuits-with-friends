@@ -76,9 +76,9 @@
 ;; External Interface Functions
 (defn add-component-js [species circuit display]
   (let [circuit-js (js->clj circuit)
-        l1 (.log js/console circuit-js) 
-        display-js (js->clj display)
-        l2 (.log js/console display-js)]
+        l1 (.log js/console circuit)
+        l2 (.log js/console circuit-js) 
+        display-js (js->clj display)]
   (clj->js (add-component species circuit-js display-js)))
 (defn add-connection-js [src dst circuit]
   (.log js/console (js->clj src))
