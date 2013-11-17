@@ -1,4 +1,4 @@
-var data = {
+/*var data = {
     1: {
         id: 1,
         species: "mux",
@@ -69,15 +69,11 @@ var data = {
         }
     }
 }
-
+*/
 // source-id, source-field
 // target-id, target-index, target-field
 // entire everything
-
-
-var width = 500;
-var height = 500;
-
+var data;
 setup();
 
 function draw() {
@@ -87,9 +83,12 @@ function draw() {
     var links = makeLinks(pins);
     drawPins(pins);
     drawLinks(links);
+    if(selectedPin)
+        circle(selectedPin);
 }
 
 function clearCanvas() {
+    removeComponent("g");
     removeComponent("rect");
     removeComponent("circle");
     removeComponent("line");
@@ -144,7 +143,8 @@ function makeLinks(pins) {
         if(!!pin["source-id"]) {
             var source = findSource(pins, pin["source-id"], pin["source-field"])
             links.push({
-                x1: pin.x1, y1: pin.y1, y2: source.y1, x2: source.x1
+                x1: pin.x1, y1: pin.y1, target: pin,
+                y2: source.y1, x2: source.x1, source: source
             })
         }
     })
@@ -166,17 +166,39 @@ function drawLinks(links) {
         .data(links).enter();
 
     line(connection);
+
     var c1 = connection
         .append("svg:circle")
-        .attr("r", 3)
-        .attr("cx", function(d) {return d.x1;})
-        .attr("cy", function(d) {return d.y1;})
+        .attr("r", 2.5)
+        .attr("cx", function(d) {return d.target.x1;})
+        .attr("cy", function(d) {return d.target.y1;})
+        .on("click", function(d) {return selectPin(d.target)});
 
     var c2 = connection
         .append("svg:circle")
-        .attr("r", 3)
-        .attr("cx", function(d) {return d.x2;})
-        .attr("cy", function(d) {return d.y2;})
+        .attr("r", 2.5)
+        .attr("cx", function(d) {return d.source.x1;})
+        .attr("cy", function(d) {return d.source.y1;})
+        .on("click", function(d) {return selectPin(d.source)});
+}
+
+var selectedPin;
+
+function selectPin(pin) {
+    if(!selectedPin) {
+        selectedPin = pin;
+        return;
+    }
+    if(!!selectedPin.field && !pin.field) {
+        addConnection(pin, selectedPin);
+    }
+    else if(!!pin.field && !selectedPin.field)
+        addConnection(pin, selectedPin);
+}
+
+function addConnection(target, source) {
+    console.log(target, source);
+    selectedPin = null;
 }
 
 function makePins() {
@@ -236,6 +258,12 @@ function makeComponentPins(component) {
     }, []);
 }
 
+//I can write logic gates all the same way (and, nand, or, nor, xor, xnor)
+//Not is unique
+//decoder and mux have similar structures
+//FlipFlop is unique
+//Register is unique.
+
 function makeMuxPins(mux) {
     var r = mux.outputs.q;
     r.field = "q";
@@ -258,21 +286,6 @@ function makeFlipFlopPins(ff) {
 var lastConnected = 3;
 
 function addComponent() {
-    var current = lastConnected + 1;
-    data[current] =  {
-        id: current,
-        display: {x: 150, y: 150, size: 50},
-        species: "ip",
-        outputs: {
-            q: {"word-length": 1, "num-pins":1}
-        },
-        state: {
-            data: [true]
-        }
-    };
-
-    lastConnected = current;
-
     draw();
     //circuitRef.set(data);
 }
@@ -300,6 +313,14 @@ function line(container) {
         .attr("y2", function(d) {return d.y2;});
 }
 
+function circle(point) {
+    d3.select("#workspace")
+        .data(point).append("svg:circle")
+        .attr("cx", function(d) {return d.x1})
+        .attr("cy", function(d) {return d.x2})
+        .attr("color", "#A00")
+}
+
 function setup() {
     //var circuitRef = new Firebase('https://circuitswithfriends.firebaseIO.com/');
     /*circuitRef.on('value', function(snapshot) {
@@ -313,6 +334,9 @@ function setup() {
     /*d3.select("#workspace-container").on("mouseup", function() {
        circuitRef.set(data);
     });*/
+    data = circuits.core.add_component_js("mux", {});
+    data = circuits.core.add_component_js("andgate", data);
+    data = circuits.core.add_component_js("orgate", data);
     d3.select("#workspace-container").on("click", function() {
         if(currentSelection != -1) {
             d3.select(".selected").classed("selected", false);
