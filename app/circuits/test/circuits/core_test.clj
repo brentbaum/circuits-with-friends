@@ -21,7 +21,7 @@
 
 (expect [true] (((((evaluate :tff0 t/components) 
                    :state) :tff0) :state) :data)) 
-
+(generate-id "mux" t/components)
 ;; Not gate
 (expect {:q [false]} ((evaluate :not0 t/components) :result))
 
@@ -34,4 +34,4 @@
                               ;{:id :mux0 :field :control :index 0}
                               ;t/components) :mux0))
 (expect {:x 40 :y 40 :size 70} (((add-component "mux" {} {:x 40 :y 40 :size 70}) :mux0) :display))
-(add-component "mux" (add-component "mux" t/components {}) {})
+(keys (add-component "mux" (add-component "mux" t/components {}) {}))
