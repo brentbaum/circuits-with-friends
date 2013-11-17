@@ -27,6 +27,10 @@
 
 (expect {} (((add-component "mux" t/components) "mux2") :state))
 (expect {} (((add-component "xorgate" {}) "xorgate0") :state))
-(expect {} ((((add-connection {:id :ip3 :field :q}
-                             {:id :mux0 :field :data :index 0}
-                             t/components) :mux0) :inputs) :connections))
+;(expect {} ((((add-connection {:id :ip3 :field :q}
+                             ;{:id :mux0 :field :data :index 0}
+                             ;t/components) :mux0) :inputs) :connections))
+;(expect {} ((remove-connection {}
+                              ;{:id :mux0 :field :control :index 0}
+                              ;t/components) :mux0))
+(expect {} (add-component "mux" {} {:x 40 :y 40 :size 70}))
