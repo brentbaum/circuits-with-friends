@@ -22544,14 +22544,12 @@ circuits.core.evaluate = function evaluate(id, state) {
     return null
   }
 };
-circuits.core.add_component = function add_component(species, circuit) {
+circuits.core.add_component = function add_component(species, circuit, display) {
   var new_id = circuits.core.generate_id.call(null, species, circuit);
   var new_component = circuits.comp_builder.build_component.call(null, species, new_id);
-  var new_state = cljs.core.assoc.call(null, circuit, new_id, new_component);
+  var with_display = cljs.core.assoc.call(null, new_component, new cljs.core.Keyword(null, "display", "display", 2685668404), display);
+  var new_state = cljs.core.assoc.call(null, circuit, new_id, with_display);
   return new_state
-};
-circuits.core.add_component_js = function add_component_js(species, circuit) {
-  return cljs.core.clj__GT_js.call(null, circuits.core.add_component.call(null, species, cljs.core.js__GT_clj.call(null, circuit)))
 };
 circuits.core.add_connection = function add_connection(src, dst, circuit) {
   var dst_component = circuit.call(null, dst.call(null, new cljs.core.Keyword(null, "id", "id", 1013907597)));
@@ -22563,6 +22561,25 @@ circuits.core.add_connection = function add_connection(src, dst, circuit) {
   var new_invec = cljs.core.assoc.call(null, dst_vector, dst_index, new_connection);
   var new_circuit = cljs.core.assoc_in.call(null, circuit, cljs.core.PersistentVector.fromArray([dst.call(null, new cljs.core.Keyword(null, "id", "id", 1013907597)), new cljs.core.Keyword(null, "inputs", "inputs", 4125005147), dst.call(null, new cljs.core.Keyword(null, "field", "field", 1111331948)), new cljs.core.Keyword(null, "connections", "connections", 2738507975)], true), new_invec);
   return new_circuit
+};
+circuits.core.remove_connection = function remove_connection(src, dst, circuit) {
+  var dst_component = circuit.call(null, dst.call(null, new cljs.core.Keyword(null, "id", "id", 1013907597)));
+  var dst_inputs = dst_component.call(null, new cljs.core.Keyword(null, "inputs", "inputs", 4125005147));
+  var dst_field = dst_inputs.call(null, dst.call(null, new cljs.core.Keyword(null, "field", "field", 1111331948)));
+  var dst_vector = dst_field.call(null, new cljs.core.Keyword(null, "connections", "connections", 2738507975));
+  var dst_index = dst.call(null, new cljs.core.Keyword(null, "index", "index", 1114250308));
+  var new_invec = cljs.core.assoc.call(null, dst_vector, dst_index, cljs.core.PersistentArrayMap.EMPTY);
+  var new_circuit = cljs.core.assoc_in.call(null, circuit, cljs.core.PersistentVector.fromArray([dst.call(null, new cljs.core.Keyword(null, "id", "id", 1013907597)), new cljs.core.Keyword(null, "inputs", "inputs", 4125005147), dst.call(null, new cljs.core.Keyword(null, "field", "field", 1111331948)), new cljs.core.Keyword(null, "connections", "connections", 2738507975)], true), new_invec);
+  return new_circuit
+};
+circuits.core.add_component_js = function add_component_js(species, circuit, display) {
+  return cljs.core.clj__GT_js.call(null, circuits.core.add_component.call(null, species, cljs.core.js__GT_clj.call(null, circuit), cljs.core.js__GT_clj.call(null, display)))
+};
+circuits.core.add_connection_js = function add_connection_js(src, dst, circuit) {
+  return cljs.core.clj__GT_js.call(null, circuits.core.add_connection.call(null, cljs.core.js__GT_clj.call(null, src), cljs.core.js__GT_clj.call(null, dst), cljs.core.js__GT_clj.call(null, circuit)))
+};
+circuits.core.remove_connection_js = function remove_connection_js(src, dst, circuit) {
+  return null
 };
 circuits.core.inner_fn = function inner_fn(mapping) {
   var state = cljs.core.deref.call(null, circuits.core.circuit);

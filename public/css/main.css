@@ -1,10 +1,5 @@
-chart div {
-    font: 10px sans-serif;
-    background-color: steelblue;
-    text-align: right;
-    padding: 3px;
-    margin: 1px;
-    color: white;
+body {
+    font-family: 'Source Code Pro', sans-serif;
 }
 
 #workspace rect {
@@ -24,6 +19,15 @@ chart div {
 #workspace line {
     stroke: steelblue;
     stroke-width: 2;
+}
+
+#workspace line.pin {
+    stroke: #555;
+    stroke-width: 4;
+}
+
+#workspace line.pin.connected {
+    stroke: steelblue;
 }
 
 #workspace circle {

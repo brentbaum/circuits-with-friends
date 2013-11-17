@@ -19,7 +19,6 @@
 
 (declare function-map gen-inputs)
 
-;; External Interface Functions
 (defn evaluate-component  [component]
   (let  [component-type  (component :species)
          eval-fn  (function-map component-type)]
@@ -35,15 +34,14 @@
       ret-val)
     nil))
 
-(defn add-component [species circuit]
+(defn add-component [species circuit display]
   (let [new-id (generate-id species circuit)
         new-component (build/build-component species new-id)
-        new-state (assoc circuit new-id new-component)
+        with-display (assoc new-component :display display)
+        new-state (assoc circuit new-id with-display)
         ]
     new-state))
 
-(defn add-component-js [species circuit]
-  (clj->js (add-component species (js->clj circuit))))
 
 ;; src = {:id, :field}
 ;; dst = {:id, :field, index}
@@ -63,6 +61,29 @@
                                        :connections] 
                               new-invec)]
     new-circuit))
+
+(defn remove-connection [src dst circuit]
+  (let [dst-component (circuit (dst :id))
+        dst-inputs (dst-component :inputs)
+        dst-field (dst-inputs (dst :field)) 
+        dst-vector (dst-field :connections)
+        dst-index (dst :index)
+        new-invec (assoc dst-vector dst-index {})
+        new-circuit (assoc-in circuit [
+                                       (dst :id) 
+                                       :inputs 
+                                       (dst :field) 
+                                       :connections] 
+                              new-invec)]
+    new-circuit))
+
+;; External Interface Functions
+(defn add-component-js [species circuit display]
+  (clj->js (add-component species (js->clj circuit) (js->clj display))))
+(defn add-connection-js [src dst circuit]
+  (clj->js (add-connection (js->clj src) (js->clj dst) (js->clj circuit)))) 
+(defn remove-connection-js [src dst circuit]
+  )
 ;; End External Interface FNs
 
 (defn inner-fn  [mapping]
