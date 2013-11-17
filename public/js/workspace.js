@@ -1,3 +1,4 @@
+var data = {}/*s
 var data = {
     1: {
         id: 1,
@@ -68,15 +69,11 @@ var data = {
             data: [false]
         }
     }
-}
+}*/
 var width = 500;
 var height = 500;
 
-
-
 setup();
-drawComponents();
-drawLines();
 
 function drawComponents() {
     removeComponent("rect");
@@ -203,6 +200,7 @@ function addComponent() {
 
     drawComponents();
     drawLines();
+    circuitRef.set(data);
 }
 
 var currentSelection;
@@ -222,13 +220,22 @@ function selectComponent() {
 }
 
 function setup() {
+    var circuitRef = new Firebase('https://circuitswithfriends.firebaseIO.com/');
+    circuitRef.on('value', function(snapshot) {
+    //console.log(snapshot.val());
+        data = snapshot.val();
+        drawComponents();
+        drawLines();
+    });
+    d3.select("#workspace-container").on("mouseup", function() {
+       circuitRef.set(data);
+    });
     d3.select("#workspace-container").on("click", function() {
         if(currentSelection != -1) {
             d3.select(".selected").classed("selected", false);
             currentSelection = -1;
         }
     });
-
 }
 
 //Spec
