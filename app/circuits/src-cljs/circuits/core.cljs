@@ -46,7 +46,12 @@
 ;; src = {:id, :field}
 ;; dst = {:id, :field, index}
 (defn add-connection [src dst circuit]
-  (let [dst-component (circuit (dst :id))
+  (let [
+        ccc (js/alert circuit)
+        typess (js/alert (keyword (dst :id)))
+        kewyss (js/alert (keys circuit))
+        dst-component (find circuit (keyword (dst :id)))
+        asdf (js/alert dst-component)
         dst-inputs (dst-component :inputs)
         dst-field (dst-inputs (dst :field)) 
         dst-vector (dst-field :connections)
@@ -78,7 +83,7 @@
     new-circuit))
 
 (defn map-json [obj]
-  (js->clj obj :keywordize-keys true))
+  (js->clj obj :keywordize-keys false))
 
 ; External Interface Functions
 (defn add-component-js [species circuit display]
@@ -86,6 +91,9 @@
         display-map (map-json display)]
     (clj->js (add-component species circuit-map display-map))))
 (defn add-connection-js [src dst circuit]
+  ;(js/alert (map-json src))
+  ;(js/alert (map-json dst))
+  ;(js/alert (map-json circuit))
   (add-connection (map-json src) (map-json dst) (map-json circuit))) 
 (defn remove-connection-js [src dst circuit]
   )
