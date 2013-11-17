@@ -35,10 +35,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="workspace.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="workspace.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/js/workspace.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="273" column="59" selection-start="6236" selection-end="6236" vertical-scroll-proportion="0.6880734" vertical-offset="3795" max-vertical-offset="6060">
+            <state line="60" column="9" selection-start="1556" selection-end="1556" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="5625">
               <folding />
             </state>
           </provider>
@@ -47,7 +47,16 @@
       <file leaf-file-name="simple.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/simple.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="24" column="0" selection-start="1235" selection-end="1235" vertical-scroll-proportion="-1.4133333" vertical-offset="254" max-vertical-offset="1005">
+            <state line="51" column="14" selection-start="2254" selection-end="2254" vertical-scroll-proportion="-1.2266667" vertical-offset="673" max-vertical-offset="1005">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="circuits.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/public/js/circuits.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="17" column="6" selection-start="521" selection-end="521" vertical-scroll-proportion="0.6640625" vertical-offset="0" max-vertical-offset="340545">
               <folding />
             </state>
           </provider>
@@ -85,8 +94,9 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
+    <option name="x" value="640" />
     <option name="y" value="22" />
-    <option name="width" value="1280" />
+    <option name="width" value="640" />
     <option name="height" value="774" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
@@ -184,6 +194,24 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="circuits-with-friends" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="circuits-with-friends" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="circuits" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
     </panes>
@@ -211,6 +239,11 @@
     <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
   </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/public/js" />
+    </key>
+  </component>
   <component name="RestoreUpdateTree">
     <UpdateInfo date="Moments ago" ActionInfo="_Update">
       <UpdatedFiles>
@@ -226,8 +259,12 @@
             <option name="mySupportsDeletion" value="false" />
             <option name="myCanBeAbsent" value="false" />
             <option name="myId" value="UPDATED" />
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/circuits/circuits.js</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/circuits/src-cljs/circuits/core.cljs</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/circuits/src/circuits/core.clj</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/circuits/test/circuits/.core_test.clj.swp</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/circuits/test/circuits/core_test.clj</PATH>
             <PATH vcs="Git" revision="">$PROJECT_DIR$/public/js/workspace.js</PATH>
-            <PATH vcs="Git" revision="">$PROJECT_DIR$/public/simple.html</PATH>
           </FILE-GROUP>
           <FILE-GROUP>
             <option name="myUpdateName" value="Created" />
@@ -419,24 +456,28 @@
       <created>1384683033018</created>
       <updated>1384683033018</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Finish merge...?">
+      <created>1384684104095</created>
+      <updated>1384684104095</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="22" width="1280" height="774" extended-state="0" />
-    <editor active="true" />
+    <frame x="640" y="22" width="640" height="774" extended-state="0" />
+    <editor active="false" />
     <layout>
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32874617" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.6701031" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.5" sideWeight="0.68501526" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31664214" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3149847" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -462,19 +503,20 @@
     <MESSAGE value="It's alive!!" />
     <MESSAGE value="I did stuff." />
     <MESSAGE value="Merge branch 'master' of github.com:bbaumgar/circuits-with-friends into b-feature-branch&#10;&#10;Conflicts:&#10;&#9;public/js/workspace.js&#10;&#9;public/simple.html&#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="Merge branch 'master' of github.com:bbaumgar/circuits-with-friends into b-feature-branch&#10;&#10;Conflicts:&#10;&#9;public/js/workspace.js&#10;&#9;public/simple.html&#10;" />
+    <MESSAGE value="Finish merge...?" />
+    <option name="LAST_COMMIT_MESSAGE" value="Finish merge...?" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/public/js/workspace.js</url>
-          <line>342</line>
+          <line>318</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/public/js/workspace.js</url>
-          <line>346</line>
+          <line>322</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
@@ -489,16 +531,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/simple.html">
+    <entry file="file://$PROJECT_DIR$/public/js/workspace.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="0" selection-start="1235" selection-end="1235" vertical-scroll-proportion="-1.4133333" vertical-offset="254" max-vertical-offset="1005">
+        <state line="60" column="9" selection-start="1556" selection-end="1556" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="5625">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/workspace.js">
+    <entry file="file://$PROJECT_DIR$/public/simple.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="273" column="59" selection-start="6236" selection-end="6236" vertical-scroll-proportion="0.6880734" vertical-offset="3795" max-vertical-offset="6060">
+        <state line="51" column="14" selection-start="2254" selection-end="2254" vertical-scroll-proportion="-1.2266667" vertical-offset="673" max-vertical-offset="1005">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/circuits.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="6" selection-start="521" selection-end="521" vertical-scroll-proportion="0.6640625" vertical-offset="0" max-vertical-offset="340545">
           <folding />
         </state>
       </provider>

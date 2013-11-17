@@ -1,78 +1,9 @@
-//var data = {};
-var data = {
- 1: {
- id: 1,
- species: "mux",
- display: {x: 250, y: 150, size: 60},
- outputs: {
- q: {wordLength : 1, "num-pins": 2}
- },
- state: {},
- inputs: {
- data: {
- "num-inputs": 4,
- "word-length": 1,
- connections: [
- {"source-id": 2, "source-field": "q"},
- {"source-id": 2, "source-field": "q"},
- {},
- {}
- ]
- },
- control: {
- "num-inputs": 1,
- "word-length": 2,
- connections: [
- {"source-id": 3, "source-field": "q"}
- ]
+var data = {};
 
- }
- }
- },
-
- 2: {
- id: 2,
- display: {x: 150, y: 150, size: 50},
- species: "nandgate",
- outputs: {
- q: {"word-length": 1, "num-pins":1}
- },
- state: {
- data: [true]
- }
- },
- 3: {
- id: 3,
- species: "dflipflop",
- display: {x: 350, y: 150, size: 60},
- outputs: {
- q: {"word-length": 1, "num-pins": 1},
- qbar: {"word-length": 1, "num-pins": 1}
- },
- inputs: {
- data: {
- "num-inputs" : 4,
- "word-length": 1,
- connections: [
- {"source-id": 1, "source-field": "q"}
- ]
- },
- enable: {
- "num-inputs": 1,
- "word-length": 1,
- connections: [
- {"source-id":2, "source-field": "q"}
- ]
- }
- },
- state: {
- data: [false]
- }
- }
- }
 // source-id, source-field
 // target-id, target-index, target-field
 // entire everything
+
 setup();
 
 function draw() {
@@ -259,16 +190,26 @@ function drawPins(pinTrist) {
             return !!d["source-id"] || !!d["word-length"];
         });
 }
-
 function makeComponentPins(component) {
     var len = 5;
     var pins;
     if (component.species == "mux")
         pins = makeMuxPins(component);
-    if (component.species == "ip")
+    else if (component.species == "ip")
         pins = makeIpPins(component);
-    if (component.species == "dflipflop" || component.species == "tflipflop")
+    else if (component.species == "dflipflop" || component.species == "tflipflop")
         pins = makeFlipFlopPins(component);
+    else if ( component.species == "orgate" || component.species == "andgate"
+        || component.species == "nandgate" || component.species == "xorgate"
+        || component.species == "norgate"
+        || component.species == "xnorgate")
+        pins = makeLogicGatePins(component);
+    else if (component.species == "decoder")
+        pins = makeDecoderPins(component);
+    else if (component.species == "notgate")
+        pins = makeNotPins(component);
+    else if (component.species == "register")
+        pins = makeRegisterPins(component);
     console.log(pins, component.species);
 
     var leftDistance = component.display.size / (pins.left.length * 2 );
@@ -308,14 +249,40 @@ function makeComponentPins(component) {
 //Register is unique.
 
 function addComponent(name) {
-    display = {
+    var display = {
         x: 25,
         y: 25,
         size: 60
     }
+    console.log(data);
+    console.log(name);
     data = circuits.core.add_component_js(name, data, display)
+    console.log(data);
     draw();
+}
 
+function makeRegisterPins(reg) {
+    var r = reg.outputs.q;
+    return {left: reg.inputs.data.connections, bottom: {}, right: [r]};
+}
+
+function makeLogicGatePins(gate) {
+    var r = gate.outputs.q;
+    r.field = "q";
+    return {left: gate.inputs.data.connections, bottom: {} ,right: [r]};
+}
+
+function makeDecoderPins(dec) {
+    var r = dec.outputs.q;
+    r.field = "q";
+    return {left: dec.inputs.data.connections, bottom: dec.inputs.enable.connections, right: [r]}
+
+}
+
+function makeNotPins(not) {
+    var r = not.outputs.q;
+    r.field = "q";
+    return {left: not.inputs.data.connections, bottom: {}, right: [r]}
 }
 
 function makeMuxPins(mux) {
@@ -331,7 +298,7 @@ function makeIpPins(ip) {
 };
 
 function makeFlipFlopPins(ff) {
-    var r = [ff.outputs.q,ff.outputs.qbar];
+    var r = [ff.outputs.q,ff.outputs["q-bar"]];
     r[0].field = "q";
     r[1].field = "qbar";
     return {left: ff.inputs.data.connections, bottom: ff.inputs.enable.connections, right: r};
