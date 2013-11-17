@@ -151,11 +151,9 @@ var selectedPin;
 function selectPin(pin) {
     if(pin === selectedPin) {
         selectedPin = null;
-        return;
     }
     else if (!selectedPin) {
         selectedPin = pin;
-        return;
     }
     else if ((typeof pin.index !== "undefined") && (typeof selectedPin.index === "undefined") ) {
         addConnection(pin, selectedPin);
