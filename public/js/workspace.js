@@ -1,79 +1,77 @@
-/*var data = {
-    1: {
-        id: 1,
-        species: "mux",
-        display: {x: 250, y: 150, size: 60},
-        outputs: {
-            q: {wordLength : 1, "num-pins": 2}
-        },
-        state: {},
-        inputs: {
-            data: {
-                "num-inputs": 4,
-                "word-length": 1,
-                connections: [
-                    {"source-id": 2, "source-field": "q"},
-                    {"source-id": 2, "source-field": "q"},
-                    {},
-                    {}
-                ]
-            },
-            control: {
-                "num-inputs": 1,
-                "word-length": 2,
-                connections: [
-                    {"source-id": 3, "source-field": "q"}
-                ]
+var data = {
+ 1: {
+ id: 1,
+ species: "mux",
+ display: {x: 250, y: 150, size: 60},
+ outputs: {
+ q: {wordLength : 1, "num-pins": 2}
+ },
+ state: {},
+ inputs: {
+ data: {
+ "num-inputs": 4,
+ "word-length": 1,
+ connections: [
+ {"source-id": 2, "source-field": "q"},
+ {"source-id": 2, "source-field": "q"},
+ {},
+ {}
+ ]
+ },
+ control: {
+ "num-inputs": 1,
+ "word-length": 2,
+ connections: [
+ {"source-id": 3, "source-field": "q"}
+ ]
 
-            }
-        }
-    },
+ }
+ }
+ },
 
-    2: {
-        id: 2,
-        display: {x: 150, y: 150, size: 50},
-        species: "ip",
-        outputs: {
-            q: {"word-length": 1, "num-pins":1}
-        },
-        state: {
-            data: [true]
-        }
-    },
-    3: {
-        id: 3,
-        species: "dflipflop",
-        display: {x: 350, y: 150, size: 60},
-        outputs: {
-            q: {"word-length": 1, "num-pins": 1},
-            qbar: {"word-length": 1, "num-pins": 1}
-        },
-        inputs: {
-            data: {
-                "num-inputs" : 4,
-                "word-length": 1,
-                connections: [
-                    {"source-id": 1, "source-field": "q"}
-                ]
-            },
-            enable: {
-                "num-inputs": 1,
-                "word-length": 1,
-                connections: [
-                    {"source-id":2, "source-field": "q"}
-                ]
-            }
-        },
-        state: {
-            data: [false]
-        }
-    }
-}
-*/
+ 2: {
+ id: 2,
+ display: {x: 150, y: 150, size: 50},
+ species: "ip",
+ outputs: {
+ q: {"word-length": 1, "num-pins":1}
+ },
+ state: {
+ data: [true]
+ }
+ },
+ 3: {
+ id: 3,
+ species: "dflipflop",
+ display: {x: 350, y: 150, size: 60},
+ outputs: {
+ q: {"word-length": 1, "num-pins": 1},
+ qbar: {"word-length": 1, "num-pins": 1}
+ },
+ inputs: {
+ data: {
+ "num-inputs" : 4,
+ "word-length": 1,
+ connections: [
+ {"source-id": 1, "source-field": "q"}
+ ]
+ },
+ enable: {
+ "num-inputs": 1,
+ "word-length": 1,
+ connections: [
+ {"source-id":2, "source-field": "q"}
+ ]
+ }
+ },
+ state: {
+ data: [false]
+ }
+ }
+ }
 // source-id, source-field
 // target-id, target-index, target-field
 // entire everything
-var data;
 setup();
 
 function draw() {
@@ -83,7 +81,7 @@ function draw() {
     var links = makeLinks(pins);
     drawPins(pins);
     drawLinks(links);
-    if(selectedPin)
+    if (selectedPin)
         circle(selectedPin);
 }
 
@@ -117,23 +115,23 @@ function drawComponents() {
     };
 
     component.append("svg:image")
-        .attr("xlink:href", function(d){return map[d.species]})
-        .attr("width", function(d){return d.display.size;})
-        .attr("height", function(d){return d.display.size;})
-        .attr("x", function(d){return d.display.x;})
-        .attr("y", function(d){return d.display.y;})
+        .attr("xlink:href", function (d) {
+            return map[d.species]
+        })
+        .attr("width", function (d) {
+            return d.display.size;
+        })
+        .attr("height", function (d) {
+            return d.display.size;
+        })
+        .attr("x", function (d) {
+            return d.display.x;
+        })
+        .attr("y", function (d) {
+            return d.display.y;
+        })
         .call(d3.behavior.drag().on("drag", move))
         .on("click", selectComponent);
-}
-
-function muxPins(mux) {
-    pins = {left: [], bottom: []};
-    mux.data(function(d) {
-        dataPins = d.inputs.data;
-        for(var x = 0; x < dataPins.length; x++) {
-            pins.left.push(dataPins[x]);
-        }
-    });
 }
 
 function removeComponent(type) {
@@ -142,7 +140,7 @@ function removeComponent(type) {
         .remove();
 }
 
-function move(){
+function move() {
     this.parentNode.appendChild(this);
     var dragTarget = d3.select(this);
 
@@ -150,14 +148,18 @@ function move(){
     var newY = d3.event.dy + parseInt(dragTarget.attr("y"));
 
     dragTarget
-        .attr("x", function(){return newX})
-        .attr("y", function(){return newY})
+        .attr("x", function () {
+            return newX
+        })
+        .attr("y", function () {
+            return newY
+        })
 
     this.__data__.display.x = newX;
     this.__data__.display.y = newY;
 
     removeComponent("line");
-    removeComponent("circle")
+    removeComponent("circle");
     var pins = makePins();
     var links = makeLinks(pins);
     drawLinks(links);
@@ -166,8 +168,8 @@ function move(){
 
 function makeLinks(pins) {
     var links = [];
-    pins.forEach(function(pin) {
-        if(!!pin["source-id"]) {
+    pins.forEach(function (pin) {
+        if (!!pin["source-id"]) {
             var source = findSource(pins, pin["source-id"], pin["source-field"])
             links.push({
                 x1: pin.x1, y1: pin.y1, target: pin,
@@ -180,8 +182,8 @@ function makeLinks(pins) {
 
 function findSource(pins, id, field) {
     var result;
-    pins.forEach(function(pin) {
-        if(!!pin.field && pin.parent === id && pin.field === field)
+    pins.forEach(function (pin) {
+        if (!!pin.field && pin.parent === id && pin.field === field)
             result = pin;
     })
     return result;
@@ -197,29 +199,41 @@ function drawLinks(links) {
     var c1 = connection
         .append("svg:circle")
         .attr("r", 2.5)
-        .attr("cx", function(d) {return d.target.x1;})
-        .attr("cy", function(d) {return d.target.y1;})
-        .on("click", function(d) {return selectPin(d.target)});
+        .attr("cx", function (d) {
+            return d.target.x1;
+        })
+        .attr("cy", function (d) {
+            return d.target.y1;
+        })
+        .on("click", function (d) {
+            return selectPin(d.target)
+        });
 
     var c2 = connection
         .append("svg:circle")
         .attr("r", 2.5)
-        .attr("cx", function(d) {return d.source.x1;})
-        .attr("cy", function(d) {return d.source.y1;})
-        .on("click", function(d) {return selectPin(d.source)});
+        .attr("cx", function (d) {
+            return d.source.x1;
+        })
+        .attr("cy", function (d) {
+            return d.source.y1;
+        })
+        .on("click", function (d) {
+            return selectPin(d.source)
+        });
 }
 
 var selectedPin;
 
 function selectPin(pin) {
-    if(!selectedPin) {
+    if (!selectedPin) {
         selectedPin = pin;
         return;
     }
-    if(!!selectedPin.field && !pin.field) {
+    if (!!selectedPin.field && !pin.field) {
         addConnection(pin, selectedPin);
     }
-    else if(!!pin.field && !selectedPin.field)
+    else if (!!pin.field && !selectedPin.field)
         addConnection(pin, selectedPin);
 }
 
@@ -229,7 +243,7 @@ function addConnection(target, source) {
 }
 
 function makePins() {
-    return d3.values(data).reduce(function(prev,component) {
+    return d3.values(data).reduce(function (prev, component) {
         return prev.concat(makeComponentPins(component));
     }, []);
 }
@@ -240,7 +254,7 @@ function drawPins(pinTrist) {
         .data(pinTrist)
         .enter().append("svg:g");
     line(p).classed("pin", true)
-        .classed("connected", function(d) {
+        .classed("connected", function (d) {
             return !!d["source-id"] || !!d["word-length"];
         });
 }
@@ -248,39 +262,40 @@ function drawPins(pinTrist) {
 function makeComponentPins(component) {
     var len = 5;
     var pins;
-    if(component.species == "mux")
+    if (component.species == "mux")
         pins = makeMuxPins(component);
-    if(component.species == "ip")
+    if (component.species == "ip")
         pins = makeIpPins(component);
-    if(component.species == "flipflop")
+    if (component.species == "dflipflop" || component.species == "tflipflop")
         pins = makeFlipFlopPins(component);
+    console.log(pins, component.species);
 
     var leftDistance = component.display.size / (pins.left.length * 2 );
-    for(var index = 0; index < pins.left.length; index++) {
+    for (var index = 0; index < pins.left.length; index++) {
         pins.left[index].y1 = pins.left[index].y2 = component.display.y + leftDistance * (2 * index + 1);
-        pins.left[index].x1 = component.display.x-len;
-        pins.left[index].x2 = component.display.x+len;
+        pins.left[index].x1 = component.display.x - len;
+        pins.left[index].x2 = component.display.x + len;
         pins.left[index].parent = component.id;
     }
 
     var botDistance = component.display.size / (pins.bottom.length * 2);
-    for(var index = 0; index < pins.bottom.length; index++) {
+    for (var index = 0; index < pins.bottom.length; index++) {
         pins.bottom[index].x1 = pins.bottom[index].x2 = component.display.x + botDistance * (2 * index + 1);
         pins.bottom[index].y2 = component.display.y + component.display.size - len;
-        pins.bottom[index].y1 = pins.bottom[index].y2 + 2*len;
+        pins.bottom[index].y1 = pins.bottom[index].y2 + 2 * len;
         pins.bottom[index].parent = component.id;
     }
 
     var rightDistance = component.display.size / (pins.right.length * 2);
-    for(var index = 0; index < pins.right.length; index++) {
+    for (var index = 0; index < pins.right.length; index++) {
         pins.right[index].y1 = pins.right[index].y2 = component.display.y + rightDistance * (2 * index + 1);
         pins.right[index].x2 = component.display.x + component.display.size - len;
-        pins.right[index].x1 = pins.right[index].x2 + 2*len;
+        pins.right[index].x1 = pins.right[index].x2 + 2 * len;
         pins.right[index].parent = component.id;
 
     }
 
-    return Object.keys(pins).reduce(function(array, side) {
+    return Object.keys(pins).reduce(function (array, side) {
         return array.concat(pins[side]);
     }, []);
 }
@@ -291,21 +306,23 @@ function makeComponentPins(component) {
 //FlipFlop is unique
 //Register is unique.
 
-function addComponent() {
-    var current = lastConnected + 1;
-    data[current] =  {
-        id: 2,
-        display: {x: 150, y: 150, size: 50},
-        species: "ip",
-        outputs: {
-            q: {"word-length": 1, "num-pins":1}
-        },
-        state: {
-            data: [true]
-        }
-    };
+function addComponent(name) {
+    data = circuits.core.add_component_js(name, data)
+    draw();
 
-    lastConnected = current;
+}
+
+function makeMuxPins(mux) {
+    var r = mux.outputs.q;
+    r.field = "q";
+    return {left: mux.inputs.data.connections, bottom: mux.inputs.control.connections, right: [r]};
+}
+
+function makeIpPins(ip) {
+    var r = ip.outputs.q;
+    r.field = "q";
+    return {left: [], bottom: [], right: [r]};
+};
 
 function makeFlipFlopPins(ff) {
     var r = [ff.outputs.q,ff.outputs.qbar];
@@ -314,21 +331,14 @@ function makeFlipFlopPins(ff) {
     return {left: ff.inputs.data.connections, bottom: ff.inputs.enable.connections, right: r};
 };
 
-var lastConnected = 3;
-
-function addComponent() {
-    draw();
-    //circuitRef.set(data);
-}
-
 var currentSelection;
 
 function selectComponent() {
     this.parentNode.appendChild(this);
     var selectTarget = d3.select(this);
 
-    setTimeout(function() {
-       console.log("Triggered!");
+    setTimeout(function () {
+        console.log("Triggered!");
 
         selectTarget.classed("selected", true);
 
@@ -338,41 +348,51 @@ function selectComponent() {
 
 function line(container) {
     return container.append("svg:line")
-        .attr("x1", function(d) {return d.x1;})
-        .attr("y1", function(d) {return d.y1;})
-        .attr("x2", function(d) {return d.x2;})
-        .attr("y2", function(d) {return d.y2;});
+        .attr("x1", function (d) {
+            return d.x1;
+        })
+        .attr("y1", function (d) {
+            return d.y1;
+        })
+        .attr("x2", function (d) {
+            return d.x2;
+        })
+        .attr("y2", function (d) {
+            return d.y2;
+        });
 }
 
 function circle(point) {
     d3.select("#workspace")
         .data(point).append("svg:circle")
-        .attr("cx", function(d) {return d.x1})
-        .attr("cy", function(d) {return d.x2})
+        .attr("cx", function (d) {
+            return d.x1
+        })
+        .attr("cy", function (d) {
+            return d.x2
+        })
         .attr("color", "#A00")
 }
 
 function setup() {
-    var circuitRef = new Firebase('https://circuitswithfriends.firebaseIO.com/');
-    //circuitRef.set(data);
-    circuitRef.on('value', function(snapshot) {
-        data = snapshot.val();
-        if(!data) {
+    var circuitRef = new Firebase('https://circuitswithfriends.firebaseIO.com/circuits');
+    circuitRef.on('value', function (snapshot) {
+        //data = snapshot.val();
+        console.log(data);
+        if (!data) {
             data = {};
         }
-        drawComponents();
-        drawLines();
+        else
+            draw();
     });
-    d3.select("#workspace-container").on("mouseup", function() {
-       circuitRef.set(data);
+    d3.select("#workspace-container").on("mouseup", function () {
+        circuitRef.set(data);
     });
-    d3.select("#workspace-container").on("click", function() {
-        if(currentSelection != -1) {
+    d3.select("#workspace-container").on("click", function () {
+        if (currentSelection != -1) {
             d3.select(".selected").classed("selected", false);
             currentSelection = -1;
         }
     });
-    draw();
 }
 
-}
