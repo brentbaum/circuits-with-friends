@@ -3,16 +3,9 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="569px" height="748px" viewBox="0 0 569 748" enable-background="new 0 0 569 748" xml:space="preserve">
-<g>
-	<g>
-		<defs>
-			<rect id="SVGID_1_" x="15" y="15" width="539" height="718"/>
-		</defs>
-		<clipPath id="SVGID_2_">
-			<use xlink:href="#SVGID_1_"  overflow="visible"/>
-		</clipPath>
-		
-			<rect x="30" y="30" clip-path="url(#SVGID_2_)" fill="none" stroke="#010101" stroke-width="30" stroke-linecap="square" width="510" height="688"/>
+	<g id="tff">
+		<rect x="28.999" y="25" fill="none" stroke="#000" stroke-width="15" stroke-linecap="square" width="520.951" height="703.742"/>
+		<polygon fill="#000" points="127.663,237.706 127.663,156.923 157.964,156.923 157.964,146.115 85.366,146.115 85.366,156.923 
+		115.542,156.923 115.542,237.706 127.663,237.706"/>
 	</g>
-</g>
 </svg>

@@ -11,7 +11,7 @@
 (defn generate-id [species circuit]
   (let [same-species (filter #(= (% :species) species) (vals circuit))
         same-count (count same-species)]
-    (str species same-count))) 
+    (keyword (str species same-count)))) 
 
 (declare function-map gen-inputs)
 
@@ -33,6 +33,7 @@
 (defn add-component [species circuit display]
   (let [new-id (generate-id species circuit)
         new-component (build/build-component species new-id)
+        asdf (println new-component)
         with-display (assoc new-component :display display)
         new-state (assoc circuit new-id with-display)
         ]
