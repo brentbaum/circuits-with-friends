@@ -79,16 +79,23 @@
 
 ;; External Interface Functions
 (defn add-component-js [species circuit display]
-  (clj->js (add-component species (js->clj circuit) (js->clj display))))
+  (let [circuit-js (js->clj circuit)
+        l1 (.log js/console circuit-js) 
+        display-js (js->clj display)
+        l2 (.log js/console display-js)]
+  (clj->js (add-component species circuit-js display-js)))
 (defn add-connection-js [src dst circuit]
+  (.log js/console (js->clj src))
+  (.log js/console (js->clj dst))
+  (.log js/console (js->clj circuit))
   (clj->js (add-connection (js->clj src) (js->clj dst) (js->clj circuit)))) 
 (defn remove-connection-js [src dst circuit]
   )
 (defn evaluate-js [id circuit]
   (clj->js (evaluate id (js->clj circuit))))
-(defn get-test-circuit-js []
+;(defn get-test-circuit-js []
   (clj->js t/t1-set))
-;; End External Interface FNs
+; End External Interface FNs
 
 (defn inner-fn  [mapping]
   (let  [state @circuit
