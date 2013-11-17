@@ -74,13 +74,13 @@
     new-circuit))
 
 (defn map-json [obj]
-  (zipmap (goog.object/getKeys obj) (goog.object/getValues obj)))
+  (js->clj obj :keywordize-keys true))
 
 ;; External Interface Functions
 (defn add-component-js [species circuit display]
   (let [circuit-map (map-json circuit)
         display-map (map-json display)]
-    (add-component [species circuit-map display-map]))
+    (add-component species circuit-map display-map))
 (defn add-connection-js [src dst circuit]
   (add-connection (map-json src) (map-json dst) (map-json circuit))) 
 (defn remove-connection-js [src dst circuit]
