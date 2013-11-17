@@ -45,7 +45,12 @@ body {
 }
 
 #chat {
-    width: 300px;
+    position: relative;
+    left: 900px;
+    top: -400px;
+    width: 166px;
+    height: 400px;
+    background: #FFFFFF;
 }
 
 #main {

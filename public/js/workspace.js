@@ -1,9 +1,5 @@
 var data = {};
 
-// source-id, source-field
-// target-id, target-index, target-field
-// entire everything
-
 setup();
 
 function draw() {
@@ -32,18 +28,18 @@ function drawComponents() {
         .enter().append("svg:g");
 
     var map = {
-        "notgate": "../svg/00-not.svg",
-        "andgate": "../svg/01-and.svg",
-        "orgate": "../svg/02-or.svg",
-        "nandgate": "../svg/03-nand.svg",
-        "norgate": "../svg/04-nor.svg",
-        "xorgate": "../svg/05-xor.svg",
-        "xnorgate": "../svg/06-xnor.svg",
-        "mux": "../svg/07-mux.svg",
-        "dflipflop": "../svg/08-dff.svg",
-        "tflipflop": "../svg/09-tff.svg",
-        "decoder": "../svg/10-decoder.svg",
-        "register": "../svg/11-register.svg"
+        "notgate": "../svg/default/00-not.svg",
+        "andgate": "../svg/default/01-and.svg",
+        "orgate": "../svg/default/02-or.svg",
+        "nandgate": "../svg/default/03-nand.svg",
+        "norgate": "../svg/default/04-nor.svg",
+        "xorgate": "../svg/default/05-xor.svg",
+        "xnorgate": "../svg/default/06-xnor.svg",
+        "mux": "../svg/default/07-mux.svg",
+        "dflipflop": "../svg/default/08-dff.svg",
+        "tflipflop": "../svg/default/09-tff.svg",
+        "decoder": "../svg/default/10-decoder.svg",
+        "register": "../svg/default/11-register.svg"
     };
 
     component.append("svg:image")
@@ -190,6 +186,7 @@ function drawPins(pinTrist) {
             return !!d["source-id"] || !!d["word-length"];
         });
 }
+
 function makeComponentPins(component) {
     var len = 5;
     var pins;
@@ -254,12 +251,8 @@ function addComponent(name) {
         y: 25,
         size: 60
     }
-    console.log(data);
-    console.log(name);
     data = circuits.core.add_component_js(name, data, display)
-    console.log(data);
     draw();
-}
 
 function makeRegisterPins(reg) {
     var r = reg.outputs.q;
