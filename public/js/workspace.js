@@ -1,3 +1,4 @@
+//var data = {};
 var data = {
  1: {
  id: 1,
@@ -32,7 +33,7 @@ var data = {
  2: {
  id: 2,
  display: {x: 150, y: 150, size: 50},
- species: "ip",
+ species: "nandgate",
  outputs: {
  q: {"word-length": 1, "num-pins":1}
  },
@@ -307,7 +308,12 @@ function makeComponentPins(component) {
 //Register is unique.
 
 function addComponent(name) {
-    data = circuits.core.add_component_js(name, data)
+    display = {
+        x: 25,
+        y: 25,
+        size: 60
+    }
+    data = circuits.core.add_component_js(name, data, display)
     draw();
 
 }
@@ -377,8 +383,6 @@ function circle(point) {
 function setup() {
     var circuitRef = new Firebase('https://circuitswithfriends.firebaseIO.com/circuits');
     circuitRef.on('value', function (snapshot) {
-        //data = snapshot.val();
-        console.log(data);
         if (!data) {
             data = {};
         }
