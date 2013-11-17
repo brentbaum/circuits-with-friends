@@ -26,6 +26,23 @@ body {
     stroke-width: 4;
 }
 
+#workspace circle.selection-background {
+    fill: red;
+    opacity: 0;
+}
+
+#workspace circle.selection-background:hover {
+    opacity: .3;
+}
+
+#workspace circle.selected {
+    opacity: .3;
+}
+
+#workspace line.selected {
+    stroke-width: 8;
+}
+
 #workspace line.pin.connected {
     stroke: steelblue;
 }
