@@ -92,9 +92,10 @@ function drawComponents() {
         "xorgate": "../svg/05-xor.svg",
         "xnorgate": "../svg/06-xnor.svg",
         "mux": "../svg/07-mux.svg",
-        "dflipflop": "../svg/08-flipflop.svg",
-        "tflipflop": "../svg/08-flipflop.svg",
-        "register": "../svg/08-flipflop.svg"
+        "dflipflop": "../svg/08-dff.svg",
+        "tflipflop": "../svg/09-tff.svg",
+        "decoder": "../svg/10-decoder.svg",
+        "register": "../svg/11-register.svg"
     };
 
     component.append("svg:image")
@@ -192,12 +193,13 @@ function makeLinks() {
 
 var lastConnected = 3;
 
-function addComponent() {
+function addComponent(species) {
     var current = lastConnected + 1;
+
     data[current] =  {
         id: 2,
         display: {x: 25, y: 25, size: 60},
-        species: "nandgate",
+        species: species,
         outputs: {
             q: {"word-length": 1, "num-pins":1}
         },
@@ -205,6 +207,7 @@ function addComponent() {
             data: [true]
         }
     };
+
 
     lastConnected = current;
 
