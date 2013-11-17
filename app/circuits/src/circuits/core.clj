@@ -75,12 +75,12 @@
     new-circuit))
 
 ;; External Interface Functions
-;(defn add-component-js [species circuit display]
-  ;(clj->js (add-component species (js->clj circuit) (js->clj display))))
-;(defn add-connection-js [src dst circuit]
-  ;(clj->js (add-connection (js->clj src) (js->clj dst) (js->clj circuit)))) 
-;(defn remove-connection-js [src dst circuit]
-  ;)
+(defn add-component-js [species circuit display]
+  (clj->js (add-component species (js->clj circuit) (js->clj display))))
+(defn add-connection-js [src dst circuit]
+  (clj->js (add-connection (js->clj src) (js->clj dst) (js->clj circuit)))) 
+(defn remove-connection-js [src dst circuit]
+  )
 ;; End External Interface FNs
 
 (defn inner-fn  [mapping]

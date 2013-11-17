@@ -22351,7 +22351,7 @@ circuits.comp_builder.build_tff = function build_tff(id) {
 circuits.comp_builder.build_register = function build_register(id) {
   var inputs = cljs.core.PersistentArrayMap.fromArray([new cljs.core.Keyword(null, "data", "data", 1016980252), cljs.core.PersistentArrayMap.fromArray([new cljs.core.Keyword(null, "word-length", "word-length", 4354454139), 8, new cljs.core.Keyword(null, "num-pins", "num-pins", 3373805271), 1, new cljs.core.Keyword(null, "connections", "connections", 2738507975), cljs.core.PersistentVector.fromArray([cljs.core.PersistentArrayMap.EMPTY], true)], true), new cljs.core.Keyword(null, "enable", "enable", 
   4010023157), cljs.core.PersistentArrayMap.fromArray([new cljs.core.Keyword(null, "word-length", "word-length", 4354454139), 1, new cljs.core.Keyword(null, "num-pins", "num-pins", 3373805271), 1, new cljs.core.Keyword(null, "connections", "connections", 2738507975), cljs.core.PersistentVector.fromArray([cljs.core.PersistentArrayMap.EMPTY], true)], true)], true);
-  var outputs = cljs.core.PersistentArrayMap.fromArray([new cljs.core.Keyword(null, "data", "data", 1016980252), cljs.core.PersistentArrayMap.fromArray([new cljs.core.Keyword(null, "word-length", "word-length", 4354454139), 8, new cljs.core.Keyword(null, "num-pins", "num-pins", 3373805271), 1], true)], true);
+  var outputs = cljs.core.PersistentArrayMap.fromArray([new cljs.core.Keyword(null, "q", "q", 1013904355), cljs.core.PersistentArrayMap.fromArray([new cljs.core.Keyword(null, "word-length", "word-length", 4354454139), 8, new cljs.core.Keyword(null, "num-pins", "num-pins", 3373805271), 1], true)], true);
   return cljs.core.PersistentArrayMap.fromArray([new cljs.core.Keyword(null, "id", "id", 1013907597), id, new cljs.core.Keyword(null, "label", "label", 1116631654), id, new cljs.core.Keyword(null, "species", "species", 3300406446), "register", new cljs.core.Keyword(null, "inputs", "inputs", 4125005147), inputs, new cljs.core.Keyword(null, "outputs", "outputs", 4202756868), outputs, new cljs.core.Keyword(null, "state", "state", 1123661827), cljs.core.PersistentArrayMap.fromArray([new cljs.core.Keyword(null, 
   "data", "data", 1016980252), cljs.core.PersistentVector.fromArray([false], true)], true)], true)
 };
@@ -22526,7 +22526,7 @@ circuits.core.generate_id = function generate_id(species, circuit) {
     return cljs.core._EQ_.call(null, p1__4825_SHARP_.call(null, new cljs.core.Keyword(null, "species", "species", 3300406446)), species)
   }, cljs.core.vals.call(null, circuit));
   var same_count = cljs.core.count.call(null, same_species);
-  return[cljs.core.str(species), cljs.core.str(same_count)].join("")
+  return cljs.core.keyword.call(null, [cljs.core.str(species), cljs.core.str(same_count)].join(""))
 };
 circuits.core.evaluate_component = function evaluate_component(component) {
   var component_type = component.call(null, new cljs.core.Keyword(null, "species", "species", 3300406446));
@@ -22547,6 +22547,7 @@ circuits.core.evaluate = function evaluate(id, state) {
 circuits.core.add_component = function add_component(species, circuit, display) {
   var new_id = circuits.core.generate_id.call(null, species, circuit);
   var new_component = circuits.comp_builder.build_component.call(null, species, new_id);
+  var asdf = cljs.core.println.call(null, new_component);
   var with_display = cljs.core.assoc.call(null, new_component, new cljs.core.Keyword(null, "display", "display", 2685668404), display);
   var new_state = cljs.core.assoc.call(null, circuit, new_id, with_display);
   return new_state

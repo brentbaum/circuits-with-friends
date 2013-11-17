@@ -100,7 +100,7 @@
                 :enable {:word-length 1
                          :num-pins 1
                          :connections [{}]}}
-        outputs {:data {:word-length 8
+        outputs {:q {:word-length 8
                         :num-pins 1}}]
     {:id id :label id :species "register"
      :inputs inputs :outputs outputs :state {:data [false]}}))
