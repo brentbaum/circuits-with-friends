@@ -91,10 +91,10 @@ function drawComponents() {
         .call(d3.behavior.drag().on("drag", move))
         .on("click", selectComponent);
 
-    component.data(function(d) {
-        if(d.species == "mux")
+    /*component.data(function(d) {
+        if(d.type == "mux")
             return muxPins(d);
-    })
+    })*/
 }
 
 function muxPins(mux) {
@@ -216,7 +216,6 @@ function selectComponent() {
 
         currentSelection = selectTarget.id;
     }, 10);
-
 }
 
 function setup() {
@@ -224,6 +223,9 @@ function setup() {
     circuitRef.on('value', function(snapshot) {
     //console.log(snapshot.val());
         data = snapshot.val();
+        if(!data) {
+            data = {};
+        }
         drawComponents();
         drawLines();
     });
