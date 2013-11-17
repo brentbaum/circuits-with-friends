@@ -22547,7 +22547,6 @@ circuits.core.evaluate = function evaluate(id, state) {
 circuits.core.add_component = function add_component(species, circuit, display) {
   var new_id = circuits.core.generate_id.call(null, species, circuit);
   var new_component = circuits.comp_builder.build_component.call(null, species, new_id);
-  var asdf = cljs.core.println.call(null, new_component);
   var with_display = cljs.core.assoc.call(null, new_component, new cljs.core.Keyword(null, "display", "display", 2685668404), display);
   var new_state = cljs.core.assoc.call(null, circuit, new_id, with_display);
   return new_state
