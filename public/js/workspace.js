@@ -3,7 +3,7 @@ var data = {
     1: {
         id: 1,
         species: "mux",
-        display: {x: 250, y: 150, size: 50},
+        display: {x: 250, y: 150, size: 60},
         outputs: {
             q: {wordLength : 1, "num-pins": 2}
         },
@@ -32,8 +32,8 @@ var data = {
 
     2: {
         id: 2,
-        display: {x: 150, y: 150, size: 50},
-        species: "ip",
+        display: {x: 150, y: 150, size: 60},
+        species: "xnorgate",
         outputs: {
             q: {"word-length": 1, "num-pins":1}
         },
@@ -43,8 +43,8 @@ var data = {
     },
     3: {
         id: 3,
-        species: "flipflop",
-        display: {x: 350, y: 150, size: 50},
+        species: "dflipflop",
+        display: {x: 350, y: 150, size: 60},
         outputs: {
             q: {"word-length": 1, "num-pins": 1},
             qbar: {"word-length": 1, "num-pins": 1}
@@ -69,32 +69,42 @@ var data = {
             data: [false]
         }
     }
-}*/
+} // */
 var width = 500;
 var height = 500;
 
 setup();
 
 function drawComponents() {
-    removeComponent("rect");
+    removeComponent("image");
 
     var component = d3.select("#workspace")
         .selectAll("g.component")
         .data(d3.values(data))
         .enter().append("svg:g");
 
-    component.append("svg:rect").attr("class", "component")
-        .attr("width", function(d) {return d.display.size})
-        .attr("height", function(d) {return d.display.size})
-        .attr("x", function(d) {return d.display.x})
-        .attr("y", function(d) {return d.display.y})
+    var map = {
+        "notgate": "../svg/00-not.svg",
+        "andgate": "../svg/01-and.svg",
+        "orgate": "../svg/02-or.svg",
+        "nandgate": "../svg/03-nand.svg",
+        "norgate": "../svg/04-nor.svg",
+        "xorgate": "../svg/05-xor.svg",
+        "xnorgate": "../svg/06-xnor.svg",
+        "mux": "../svg/07-mux.svg",
+        "dflipflop": "../svg/08-flipflop.svg",
+        "tflipflop": "../svg/08-flipflop.svg",
+        "register": "../svg/08-flipflop.svg"
+    };
+
+    component.append("svg:image")
+        .attr("xlink:href", function(d){return map[d.species]})
+        .attr("width", function(d){return d.display.size;})
+        .attr("height", function(d){return d.display.size;})
+        .attr("x", function(d){return d.display.x;})
+        .attr("y", function(d){return d.display.y;})
         .call(d3.behavior.drag().on("drag", move))
         .on("click", selectComponent);
-
-    /*component.data(function(d) {
-        if(d.type == "mux")
-            return muxPins(d);
-    })*/
 }
 
 function muxPins(mux) {
@@ -186,8 +196,8 @@ function addComponent() {
     var current = lastConnected + 1;
     data[current] =  {
         id: 2,
-        display: {x: 150, y: 150, size: 50},
-        species: "ip",
+        display: {x: 25, y: 25, size: 60},
+        species: "nandgate",
         outputs: {
             q: {"word-length": 1, "num-pins":1}
         },
@@ -220,8 +230,8 @@ function selectComponent() {
 
 function setup() {
     var circuitRef = new Firebase('https://circuitswithfriends.firebaseIO.com/');
+    //circuitRef.set(data);
     circuitRef.on('value', function(snapshot) {
-    //console.log(snapshot.val());
         data = snapshot.val();
         if(!data) {
             data = {};
@@ -230,8 +240,9 @@ function setup() {
         drawLines();
     });
     d3.select("#workspace-container").on("mouseup", function() {
-       circuitRef.set(data);
+        circuitRef.set(data);
     });
+
     d3.select("#workspace-container").on("click", function() {
         if(currentSelection != -1) {
             d3.select(".selected").classed("selected", false);
@@ -239,6 +250,3 @@ function setup() {
         }
     });
 }
-
-//Spec
-
