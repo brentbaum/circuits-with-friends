@@ -8,10 +8,13 @@
   (reset! circuit component-map))
 
 (defn clear-state [] (reset! circuit {}))
-(defn generate-id [species circuit]
-  (let [component-count (count circuit)]
-    (inc component-count))) 
-
+;(defn generate-id [species circuit]
+  ;(let [component-count (count circuit)]
+    ;(inc component-count))) 
+(defn generate-id  [species circuit]
+    (let  [same-species  (filter #(=  (% :species) species)  (vals circuit))
+                   same-count  (count same-species)]
+          (keyword  (str species same-count))))
 (declare function-map gen-inputs)
 
 (defn evaluate-component  [component]
