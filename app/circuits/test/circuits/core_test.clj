@@ -26,7 +26,7 @@
 (expect {:q [false]} ((evaluate :not0 t/components) :result))
 
 ;(expect {} (((add-component "mux" t/components {}) :mux2) :state))
-;(expect {} (((add-component "xorgate" {} {}) :xorgate0) :state))
+(expect {} (((add-component "xorgate" {} {}) :xorgate0) :state))
 (expect {} ((((add-connection {:id :ip3 :field :q}
                              {:id :mux0 :field :data :index 0}
                              t/components) :mux0) :inputs) :data))
