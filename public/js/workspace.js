@@ -133,9 +133,6 @@ function drawLinks(links) {
         .attr("cy", function (d) {
             return d.target.y1;
         })
-        .on("click", function (d) {
-            return selectPin(d.target)
-        });
 
     var c2 = connection
         .append("svg:circle")
@@ -146,27 +143,30 @@ function drawLinks(links) {
         .attr("cy", function (d) {
             return d.source.y1;
         })
-        .on("click", function (d) {
-            return selectPin(d.source)
-        });
+
 }
 
 var selectedPin;
 
 function selectPin(pin) {
-    if (!selectedPin) {
+    if(pin === selectedPin)
+        selectedPin = null;
+
+    else if (!selectedPin) {
         selectedPin = pin;
-        return;
     }
-    if (!!selectedPin.field && !pin.field) {
+    else if (!!selectedPin.field && !pin.field) {
         addConnection(pin, selectedPin);
     }
     else if (!!pin.field && !selectedPin.field)
-        addConnection(pin, selectedPin);
+        addConnection(selectedPin, pin);
+
+    console.log(selectedPin);
 }
 
 function addConnection(target, source) {
-    console.log(target, source);
+    console.log("Connecting",source,"to",target);
+    data = circuits.core.add_connection_js(source, target, data);
     selectedPin = null;
 }
 
@@ -180,11 +180,24 @@ function drawPins(pinTrist) {
     var p = d3.select("#workspace")
         .selectAll("g.p")
         .data(pinTrist)
-        .enter().append("svg:g");
+        .enter();
     line(p).classed("pin", true)
         .classed("connected", function (d) {
-            return !!d["source-id"] || !!d["word-length"];
+            return !!d["source-id"];
         });
+    p.append("circle")
+        .attr("cx", function(d) {
+            return (d.x1+ d.x2)/2;
+        })
+        .attr("cy", function(d) {
+            return (d.y1+ d.y2)/2;
+        })
+        .attr("r", 10)
+        .classed("selection-background", true)
+        .on("click", function (d) {
+           selectPin(d);
+        })
+
 }
 
 function makeComponentPins(component) {
@@ -196,7 +209,7 @@ function makeComponentPins(component) {
         pins = makeIpPins(component);
     else if (component.species == "dflipflop" || component.species == "tflipflop")
         pins = makeFlipFlopPins(component);
-    else if ( component.species == "orgate" || component.species == "andgate"
+    else if (component.species == "orgate" || component.species == "andgate"
         || component.species == "nandgate" || component.species == "xorgate"
         || component.species == "norgate"
         || component.species == "xnorgate")
@@ -207,7 +220,6 @@ function makeComponentPins(component) {
         pins = makeNotPins(component);
     else if (component.species == "register")
         pins = makeRegisterPins(component);
-    console.log(pins, component.species);
 
     var leftDistance = component.display.size / (pins.left.length * 2 );
     for (var index = 0; index < pins.left.length; index++) {
@@ -253,6 +265,7 @@ function addComponent(name) {
     }
     data = circuits.core.add_component_js(name, data, display)
     draw();
+}
 
 function makeRegisterPins(reg) {
     var r = reg.outputs.q;
@@ -262,7 +275,7 @@ function makeRegisterPins(reg) {
 function makeLogicGatePins(gate) {
     var r = gate.outputs.q;
     r.field = "q";
-    return {left: gate.inputs.data.connections, bottom: {} ,right: [r]};
+    return {left: gate.inputs.data.connections, bottom: {}, right: [r]};
 }
 
 function makeDecoderPins(dec) {
@@ -291,7 +304,7 @@ function makeIpPins(ip) {
 };
 
 function makeFlipFlopPins(ff) {
-    var r = [ff.outputs.q,ff.outputs["q-bar"]];
+    var r = [ff.outputs.q, ff.outputs["q-bar"]];
     r[0].field = "q";
     r[1].field = "qbar";
     return {left: ff.inputs.data.connections, bottom: ff.inputs.enable.connections, right: r};
