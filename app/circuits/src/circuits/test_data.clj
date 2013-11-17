@@ -7,7 +7,7 @@
                  :inputs  {:data  {
                                    :numPins 2
                                    :wordLength 1
-                                   :connection-mappings  [
+                                   :connections  [
                                                           {:source-id :ip0
                                                            :source-field :q}
                                                           {:source-id :ip1
@@ -22,7 +22,7 @@
              :inputs  {:data  {
                                :numPins 4
                                :wordLength 1
-                               :connection-mappings  [
+                               :connections  [
                                                       {:source-id :ip0
                                                        :source-field :q}
                                                       {:source-id :ip1
@@ -35,7 +35,7 @@
                        :control  {
                                   :numPins 1
                                   :wordLength 2
-                                  :connection-mappings  [
+                                  :connections  [
                                                          {:source-id :ip4
                                                           :source-field :q}]}}
              :outputs  {
@@ -47,7 +47,7 @@
                 :inputs  {:data  {
                                   :numPins 4
                                   :wordLength 8
-                                  :connection-mappings  [
+                                  :connections  [
                                                          {:source-id :ip5
                                                           :source-field :q}
                                                          {:source-id :ip6
@@ -60,7 +60,7 @@
                           :control  {
                                      :numPins 1
                                      :wordLength 2
-                                     :connection-mappings  [
+                                     :connections  [
                                                             {:source-id :ip9
                                                              :source-field :q}]}}
                 :outputs  {
@@ -123,11 +123,11 @@
                               false false]}
                :inputs {:enable {:num-pins 1
                                  :word-length 1
-                                 :connection-mappings [{:source-id :ip42
+                                 :connections [{:source-id :ip42
                                                         :source-field :q}]}
                         :data {:num-pins 1
                                :word-length 8
-                               :connection-mappings [{:source-id :ip14
+                               :connections [{:source-id :ip14
                                                       :source-field :q}]}}
                :outputs {:data {:num-pins 1
                                 :word-length 8}}})  
@@ -151,11 +151,11 @@
                   :state {:data [false]}
                   :inputs {:data {:num-pins 1
                                   :word-length 1
-                                  :connection-mappings [{:source-id :ip0
+                                  :connections [{:source-id :ip0
                                                          :source-field :q}]}
                            :enable {:num-pins 1
                                     :word-length 1
-                                    :connection-mappings [{:source-id :ip42
+                                    :connections [{:source-id :ip42
                                                            :source-field :q}]}}
                   :outputs {:q {:num-pins 1
                                 :word-length 1}
@@ -169,7 +169,7 @@
                :state {}
                :inputs {:data {:num-pins 1
                                :word-length 1
-                               :connection-mappings [{:source-id :ip0
+                               :connections [{:source-id :ip0
                                                       :source-field :q}]}}
                :outputs {:data {:num-pins 1
                                 :word-length 1}}})

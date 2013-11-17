@@ -44,7 +44,7 @@
   (let [dst-component (circuit (dst :id))
         dst-inputs (dst-component :inputs)
         dst-field (dst-inputs (dst :field)) 
-        dst-vector (dst-field :connection-mappings)
+        dst-vector (dst-field :connections)
         dst-index (dst :index)
         new-connection {:source-id (src :id)
                         :source-field (src :field)}
@@ -53,7 +53,7 @@
                                        (dst :id) 
                                        :inputs 
                                        (dst :field) 
-                                       :connection-mappings] 
+                                       :connections] 
                               new-invec)]
     new-circuit))
 ;; End External Interface FNs
@@ -66,7 +66,7 @@
          result (the-outputs (mapping :source-field))]
     result))
 (defn gen-input-field  [kvpair]
-  {(key kvpair)  (map inner-fn  ((val kvpair) :connection-mappings))})
+  {(key kvpair)  (map inner-fn  ((val kvpair) :connections))})
 (defn gen-inputs  [component]
   (let  [input-maps  (component :inputs)
          input-fields  (map gen-input-field input-maps)

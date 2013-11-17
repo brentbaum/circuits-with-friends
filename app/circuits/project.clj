@@ -11,6 +11,7 @@
               :crossovers [circuits.core
                            circuits.validate
                            circuits.comp-logic
+                           circuits.comp-builder
                            circuits.test-data]
               :crossover-path "src-cljs/"
               :crossover-jar false} 

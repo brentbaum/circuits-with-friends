@@ -29,4 +29,4 @@
 (expect {} (((add-component "xorgate" {}) "xorgate0") :state))
 (expect {} ((((add-connection {:id :ip3 :field :q}
                              {:id :mux0 :field :data :index 0}
-                             t/components) :mux0) :inputs) :data))
+                             t/components) :mux0) :inputs) :connections))
