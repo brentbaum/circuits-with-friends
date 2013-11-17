@@ -80,6 +80,8 @@
   (clj->js (add-connection (js->clj src) (js->clj dst) (js->clj circuit)))) 
 (defn remove-connection-js [src dst circuit]
   )
+(defn evaluate-js [id circuit]
+  (clj->js (evaluate id (js->clj circuit))))
 (defn get-test-circuit-js []
   (clj->js t/t1-set))
 ;; End External Interface FNs
@@ -100,21 +102,20 @@
                   (apply conj input-fields) 
                   (first input-fields))]
     result))
-(> 1 (count [1 2]))
-(count [1 2])
-; for collections with only 1 value
+
+;; for collections with only 1 value
 ;; Eval functions for every component
 
 (defn and-eval  [andgate]
-  (let [inputs (gen-inputs andgate)] 
-    {:q (logic/do-and inputs)}))
+  (let [inputs (gen-inputs andgate)]
+    {:q (logic/do-and (inputs :data))}))
 (defn nand-eval [nandgate]
   (let [and-value (and-eval nandgate)
         negated (not and-value)]
     {:q negated}))
 (defn or-eval [orgate]
   (let [inputs (gen-inputs orgate)] 
-    (logic/do-or inputs)))
+    {:q (logic/do-or (inputs :data))}))
 (defn nor-eval [norgate]
   (let [or-value (or-eval norgate)
         negated (not or-value)]
@@ -122,15 +123,16 @@
 
 (defn xor-eval [xorgate]
   (let [inputs (gen-inputs xorgate)]
-    {:q (logic/do-xor inputs)}))
+    {:q (logic/do-xor (inputs :data))}))
 (defn xnor-eval [xnorgate]
   (let [xor-value (xor-eval xnorgate)
         negated (not xor-value)]
     {:q negated}))
 
+;; TODO consider enable
 (defn decoder-eval [decoder]
   (let [input (gen-inputs decoder)]
-    {:q (logic/do-decode input)}))
+    {:q (logic/do-decode (input :data))}))
 
 (defn mux-eval  [mux]
   (let  [inputs  (gen-inputs mux)
@@ -180,7 +182,8 @@
          data  (state :data)]
     {:q data}))
 (defn outputpin-eval [outputpin]
-  (let [inputs (gen-inputs outputpin)]
+  (let [inputs (gen-inputs outputpin)
+        asdf (println inputs)]
     inputs))
 
 (def function-map  {"notgate" not-eval

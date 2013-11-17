@@ -34,4 +34,5 @@
                               ;{:id :mux0 :field :control :index 0}
                               ;t/components) :mux0))
 ;(expect {:x 40 :y 40 :size 70} (add-component "mux" {} {:x 40 :y 40 :size 70}))
-;(expect {} (evaluate 3 t/t1-set))
+(expect {:q [true]} ((evaluate :and0 t/and-set) :result))
+(expect {:q [true]} ((evaluate :or0 t/or-set) :result))
