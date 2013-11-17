@@ -133,6 +133,7 @@ function move(){
     this.__data__.display.x = newX;
     this.__data__.display.y = newY;
 
+    removeComponent("line");
     drawLines();
     drawPins();
 };
@@ -268,9 +269,7 @@ function addComponent() {
 
     lastConnected = current;
 
-    drawComponents();
-    drawLines();
-    drawPins();
+    draw();
     //circuitRef.set(data);
 }
 
@@ -297,9 +296,7 @@ function setup() {
         if(!data) {
             data = {};
         }
-        drawComponents();
-        drawLines();
-        drawPins();
+        draw();
     });*/
     /*d3.select("#workspace-container").on("mouseup", function() {
        circuitRef.set(data);
@@ -310,8 +307,6 @@ function setup() {
             currentSelection = -1;
         }
     });
-    drawComponents();
-    drawLines();
-    drawPins();
+    draw();
 }
 
