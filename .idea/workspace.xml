@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="34feec7a-fa64-44ae-b1d4-0a01fa16a2a7" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/css/main.css" afterPath="$PROJECT_DIR$/public/css/main.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/simple.html" afterPath="$PROJECT_DIR$/public/simple.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/workspace.js" afterPath="$PROJECT_DIR$/public/js/workspace.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -31,7 +29,7 @@
       <file leaf-file-name="main.css" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/css/main.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="4" column="0" selection-start="58" selection-end="58" vertical-scroll-proportion="0.0" vertical-offset="159" max-vertical-offset="810">
+            <state line="23" column="17" selection-start="353" selection-end="353" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="810">
               <folding />
             </state>
           </provider>
@@ -40,7 +38,7 @@
       <file leaf-file-name="workspace.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/js/workspace.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="136" column="0" selection-start="3426" selection-end="3426" vertical-scroll-proportion="0.875576" vertical-offset="1470" max-vertical-offset="4770">
+            <state line="262" column="18" selection-start="7252" selection-end="7252" vertical-scroll-proportion="0.2857143" vertical-offset="3744" max-vertical-offset="4950">
               <folding />
             </state>
           </provider>
@@ -75,6 +73,7 @@
     <option name="changedFiles">
       <list>
         <option value="$PROJECT_DIR$/public/simple.html" />
+        <option value="$PROJECT_DIR$/public/css/and.svg" />
         <option value="$PROJECT_DIR$/public/css/main.css" />
         <option value="$PROJECT_DIR$/public/js/workspace.js" />
       </list>
@@ -383,7 +382,11 @@
       <created>1384665972105</created>
       <updated>1384665972105</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Midway commit.&#10;">
+      <created>1384666853729</created>
+      <updated>1384666853729</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -422,19 +425,15 @@
     <MESSAGE value="Fix null reference when database empty, merge firebase to master." />
     <MESSAGE value="Midway commit. No errors, but no output. That's not terrible, right?" />
     <MESSAGE value="Pins work! Refactoring next." />
-    <option name="LAST_COMMIT_MESSAGE" value="Pins work! Refactoring next." />
+    <MESSAGE value="Midway commit.&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="Midway commit.&#10;" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <option name="time" value="2" />
+    </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/public/css/main.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="0" selection-start="58" selection-end="58" vertical-scroll-proportion="0.0" vertical-offset="159" max-vertical-offset="810">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/simple.html">
       <provider selected="true" editor-type-id="text-editor">
         <state line="10" column="0" selection-start="362" selection-end="362" vertical-scroll-proportion="-2.0" vertical-offset="0" max-vertical-offset="435">
@@ -442,9 +441,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/public/css/main.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="17" selection-start="353" selection-end="353" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="810">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/public/js/workspace.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="136" column="0" selection-start="3426" selection-end="3426" vertical-scroll-proportion="0.875576" vertical-offset="1470" max-vertical-offset="4770">
+        <state line="262" column="18" selection-start="7252" selection-end="7252" vertical-scroll-proportion="0.2857143" vertical-offset="3744" max-vertical-offset="4950">
           <folding />
         </state>
       </provider>

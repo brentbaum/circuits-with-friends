@@ -53,7 +53,7 @@ var data = {
                 "num-inputs" : 4,
                 "word-length": 1,
                 connections: [
-                    {"source-id": 1, "source-field": "zero?"}
+                    {"source-id": 1, "source-field": "q"}
                 ]
             },
             enable: {
@@ -69,10 +69,31 @@ var data = {
         }
     }
 }
+
+// source-id, source-field
+// target-id, target-index, target-field
+// entire everything
+
+
 var width = 500;
 var height = 500;
 
 setup();
+
+function draw() {
+    clearCanvas();
+    drawComponents();
+    var pins = makePins();
+    var links = makeLinks(pins);
+    drawPins(pins);
+    drawLinks(links);
+}
+
+function clearCanvas() {
+    removeComponent("rect");
+    removeComponent("circle");
+    removeComponent("line");
+}
 
 function drawComponents() {
     var component = d3.select("#workspace")
@@ -89,34 +110,10 @@ function drawComponents() {
         .on("click", selectComponent);
 }
 
-function clearCanvas() {
-    removeComponent("rect");
-    removeComponent("circle");
-    removeComponent("line");
-}
-
 function removeComponent(type) {
     d3.select("#workspace")
         .selectAll(type)
         .remove();
-}
-
-function drawLines() {
-    var links = makeLinks();
-
-    var connection = d3.select("#workspace")
-        .selectAll("line.link")
-        .data(links);
-
-    line(connection);
-}
-
-function line(container) {
-    return container.append("svg:line")
-        .attr("x1", function(d) {return d.x1;})
-        .attr("y1", function(d) {return d.y1;})
-        .attr("x2", function(d) {return d.x2;})
-        .attr("y2", function(d) {return d.y2;});
 }
 
 function move(){
@@ -134,43 +131,48 @@ function move(){
     this.__data__.display.y = newY;
 
     removeComponent("line");
-    drawLines();
-    drawPins();
+    removeComponent("circle")
+    var pins = makePins();
+    var links = makeLinks(pins);
+    drawLinks(links);
+    drawPins(pins);
 };
 
-function makeLinks() {
+function makeLinks(pins) {
     var links = [];
-    d3.values(data).forEach(function (target) {
-        d3.values(target.inputs).forEach(function (input) {
-            input.connections.forEach(function(pin) {
-                if(!!pin.source) {
-                    var source = data[pin["source-id"]];
-                    links.push({
-                            x1: target.display.x + target.display.size/2, y1: target.display.y + target.display.size/2,
-                            x2: source.display.x + source.display.size/2, y2: source.display.y + source.display.size/2
-                    });
-                }
-            });
-        })
-    });
+    pins.forEach(function(pin) {
+        if(!!pin["source-id"]) {
+            var source = findSource(pins, pin["source-id"], pin["source-field"])
+            links.push({
+                x1: pin.x1, y1: pin.y1, y2: source.y1, x2: source.x1
+            })
+        }
+    })
     return links;
 }
 
-function draw() {
-    clearCanvas();
-    drawComponents();
-    drawLinks();
-    drawPins();
+function findSource(pins, id, field) {
+    var result;
+    pins.forEach(function(pin) {
+        if(!!pin.field && pin.parent === id && pin.field === field)
+            result = pin;
+    })
+    return result;
 }
 
-function drawLinks() {
-    var c1 = connection.enter()
+function drawLinks(links) {
+    var connection = d3.select("#workspace")
+        .selectAll("line.link")
+        .data(links).enter();
+
+    line(connection);
+    var c1 = connection
         .append("svg:circle")
         .attr("r", 3)
         .attr("cx", function(d) {return d.x1;})
         .attr("cy", function(d) {return d.y1;})
 
-    var c2 = connection.enter()
+    var c2 = connection
         .append("svg:circle")
         .attr("r", 3)
         .attr("cx", function(d) {return d.x2;})
@@ -178,23 +180,20 @@ function drawLinks() {
 }
 
 function makePins() {
-    return d3.values(data).map(function(component) {
-        return makeComponentPins(component);
-    });
+    return d3.values(data).reduce(function(prev,component) {
+        return prev.concat(makeComponentPins(component));
+    }, []);
 }
 
-function drawPins() {
-    var pinTrist = makePins();
-    pinTrist.forEach(function(pins) {
-        var p = d3.select("#workspace")
-            .selectAll("g.p")
-            .data(pins)
-            .enter().append("svg:g");
-        line(p).classed("pin", true)
-            .classed("connected", function(d) {
-                return !!d["source-id"];
-            });
-    })
+function drawPins(pinTrist) {
+    var p = d3.select("#workspace")
+        .selectAll("g.p")
+        .data(pinTrist)
+        .enter().append("svg:g");
+    line(p).classed("pin", true)
+        .classed("connected", function(d) {
+            return !!d["source-id"] || !!d["word-length"];
+        });
 }
 
 function makeComponentPins(component) {
@@ -229,6 +228,7 @@ function makeComponentPins(component) {
         pins.right[index].x2 = component.display.x + component.display.size - len;
         pins.right[index].x1 = pins.right[index].x2 + 2*len;
         pins.right[index].parent = component.id;
+
     }
 
     return Object.keys(pins).reduce(function(array, side) {
@@ -237,17 +237,21 @@ function makeComponentPins(component) {
 }
 
 function makeMuxPins(mux) {
-    return {left: mux.inputs.data.connections, bottom: mux.inputs.control.connections, right: [mux.outputs.q]};
+    var r = mux.outputs.q;
+    r.field = "q";
+    return {left: mux.inputs.data.connections, bottom: mux.inputs.control.connections, right: [r]};
 }
 
 function makeIpPins(ip) {
-    return {left: [], bottom: [], right: [ip.outputs.q]};
+    var r = ip.outputs.q;
+    r.field = "q";
+    return {left: [], bottom: [], right: [r]};
 };
 
 function makeFlipFlopPins(ff) {
     var r = [ff.outputs.q,ff.outputs.qbar];
-    r[0].type = "q";
-    r[1].type = "qbar";
+    r[0].field = "q";
+    r[1].field = "qbar";
     return {left: ff.inputs.data.connections, bottom: ff.inputs.enable.connections, right: r};
 };
 
@@ -256,7 +260,7 @@ var lastConnected = 3;
 function addComponent() {
     var current = lastConnected + 1;
     data[current] =  {
-        id: 2,
+        id: current,
         display: {x: 150, y: 150, size: 50},
         species: "ip",
         outputs: {
@@ -286,6 +290,14 @@ function selectComponent() {
 
         currentSelection = selectTarget.id;
     }, 10);
+}
+
+function line(container) {
+    return container.append("svg:line")
+        .attr("x1", function(d) {return d.x1;})
+        .attr("y1", function(d) {return d.y1;})
+        .attr("x2", function(d) {return d.x2;})
+        .attr("y2", function(d) {return d.y2;});
 }
 
 function setup() {
