@@ -190,7 +190,12 @@
                   :ip14 eight-bit-pin
                   :not0 not-gate})
 
-
-(def stock-mux (build/build-component "mux" {}))
-(def stock-andgate (build/build-component "andgate" {}))
-(def stock-nandgate (build/build-component "nandgate" {}))
+(def t1-outputpin {:id 3 :species "outputpin"
+                   :input {:data {:word-length 1
+                                  :num-pins 1
+                                  :connections [{:source-id :and0
+                                                 :source-field :q}]}}
+                   :output {:q {:word-length 1
+                                :num-pins 1}}})
+(def t1-set {:ip0 input-pin-0 :ip1 input-pin-1
+             :and0 myandgate 3 t1-outputpin})
