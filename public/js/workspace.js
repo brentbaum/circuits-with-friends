@@ -93,11 +93,21 @@ function drawComponents() {
         .attr("y", function(d) {return d.display.y})
         .call(d3.behavior.drag().on("drag", move))
         .on("click", selectComponent);
-/*
+
     component.data(function(d) {
-        var pins = [];
-        pins.forEach()
-    })*/
+        if(d.species == "mux")
+            return muxPins(d);
+    })
+}
+
+function muxPins(mux) {
+    pins = {left: [], bottom: []};
+    mux.data(function(d) {
+        dataPins = d.inputs.data;
+        for(var x = 0; x < dataPins.length; x++) {
+            pins.left.push(dataPins[x]);
+        }
+    });
 }
 
 function removeComponent(type) {
@@ -116,12 +126,7 @@ function drawLines() {
         .selectAll("line.link")
         .data(links);
 
-    var line = connection.enter()
-        .append("svg:line")
-        .attr("x1", function(d) {return d[0].x;})
-        .attr("y1", function(d) {return d[0].y;})
-        .attr("x2", function(d) {return d[1].x;})
-        .attr("y2", function(d) {return d[1].y;});
+    line(connection);
 
     var c1 = connection.enter()
         .append("svg:circle")
@@ -134,6 +139,14 @@ function drawLines() {
         .attr("r", 3)
         .attr("cx", function(d) {return d[1].x;})
         .attr("cy", function(d) {return d[1].y;})
+}
+
+function line(container) {
+    container.append("svg:line")
+        .attr("x1", function(d) {return d[0].x;})
+        .attr("y1", function(d) {return d[0].y;})
+        .attr("x2", function(d) {return d[1].x;})
+        .attr("y2", function(d) {return d[1].y;});
 }
 
 function move(){
@@ -174,11 +187,18 @@ var lastConnected = 3;
 
 function addComponent() {
     var current = lastConnected + 1;
-    data[current] = {
-        display: {x: 250, y: 200, size: 50},
-        outConnect: []
+    data[current] =  {
+        id: 2,
+        display: {x: 150, y: 150, size: 50},
+        species: "ip",
+        outputs: {
+            q: {"word-length": 1, "num-pins":1}
+        },
+        state: {
+            data: [true]
+        }
     };
-    data[lastConnected].outConnect.push(current);
+
     lastConnected = current;
 
     drawComponents();
@@ -203,7 +223,6 @@ function selectComponent() {
 
 function setup() {
     d3.select("#workspace-container").on("click", function() {
-        console.log("click!");
         if(currentSelection != -1) {
             d3.select(".selected").classed("selected", false);
             currentSelection = -1;
