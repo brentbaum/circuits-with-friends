@@ -43,6 +43,15 @@ body {
     display: block;
     margin: 0 auto;
 }
+
+#chat {
+    width: 300px;
+}
+
+#main {
+    width: 800px;
+}
+
 html {
     background: #444444;
 }

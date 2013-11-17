@@ -2,7 +2,7 @@
     1: {
         id: 1,
         species: "mux",
-        display: {x: 250, y: 150, size: 50},
+        display: {x: 250, y: 150, size: 60},
         outputs: {
             q: {wordLength : 1, "num-pins": 2}
         },
@@ -42,8 +42,8 @@
     },
     3: {
         id: 3,
-        species: "flipflop",
-        display: {x: 350, y: 150, size: 50},
+        species: "dflipflop",
+        display: {x: 350, y: 150, size: 60},
         outputs: {
             q: {"word-length": 1, "num-pins": 1},
             qbar: {"word-length": 1, "num-pins": 1}
@@ -93,20 +93,47 @@ function clearCanvas() {
     removeComponent("circle");
     removeComponent("line");
 }
-
 function drawComponents() {
+    removeComponent("image");
+
     var component = d3.select("#workspace")
         .selectAll("g.component")
         .data(d3.values(data))
         .enter().append("svg:g");
 
-    component.append("svg:rect").attr("class", "component")
-        .attr("width", function(d) {return d.display.size})
-        .attr("height", function(d) {return d.display.size})
-        .attr("x", function(d) {return d.display.x})
-        .attr("y", function(d) {return d.display.y})
+    var map = {
+        "notgate": "../svg/00-not.svg",
+        "andgate": "../svg/01-and.svg",
+        "orgate": "../svg/02-or.svg",
+        "nandgate": "../svg/03-nand.svg",
+        "norgate": "../svg/04-nor.svg",
+        "xorgate": "../svg/05-xor.svg",
+        "xnorgate": "../svg/06-xnor.svg",
+        "mux": "../svg/07-mux.svg",
+        "dflipflop": "../svg/08-dff.svg",
+        "tflipflop": "../svg/09-tff.svg",
+        "decoder": "../svg/10-decoder.svg",
+        "register": "../svg/11-register.svg"
+    };
+
+    component.append("svg:image")
+        .attr("xlink:href", function(d){return map[d.species]})
+        .attr("width", function(d){return d.display.size;})
+        .attr("height", function(d){return d.display.size;})
+        .attr("x", function(d){return d.display.x;})
+        .attr("y", function(d){return d.display.y;})
         .call(d3.behavior.drag().on("drag", move))
         .on("click", selectComponent);
+}
+
+function muxPins(mux) {
+    pins = {left: [], bottom: []};
+    mux.data(function(d) {
+        dataPins = d.inputs.data;
+        for(var x = 0; x < dataPins.length; x++) {
+            pins.left.push(dataPins[x]);
+        }
+    });
 }
 
 function removeComponent(type) {
@@ -264,17 +291,21 @@ function makeComponentPins(component) {
 //FlipFlop is unique
 //Register is unique.
 
-function makeMuxPins(mux) {
-    var r = mux.outputs.q;
-    r.field = "q";
-    return {left: mux.inputs.data.connections, bottom: mux.inputs.control.connections, right: [r]};
-}
+function addComponent() {
+    var current = lastConnected + 1;
+    data[current] =  {
+        id: 2,
+        display: {x: 150, y: 150, size: 50},
+        species: "ip",
+        outputs: {
+            q: {"word-length": 1, "num-pins":1}
+        },
+        state: {
+            data: [true]
+        }
+    };
 
-function makeIpPins(ip) {
-    var r = ip.outputs.q;
-    r.field = "q";
-    return {left: [], bottom: [], right: [r]};
-};
+    lastConnected = current;
 
 function makeFlipFlopPins(ff) {
     var r = [ff.outputs.q,ff.outputs.qbar];
@@ -322,21 +353,19 @@ function circle(point) {
 }
 
 function setup() {
-    //var circuitRef = new Firebase('https://circuitswithfriends.firebaseIO.com/');
-    /*circuitRef.on('value', function(snapshot) {
-    //console.log(snapshot.val());
+    var circuitRef = new Firebase('https://circuitswithfriends.firebaseIO.com/');
+    //circuitRef.set(data);
+    circuitRef.on('value', function(snapshot) {
         data = snapshot.val();
         if(!data) {
             data = {};
         }
-        draw();
-    });*/
-    /*d3.select("#workspace-container").on("mouseup", function() {
+        drawComponents();
+        drawLines();
+    });
+    d3.select("#workspace-container").on("mouseup", function() {
        circuitRef.set(data);
-    });*/
-    data = circuits.core.add_component_js("mux", {});
-    data = circuits.core.add_component_js("andgate", data);
-    data = circuits.core.add_component_js("orgate", data);
+    });
     d3.select("#workspace-container").on("click", function() {
         if(currentSelection != -1) {
             d3.select(".selected").classed("selected", false);
@@ -346,3 +375,4 @@ function setup() {
     draw();
 }
 
+}
