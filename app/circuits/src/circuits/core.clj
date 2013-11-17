@@ -76,18 +76,18 @@
 (defn map-json [obj]
   (js->clj obj :keywordize-keys true))
 
-;; External Interface Functions
+; External Interface Functions
 (defn add-component-js [species circuit display]
   (let [circuit-map (map-json circuit)
         display-map (map-json display)]
-    (clj->js (add-component species circuit-map display-map)))
+    (clj->js (add-component species circuit-map display-map))))
 (defn add-connection-js [src dst circuit]
   (add-connection (map-json src) (map-json dst) (map-json circuit))) 
 (defn remove-connection-js [src dst circuit]
   )
 (defn evaluate-js [id circuit]
   (clj->js (evaluate id (js->clj circuit))))
-;(defn get-test-circuit-js []
+(defn get-test-circuit-js []
   (clj->js t/t1-set))
 ; End External Interface FNs
 

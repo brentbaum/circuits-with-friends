@@ -22579,24 +22579,24 @@ circuits.core.remove_connection = function remove_connection(src, dst, circuit) 
   var new_circuit = cljs.core.assoc_in.call(null, circuit, cljs.core.PersistentVector.fromArray([dst.call(null, new cljs.core.Keyword(null, "id", "id", 1013907597)), new cljs.core.Keyword(null, "inputs", "inputs", 4125005147), dst.call(null, new cljs.core.Keyword(null, "field", "field", 1111331948)), new cljs.core.Keyword(null, "connections", "connections", 2738507975)], true), new_invec);
   return new_circuit
 };
+circuits.core.map_json = function map_json(obj) {
+  return cljs.core.js__GT_clj.call(null, obj, new cljs.core.Keyword(null, "keywordize-keys", "keywordize-keys", 4191781672), true)
+};
 circuits.core.add_component_js = function add_component_js(species, circuit, display) {
-  var circuit_js_4825 = cljs.core.js__GT_clj.call(null, circuit);
-  var l1_4826 = console.log(circuit_js_4825);
-  var display_js_4827 = cljs.core.js__GT_clj.call(null, display);
-  var l2_4828 = console.log(display_js_4827);
-  cljs.core.clj__GT_js.call(null, circuits.core.add_component.call(null, species, circuit_js_4825, display_js_4827));
-  circuits.core.add_connection_js = function add_connection_js(src, dst, circuit__$1) {
-    console.log(cljs.core.js__GT_clj.call(null, src));
-    console.log(cljs.core.js__GT_clj.call(null, dst));
-    console.log(cljs.core.js__GT_clj.call(null, circuit__$1));
-    return cljs.core.clj__GT_js.call(null, circuits.core.add_connection.call(null, cljs.core.js__GT_clj.call(null, src), cljs.core.js__GT_clj.call(null, dst), cljs.core.js__GT_clj.call(null, circuit__$1)))
-  };
-  circuits.core.remove_connection_js = function remove_connection_js(src, dst, circuit__$1) {
-    return null
-  };
-  circuits.core.evaluate_js = function evaluate_js(id, circuit__$1) {
-    return cljs.core.clj__GT_js.call(null, circuits.core.evaluate.call(null, id, cljs.core.js__GT_clj.call(null, circuit__$1)))
-  };
+  var circuit_map = circuits.core.map_json.call(null, circuit);
+  var display_map = circuits.core.map_json.call(null, display);
+  return cljs.core.clj__GT_js.call(null, circuits.core.add_component.call(null, species, circuit_map, display_map))
+};
+circuits.core.add_connection_js = function add_connection_js(src, dst, circuit) {
+  return circuits.core.add_connection.call(null, circuits.core.map_json.call(null, src), circuits.core.map_json.call(null, dst), circuits.core.map_json.call(null, circuit))
+};
+circuits.core.remove_connection_js = function remove_connection_js(src, dst, circuit) {
+  return null
+};
+circuits.core.evaluate_js = function evaluate_js(id, circuit) {
+  return cljs.core.clj__GT_js.call(null, circuits.core.evaluate.call(null, id, cljs.core.js__GT_clj.call(null, circuit)))
+};
+circuits.core.get_test_circuit_js = function get_test_circuit_js() {
   return cljs.core.clj__GT_js.call(null, circuits.test_data.t1_set)
 };
 circuits.core.inner_fn = function inner_fn(mapping) {
@@ -22666,9 +22666,9 @@ circuits.core.register_eval = function register_eval(register) {
   var inputs = circuits.core.gen_inputs.call(null, register);
   var enabled = inputs.call(null, new cljs.core.Keyword(null, "enable", "enable", 4010023157));
   if(cljs.core.truth_(enabled)) {
-    var updated_state_4829 = cljs.core.assoc.call(null, state, new cljs.core.Keyword(null, "data", "data", 1016980252), cljs.core.first.call(null, inputs.call(null, new cljs.core.Keyword(null, "data", "data", 1016980252))));
-    var updated_register_4830 = cljs.core.assoc.call(null, register, new cljs.core.Keyword(null, "state", "state", 1123661827), updated_state_4829);
-    cljs.core.swap_BANG_.call(null, circuits.core.circuit, cljs.core.assoc, register.call(null, new cljs.core.Keyword(null, "id", "id", 1013907597)), updated_register_4830)
+    var updated_state_4825 = cljs.core.assoc.call(null, state, new cljs.core.Keyword(null, "data", "data", 1016980252), cljs.core.first.call(null, inputs.call(null, new cljs.core.Keyword(null, "data", "data", 1016980252))));
+    var updated_register_4826 = cljs.core.assoc.call(null, register, new cljs.core.Keyword(null, "state", "state", 1123661827), updated_state_4825);
+    cljs.core.swap_BANG_.call(null, circuits.core.circuit, cljs.core.assoc, register.call(null, new cljs.core.Keyword(null, "id", "id", 1013907597)), updated_register_4826)
   }else {
   }
   return cljs.core.PersistentArrayMap.fromArray([new cljs.core.Keyword(null, "q", "q", 1013904355), data], true)
@@ -22679,9 +22679,9 @@ circuits.core.d_flipflop_eval = function d_flipflop_eval(dff) {
   var inputs = circuits.core.gen_inputs.call(null, dff);
   var enabled = inputs.call(null, new cljs.core.Keyword(null, "enable", "enable", 4010023157));
   if(cljs.core.truth_(enabled)) {
-    var updated_state_4831 = cljs.core.assoc.call(null, state, new cljs.core.Keyword(null, "data", "data", 1016980252), cljs.core.vec.call(null, cljs.core.first.call(null, inputs.call(null, new cljs.core.Keyword(null, "data", "data", 1016980252)))));
-    var updated_dff_4832 = cljs.core.assoc.call(null, dff, new cljs.core.Keyword(null, "state", "state", 1123661827), updated_state_4831);
-    cljs.core.swap_BANG_.call(null, circuits.core.circuit, cljs.core.assoc, dff.call(null, new cljs.core.Keyword(null, "id", "id", 1013907597)), updated_dff_4832)
+    var updated_state_4827 = cljs.core.assoc.call(null, state, new cljs.core.Keyword(null, "data", "data", 1016980252), cljs.core.vec.call(null, cljs.core.first.call(null, inputs.call(null, new cljs.core.Keyword(null, "data", "data", 1016980252)))));
+    var updated_dff_4828 = cljs.core.assoc.call(null, dff, new cljs.core.Keyword(null, "state", "state", 1123661827), updated_state_4827);
+    cljs.core.swap_BANG_.call(null, circuits.core.circuit, cljs.core.assoc, dff.call(null, new cljs.core.Keyword(null, "id", "id", 1013907597)), updated_dff_4828)
   }else {
   }
   return cljs.core.PersistentArrayMap.fromArray([new cljs.core.Keyword(null, "q", "q", 1013904355), data, new cljs.core.Keyword(null, "q-bar", "q-bar", 1119700009), cljs.core.vec.call(null, cljs.core.map.call(null, cljs.core.not, data))], true)
@@ -22692,9 +22692,9 @@ circuits.core.t_flipflop_eval = function t_flipflop_eval(tff) {
   var inputs = circuits.core.gen_inputs.call(null, tff);
   var enabled = inputs.call(null, new cljs.core.Keyword(null, "enable", "enable", 4010023157));
   if(cljs.core.truth_(enabled)) {
-    var updated_state_4833 = cljs.core.assoc.call(null, state, new cljs.core.Keyword(null, "data", "data", 1016980252), cljs.core.vec.call(null, cljs.core.map.call(null, cljs.core.not, data)));
-    var updated_dff_4834 = cljs.core.assoc.call(null, tff, new cljs.core.Keyword(null, "state", "state", 1123661827), updated_state_4833);
-    cljs.core.swap_BANG_.call(null, circuits.core.circuit, cljs.core.assoc, tff.call(null, new cljs.core.Keyword(null, "id", "id", 1013907597)), updated_dff_4834)
+    var updated_state_4829 = cljs.core.assoc.call(null, state, new cljs.core.Keyword(null, "data", "data", 1016980252), cljs.core.vec.call(null, cljs.core.map.call(null, cljs.core.not, data)));
+    var updated_dff_4830 = cljs.core.assoc.call(null, tff, new cljs.core.Keyword(null, "state", "state", 1123661827), updated_state_4829);
+    cljs.core.swap_BANG_.call(null, circuits.core.circuit, cljs.core.assoc, tff.call(null, new cljs.core.Keyword(null, "id", "id", 1013907597)), updated_dff_4830)
   }else {
   }
   return cljs.core.PersistentArrayMap.fromArray([new cljs.core.Keyword(null, "q", "q", 1013904355), data, new cljs.core.Keyword(null, "q-bar", "q-bar", 1119700009), cljs.core.vec.call(null, cljs.core.map.call(null, cljs.core.not, data))], true)
