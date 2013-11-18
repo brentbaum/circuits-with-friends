@@ -149,26 +149,30 @@ function drawLinks(links) {
 var selectedPin;
 
 function selectPin(pin) {
-    if(!!selectedPin && pin.parent === selectedPin.parent && pin.field === selectedPin.field) {
+    if(pin == null && (!pin.parent || pin.parent === selectedPin.parent) && pin.field === selectedPin.field) {
         selectedPin = null;
     }
-    else if (!selectedPin) {
+    else if ((typeof selectedPin === "undefined") || selectedPin == null) {
         selectedPin = pin;
+        return;
     }
-    else if ((typeof pin.index !== "undefined") && (typeof selectedPin.index === "undefined") ) {
+    else if (!!selectedPin && !!pin && (typeof pin.index !== "undefined") && (typeof selectedPin.index === "undefined") ) {
+        console.log("source:", pin)
+        console.log("target:", selectedPin)
         addConnection(pin, selectedPin);
     }
-    else if ((typeof pin.index === "undefined") && (typeof selectedPin.index !== "undefined"));
+    else if (!!selectedPin && !!pin && (typeof pin.index === "undefined") && (typeof selectedPin.index !== "undefined"));
+        console.log("target:", pin)
+        console.log("source:", selectedPin)
         addConnection(selectedPin, pin);
 }
 
 function addConnection(target, source) {
-    console.log("Connecting",source,"to",target);
     var src={id: source.parent, field: source.field}
     var dst = {id: target.parent, field: target.field, index: target.index}
-    console.log(src,dst,data);
     data = circuits.js.add_connection(src, dst, data);
     selectedPin = null;
+    draw();
 }
 
 function makePins() {
@@ -226,6 +230,8 @@ function makeComponentPins(component) {
         pins = makeNotPins(component);
     else if (component.species == "register")
         pins = makeRegisterPins(component);
+
+    //TODO don't put display in data
 
     var leftDistance = component.display.size / (pins.left.length * 2 );
     for (var index = 0; index < pins.left.length; index++) {
