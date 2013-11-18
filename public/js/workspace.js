@@ -167,7 +167,7 @@ function addConnection(target, source) {
     var src={id: source.parent, field: source.field}
     var dst = {id: target.parent, field: target.field, index: target.index}
     console.log(src,dst,data);
-    data = circuits.core.add_connection_js(src, dst, data);
+    data = circuits.js.add_connection(src, dst, data);
     selectedPin = null;
 }
 
@@ -269,7 +269,7 @@ function addComponent(name) {
         y: 25,
         size: 60
     }
-    data = circuits.core.add_component_js(name, data, display)
+    data = circuits.js.add_component(name, data, display)
     draw();
 }
 

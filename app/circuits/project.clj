@@ -5,7 +5,7 @@
   :plugins  [[lein-autoexpect "1.0"]
              [lein-cljsbuild "1.0.0-alpha2"]]
   :cljsbuild {:builds [{:source-paths ["src/circuits"]
-                        :compiler {:output-to "circuits.js"
+                        :compiler {:output-to "../../public/js/circuits.js"
                                    :optimizations :whitespace
                                    :pretty-print true}}]}
 

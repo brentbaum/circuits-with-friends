@@ -22561,14 +22561,13 @@ circuits.core.add_component = function add_component(species, circuit, display) 
   var new_state = cljs.core.assoc.call(null, circuit, new_id, with_display);
   return new_state
 };
-[cljs.core.str(cljs.core.keyword.call(null, 0)), cljs.core.str(" "), cljs.core.str(cljs.core.keyword.call(null, "0"))].join("");
-cljs.core.keyword_identical_QMARK_.call(null, cljs.core.keyword.call(null, 0), cljs.core.keyword.call(null, "0"));
 circuits.core.add_connection = function add_connection(src, dst, input_circuit) {
   var dstid = cljs.core.keyword.call(null, dst.call(null, new cljs.core.Keyword(null, "id", "id", 1013907597)));
   var dstfield = cljs.core.keyword.call(null, dst.call(null, new cljs.core.Keyword(null, "field", "field", 1111331948)));
   var srcid = cljs.core.keyword.call(null, src.call(null, new cljs.core.Keyword(null, "id", "id", 1013907597)));
   var srcfield = cljs.core.keyword.call(null, src.call(null, new cljs.core.Keyword(null, "field", "field", 1111331948)));
   var dst_component = input_circuit.call(null, dstid);
+  var asdf = console.log([cljs.core.str(dst_component)].join(""));
   var dst_inputs = dst_component.call(null, new cljs.core.Keyword(null, "inputs", "inputs", 4125005147));
   var dst_field = dst_inputs.call(null, dstfield);
   var dst_vector = dst_field.call(null, new cljs.core.Keyword(null, "connections", "connections", 2738507975));
@@ -22707,20 +22706,20 @@ goog.require("circuits.core");
 circuits.js.map_json = function map_json(obj) {
   return cljs.core.js__GT_clj.call(null, obj, new cljs.core.Keyword(null, "keywordize-keys", "keywordize-keys", 4191781672), true)
 };
-circuits.js.add_component_js = function add_component_js(species, circuit, display) {
+circuits.js.add_component = function add_component(species, circuit, display) {
   var circuit_map = circuits.js.map_json.call(null, circuit);
   var display_map = circuits.js.map_json.call(null, display);
   return cljs.core.clj__GT_js.call(null, circuits.core.add_component.call(null, species, circuit_map, display_map))
 };
-circuits.js.add_connection_js = function add_connection_js(src, dst, circuit) {
+circuits.js.add_connection = function add_connection(src, dst, circuit) {
   var src_map = circuits.js.map_json.call(null, src);
   var dst_map = circuits.js.map_json.call(null, dst);
   var circuit_map = circuits.js.map_json.call(null, circuit);
   return cljs.core.clj__GT_js.call(null, circuits.core.add_connection.call(null, src_map, dst_map, circuit_map))
 };
-circuits.js.remove_connection_js = function remove_connection_js(src, dst, circuit) {
+circuits.js.remove_connection = function remove_connection(src, dst, circuit) {
   return null
 };
-circuits.js.evaluate_js = function evaluate_js(id, circuit) {
+circuits.js.evaluate = function evaluate(id, circuit) {
   return cljs.core.clj__GT_js.call(null, circuits.core.evaluate.call(null, id, cljs.core.js__GT_clj.call(null, circuit)))
 };
