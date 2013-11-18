@@ -51,23 +51,26 @@ body {
     fill: steelblue;
     r: 3;
 }
-
+#main {
+    width: 800px;
+}
 #workspace {
+    float:left;
+    margin:0;
+    width:66%;
     background: #2B2B2B;
     border: 1px solid #555555;
     height: 400px;
-    width: 500px;
-    display: block;
-    margin: 0 auto;
+    position: relative;
 }
 
 #chat {
-    position: relative;
-    left: 900px;
-    top: -400px;
-    width: 166px;
+    float:left;
+    margin:0;
+    width:33%;
     height: 400px;
-    background: #FFFFFF;
+    background: #999;
+    position: relative;
 }
 
 #main {
