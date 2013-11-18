@@ -8,18 +8,21 @@
     <link rel="stylesheet" href="css/main.css"/>
 </head>
 <body>
-<button onclick="addComponent('notgate')">Add a not gate!</button>
-<button onclick="addComponent('andgate')">Add an and gate!</button>
-<button onclick="addComponent('orgate')">Add an or gate!</button>
-<button onclick="addComponent('nandgate')">Add a nand gate!</button>
-<button onclick="addComponent('norgate')">Add a nor gate!</button>
-<button onclick="addComponent('xorgate')">Add a xor gate!</button>
-<button onclick="addComponent('xnorgate')">Add an xnor gate!</button>
-<button onclick="addComponent('mux')">Add a mux!</button>
-<button onclick="addComponent('dflipflop')">Add a dff!</button>
-<button onclick="addComponent('tflipflop')">Add a tff!</button>
-<button onclick="addComponent('decoder')">Add a decoder!</button>
-<button onclick="addComponent('register')">Add a register!</button>
+<ul class="component-list">
+    <li onclick="addComponent('notgate')">NOT</li>
+    <li onclick="addComponent('andgate')">AND</li>
+    <li onclick="addComponent('orgate')">OR</li>
+    <li onclick="addComponent('nandgate')">NAND</li>
+    <li onclick="addComponent('norgate')">NOR</li>
+    <li onclick="addComponent('xorgate')">XOR</li>
+    <li onclick="addComponent('xnorgate')">XNOR</li>
+    <li onclick="addComponent('mux')">MUX</li>
+    <li onclick="addComponent('dflipflop')">DFF</li>
+    <li onclick="addComponent('tflipflop')">TFF</li>
+    <li onclick="addComponent('decoder')">DECODER</li>
+    <li onclick="addComponent('register')">REGISTER</li>
+</ul>
+<div class="logo">Hack with Friends</div>
 <div class="chart"></div>
 <div class="main">
     <g id="workspace-container">

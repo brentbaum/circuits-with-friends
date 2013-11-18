@@ -27,7 +27,7 @@ function drawComponents() {
         .data(d3.values(data))
         .enter().append("svg:g");
 
-    var map = {
+    var svgMap = {
         "notgate": "../svg/default/00-not.svg",
         "andgate": "../svg/default/01-and.svg",
         "orgate": "../svg/default/02-or.svg",
@@ -44,7 +44,7 @@ function drawComponents() {
 
     component.append("svg:image")
         .attr("xlink:href", function (d) {
-            return map[d.species]
+            return svgMap[d.species]
         })
         .attr("width", function (d) {
             return d.display.size;
@@ -163,12 +163,12 @@ function selectPin(pin) {
 }
 
 function addConnection(target, source) {
-    console.log("Connecting",source,"to",target);
-    var src={id: source.parent, field: source.field}
-    var dst = {id: target.parent, field: target.field, index: target.index}
-    console.log(src,dst,data);
-    data = circuits.core.add_connection_js(src, dst, data);
+    var targetComponent = data[target.parent];
+    console.log(targetComponent);
+    targetComponent.inputs[target.field].connections[target.index] = {"source-id": source.parent, "source-field": source.field};
+    console.log(targetComponent);
     selectedPin = null;
+    drawLinks();
 }
 
 function makePins() {

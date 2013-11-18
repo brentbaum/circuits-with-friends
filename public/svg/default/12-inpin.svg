@@ -5,7 +5,7 @@
 	 width="400.56px" height="400.81px" viewBox="0 0 400.56 400.81" enable-background="new 0 0 400.56 400.81" xml:space="preserve">
 
 	<g id="inpin">
-		<rect x="29" y="29" fill="none" stroke="#000" stroke-width="28" stroke-miterlimit="10" width="343" height="343"/>
+		<rect x="29" y="29" fill="none" stroke="#222" stroke-width="28" stroke-miterlimit="10" width="343" height="343"/>
 		<path fill="#000" d="M286.5,200.5c0,47.498-38.504,86-86,86c-47.496,0-86-38.502-86-86c0-47.496,38.504-86,86-86
 		C247.996,114.5,286.5,153.003,286.5,200.5"/>
 	</g>
