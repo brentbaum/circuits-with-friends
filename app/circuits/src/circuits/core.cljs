@@ -46,7 +46,6 @@
         srcid (keyword (src :id))
         srcfield (keyword (src :field))
         dst-component (input-circuit dstid)
-        asdf (.log js/console (str dst-component))
         dst-inputs (dst-component :inputs)
         dst-field (dst-inputs dstfield)
         dst-vector (dst-field :connections)
