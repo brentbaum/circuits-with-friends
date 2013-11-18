@@ -65,6 +65,7 @@ body {
 }
 
 #chat {
+    font-size: 12px;
     float:left;
     margin:0;
     width:33%;

@@ -31,31 +31,12 @@
     <div id="chat">
         <input type='text' id='nameInput' placeholder='Name'>
         <input type='text' id='messageInput' placeholder='Message'>
-        <script>
-            var myDataRef = new Firebase('https://circuitswithfriends.firebaseIO.com/chat/');
-            $('#messageInput').keypress(function (e) {
-                if (e.keyCode == 13) {
-                    var name = $('#nameInput').val();
-                    var text = $('#messageInput').val();
-                    myDataRef.push({name: name, text: text});
-                    $('#messageInput').val('');
-                }
-            });
-            myDataRef.on('child_added', function (snapshot) {
-                var message = snapshot.val();
-                displayChatMessage(message.name, message.text);
-            });
-            function displayChatMessage(name, text) {
-                $('<div/>').text(text).prepend($('<em/>').text(name + ': ')).appendTo($('#chat'));
-                $('#chat')[0].scrollTop = $('#chat')[0].scrollHeight;
-            }
-            ;
-        </script>
     </div>
 </div>
 <script src="js/circuits.js"></script>
 <script src="js/d3.v3.js"></script>
 <script src="js/workspace.js"></script>
+<script src="js/chat.js"></script>
 <script type='text/javascript' id='lt_ws' src='http://localhost:64055/socket.io/lighttable/ws.js'></script>
 </body>
 </html>

@@ -149,7 +149,7 @@ function drawLinks(links) {
 var selectedPin;
 
 function selectPin(pin) {
-    if(pin === selectedPin) {
+    if(!!selectedPin && pin.parent === selectedPin.parent && pin.field === selectedPin.field) {
         selectedPin = null;
     }
     else if (!selectedPin) {
@@ -163,12 +163,12 @@ function selectPin(pin) {
 }
 
 function addConnection(target, source) {
-    var targetComponent = data[target.parent];
-    console.log(targetComponent);
-    targetComponent.inputs[target.field].connections[target.index] = {"source-id": source.parent, "source-field": source.field};
-    console.log(targetComponent);
+    console.log("Connecting",source,"to",target);
+    var src={id: source.parent, field: source.field}
+    var dst = {id: target.parent, field: target.field, index: target.index}
+    console.log(src,dst,data);
+    data = circuits.js.add_connection_js(src, dst, data);
     selectedPin = null;
-    drawLinks();
 }
 
 function makePins() {
@@ -269,7 +269,7 @@ function addComponent(name) {
         y: 25,
         size: 60
     }
-    data = circuits.core.add_component_js(name, data, display)
+    data = circuits.js.add_component_js(name, data, display)
     draw();
 }
 
