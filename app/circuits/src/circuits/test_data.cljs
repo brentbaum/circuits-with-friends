@@ -2,7 +2,7 @@
   (:require [circuits.comp-builder :as build]))
 
 (def default-display {:x 30 :y 30 :size 70})
-(def myandgate  {:id :and0 :label "PcPlus4" 
+(def myandgate  {:id :and0 :label "PcPlus4"
                  :species "andgate"
                  :state  {}
                  :inputs  {:data  {
@@ -18,7 +18,7 @@
                                  :wordLength 1}}
                  :display default-display})
 
-(def myorgate  {:id :or0 :label "PcPlus4" 
+(def myorgate  {:id :or0 :label "PcPlus4"
                  :species "orgate"
                  :state  {}
                  :inputs  {:data  {
@@ -34,7 +34,7 @@
                                  :wordLength 1}}
                  :display default-display})
 
-(def mymux  {:id :mux0 :label "RegWrite" 
+(def mymux  {:id :mux0 :label "RegWrite"
              :species "mux"
              :state  {}
              :inputs  {:data  {
@@ -49,7 +49,7 @@
                                                        :source-field :q}
                                                       {:source-id :ip3
                                                        :source-field :q}
-                                                      ]} 
+                                                      ]}
                        :control  {
                                   :numPins 1
                                   :wordLength 2
@@ -59,7 +59,7 @@
              :outputs  {
                         :q  {:numPins 1
                              :wordLength 1}}})
-(def myfatmux  {:id :mux1 :label "RegWrite" 
+(def myfatmux  {:id :mux1 :label "RegWrite"
                 :species "mux"
                 :state  {}
                 :inputs  {:data  {
@@ -74,7 +74,7 @@
                                                           :source-field :q}
                                                          {:source-id :ip8
                                                           :source-field :q}
-                                                         ]} 
+                                                         ]}
                           :control  {
                                      :numPins 1
                                      :wordLength 2
@@ -95,7 +95,7 @@
                    :outputs  {:q  {
                                    :numPins 1
                                    :wordLength 1}}})
-(def input-pin-1  (assoc input-pin-0 :id :ip1))    
+(def input-pin-1  (assoc input-pin-0 :id :ip1))
 (def input-pin-2  (assoc input-pin-0 :id :ip2
                          :state  {:data  [false]}))
 (def input-pin-3  (assoc input-pin-0 :id :ip3))
@@ -107,7 +107,7 @@
                                    :numPins 1
                                    :wordLength 2}}
                    })
-(def input-pin-5  {:id :ip5 
+(def input-pin-5  {:id :ip5
                    :species "inputpin"
                    :state  {:data  [true false true false
                                     true false true false]}
@@ -116,18 +116,18 @@
                                    :numPins 1
                                    :wordLength 8}}
                    })
-(def input-pin-6  (assoc input-pin-5 
+(def input-pin-6  (assoc input-pin-5
                          :id :ip6
                          :state  {:data  [false false false false
                                           false false false false]}))
-(def input-pin-7  (assoc input-pin-5 
+(def input-pin-7  (assoc input-pin-5
                          :ip :ip7
-                         :state  {:data  [false false false false 
+                         :state  {:data  [false false false false
                                           false false false false]}))
-(def input-pin-8  (assoc input-pin-5 
+(def input-pin-8  (assoc input-pin-5
                          :ip :ip8
                          :state  {:data  (vec  (repeat 8 true))}))
-(def input-pin-9  (assoc input-pin-5 
+(def input-pin-9  (assoc input-pin-5
                          :ip :ip9
                          :state  {:data  [true true]}
                          :outputs  {:q  {
@@ -149,7 +149,7 @@
                                :connections [{:source-id :ip14
                                                       :source-field :q}]}}
                :outputs {:data {:num-pins 1
-                                :word-length 8}}})  
+                                :word-length 8}}})
 (def eight-bit-pin (assoc input-pin-0
                           :id :ip14
                           :state {:data [false true false true
