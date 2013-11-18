@@ -39,8 +39,6 @@
         ]
     new-state))
 
-(str (keyword 0) " " (keyword "0"))
-(keyword-identical? (keyword 0) (keyword "0"))
 (defn add-connection [src dst input-circuit]
   (let [
         dstid (keyword (dst :id))
@@ -51,8 +49,6 @@
         asdf (.log js/console (str dst-component))
         dst-inputs (dst-component :inputs)
         dst-field (dst-inputs dstfield)
-
-
         dst-vector (dst-field :connections)
         dst-index (dst :index)
         new-connection {:source-id srcid
