@@ -20,11 +20,17 @@ circ = js.add_connection_js(
   {id: orgate0, field: data, index: 0},
   circ)
 data
-data = {}
+data.dflipflop0.inputs.data.connections[0]
+data.dflipflop0.inputs.enable.connections[0]
+data.dflipflop0.state.data[0]
+
 data.inputpin0.state.data[0] = true
 data.inputpin1.state.data[0] = true
-console.log(circuits.js.evaluate("outputpin0", data).result.data[0][0])
+console.log("Q: ", circuits.js.evaluate("outputpin0", data).result.data[0][0])
+console.log("Q: ", circuits.js.evaluate("outputpin0", data).result.data[0][0])
+console.log("Q", circuits.js.evaluate("outputpin0", data).result.data[0][0])
+data.dflipflop0.state.data[0] = false
+data = circuits.js.evaluate("outputpin0", data).state
 
 
-currentSelection
 

@@ -215,8 +215,10 @@ function makeComponentPins(component) {
     var pins;
     if (component.species == "mux")
         pins = makeMuxPins(component);
-    else if (component.species == "ip")
+    else if (component.species == "inputpin")
         pins = makeIpPins(component);
+    else if (component.species == "outputpin")
+        pins = makeOpPins(component);
     else if (component.species == "dflipflop" || component.species == "tflipflop")
         pins = makeFlipFlopPins(component);
     else if (component.species == "orgate" || component.species == "andgate"
@@ -316,6 +318,10 @@ function makeMuxPins(mux) {
     var r = mux.outputs.q;
     r.field = "q";
     return {left:  addFieldAndIndex(mux.inputs.data.connections, "data"), bottom:  addFieldAndIndex(mux.inputs.control.connections, "control"), right: [r]};
+}
+
+function makeOpPins(op) {
+  return {left: addFieldAndIndex(op.inputs.data.connections, "data"), bottom: {}, right: []}
 }
 
 function makeIpPins(ip) {

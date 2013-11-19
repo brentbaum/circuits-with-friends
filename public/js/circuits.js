@@ -22524,14 +22524,13 @@ goog.require("circuits.comp_logic");
 goog.require("circuits.comp_logic");
 goog.require("circuits.validate");
 goog.require("circuits.validate");
-circuits.core.state = cljs.core.atom.call(null, cljs.core.PersistentArrayMap.EMPTY);
+circuits.core.state_atom = cljs.core.atom.call(null, cljs.core.PersistentArrayMap.EMPTY);
 circuits.core.set_state = function set_state(component_map) {
-  return cljs.core.reset_BANG_.call(null, circuits.core.state, component_map)
+  return cljs.core.reset_BANG_.call(null, circuits.core.state_atom, component_map)
 };
 circuits.core.clear_state = function clear_state() {
-  return cljs.core.reset_BANG_.call(null, circuits.core.state, cljs.core.PersistentArrayMap.EMPTY)
+  return cljs.core.reset_BANG_.call(null, circuits.core.state_atom, cljs.core.PersistentArrayMap.EMPTY)
 };
-circuits.core.clear_state.call(null);
 circuits.core.generate_id = function generate_id(species, circuit) {
   var same_species = cljs.core.filter.call(null, function(p1__4825_SHARP_) {
     return cljs.core._EQ_.call(null, p1__4825_SHARP_.call(null, new cljs.core.Keyword(null, "species", "species", 3300406446)), species)
@@ -22545,15 +22544,11 @@ circuits.core.evaluate_component = function evaluate_component(component) {
   return eval_fn.call(null, component)
 };
 circuits.core.evaluate = function evaluate(id, state) {
-  console.log("id: ", id);
-  console.log("state: ", [cljs.core.str(state)].join(""));
   if(cljs.core.truth_(circuits.validate.validate_state.call(null, state))) {
     var newstate = circuits.core.set_state.call(null, state);
     var component = newstate.call(null, cljs.core.keyword.call(null, id));
-    var result = circuits.core.evaluate_component.call(null, newstate.call(null, cljs.core.keyword.call(null, id)));
-    var ret_val = cljs.core.PersistentArrayMap.fromArray([new cljs.core.Keyword(null, "result", "result", 4374444943), result, new cljs.core.Keyword(null, "state", "state", 1123661827), state], true);
-    var a = console.log([cljs.core.str(ret_val)].join(""));
-    var cleared_state = circuits.core.clear_state.call(null);
+    var result = circuits.core.evaluate_component.call(null, component);
+    var ret_val = cljs.core.PersistentArrayMap.fromArray([new cljs.core.Keyword(null, "result", "result", 4374444943), result, new cljs.core.Keyword(null, "state", "state", 1123661827), cljs.core.deref.call(null, circuits.core.state_atom)], true);
     return ret_val
   }else {
     return null
@@ -22569,13 +22564,11 @@ circuits.core.add_component = function add_component(species, circuit, display) 
 circuits.core.add_connection = function add_connection(src, dst, input_circuit) {
   var dstid = cljs.core.keyword.call(null, dst.call(null, new cljs.core.Keyword(null, "id", "id", 1013907597)));
   var dstfield = cljs.core.keyword.call(null, dst.call(null, new cljs.core.Keyword(null, "field", "field", 1111331948)));
-  var b = console.log([cljs.core.str(src), cljs.core.str("\n"), cljs.core.str(dst)].join(""));
   var srcid = cljs.core.keyword.call(null, src.call(null, new cljs.core.Keyword(null, "id", "id", 1013907597)));
   var srcfield = cljs.core.keyword.call(null, src.call(null, new cljs.core.Keyword(null, "field", "field", 1111331948)));
   var dst_component = input_circuit.call(null, dstid);
   var dst_inputs = dst_component.call(null, new cljs.core.Keyword(null, "inputs", "inputs", 4125005147));
   var dst_field = dst_inputs.call(null, dstfield);
-  var a = console.log([cljs.core.str("\n"), cljs.core.str(dst_inputs), cljs.core.str("\n"), cljs.core.str(dst_field)].join(""));
   var dst_vector = dst_field.call(null, new cljs.core.Keyword(null, "connections", "connections", 2738507975));
   var dst_index = dst.call(null, new cljs.core.Keyword(null, "index", "index", 1114250308));
   var new_connection = cljs.core.PersistentArrayMap.fromArray([new cljs.core.Keyword(null, "source-id", "source-id", 3610412927), srcid, new cljs.core.Keyword(null, "source-field", "source-field", 1240617018), srcfield], true);
@@ -22594,8 +22587,7 @@ circuits.core.remove_connection = function remove_connection(src, dst, circuit) 
   return new_circuit
 };
 circuits.core.inner_fn = function inner_fn(mapping) {
-  var local_state = cljs.core.deref.call(null, circuits.core.state);
-  var source_component = local_state.call(null, cljs.core.keyword.call(null, mapping.call(null, new cljs.core.Keyword(null, "source-id", "source-id", 3610412927))));
+  var source_component = cljs.core.deref.call(null, circuits.core.state_atom).call(null, cljs.core.keyword.call(null, mapping.call(null, new cljs.core.Keyword(null, "source-id", "source-id", 3610412927))));
   var eval_fn = circuits.core.function_map.call(null, source_component.call(null, new cljs.core.Keyword(null, "species", "species", 3300406446)));
   var the_outputs = eval_fn.call(null, source_component);
   var result = the_outputs.call(null, cljs.core.keyword.call(null, mapping.call(null, new cljs.core.Keyword(null, "source-field", "source-field", 1240617018))));
@@ -22662,20 +22654,24 @@ circuits.core.register_eval = function register_eval(register) {
   if(cljs.core.truth_(enabled)) {
     var updated_state_4826 = cljs.core.assoc.call(null, state, new cljs.core.Keyword(null, "data", "data", 1016980252), cljs.core.first.call(null, inputs.call(null, new cljs.core.Keyword(null, "data", "data", 1016980252))));
     var updated_register_4827 = cljs.core.assoc.call(null, register, new cljs.core.Keyword(null, "state", "state", 1123661827), updated_state_4826);
-    cljs.core.swap_BANG_.call(null, state, cljs.core.assoc, register.call(null, new cljs.core.Keyword(null, "id", "id", 1013907597)), updated_register_4827)
+    cljs.core.swap_BANG_.call(null, circuits.core.state_atom, cljs.core.assoc, register.call(null, new cljs.core.Keyword(null, "id", "id", 1013907597)), updated_register_4827)
   }else {
   }
   return cljs.core.PersistentArrayMap.fromArray([new cljs.core.Keyword(null, "q", "q", 1013904355), data], true)
 };
+[cljs.core.str(circuits.core.d_flipflop_eval)].join("");
 circuits.core.d_flipflop_eval = function d_flipflop_eval(dff) {
+  console.log("hello");
   var state = dff.call(null, new cljs.core.Keyword(null, "state", "state", 1123661827));
   var data = state.call(null, new cljs.core.Keyword(null, "data", "data", 1016980252));
   var inputs = circuits.core.gen_inputs.call(null, dff);
+  var a = console.log([cljs.core.str(inputs)].join(""));
   var enabled = inputs.call(null, new cljs.core.Keyword(null, "enable", "enable", 4010023157));
   if(cljs.core.truth_(enabled)) {
     var updated_state_4828 = cljs.core.assoc.call(null, state, new cljs.core.Keyword(null, "data", "data", 1016980252), cljs.core.vec.call(null, cljs.core.first.call(null, inputs.call(null, new cljs.core.Keyword(null, "data", "data", 1016980252)))));
     var updated_dff_4829 = cljs.core.assoc.call(null, dff, new cljs.core.Keyword(null, "state", "state", 1123661827), updated_state_4828);
-    cljs.core.swap_BANG_.call(null, state, cljs.core.assoc, dff.call(null, new cljs.core.Keyword(null, "id", "id", 1013907597)), updated_dff_4829)
+    var a_4830__$1 = console.log([cljs.core.str("hey\n\n"), cljs.core.str(updated_dff_4829)].join(""));
+    cljs.core.swap_BANG_.call(null, circuits.core.state_atom, cljs.core.assoc, cljs.core.keyword.call(null, dff.call(null, new cljs.core.Keyword(null, "id", "id", 1013907597))), updated_dff_4829)
   }else {
   }
   return cljs.core.PersistentArrayMap.fromArray([new cljs.core.Keyword(null, "q", "q", 1013904355), data, new cljs.core.Keyword(null, "q-bar", "q-bar", 1119700009), cljs.core.vec.call(null, cljs.core.map.call(null, cljs.core.not, data))], true)
@@ -22686,9 +22682,9 @@ circuits.core.t_flipflop_eval = function t_flipflop_eval(tff) {
   var inputs = circuits.core.gen_inputs.call(null, tff);
   var enabled = inputs.call(null, new cljs.core.Keyword(null, "enable", "enable", 4010023157));
   if(cljs.core.truth_(enabled)) {
-    var updated_state_4830 = cljs.core.assoc.call(null, state, new cljs.core.Keyword(null, "data", "data", 1016980252), cljs.core.vec.call(null, cljs.core.map.call(null, cljs.core.not, data)));
-    var updated_dff_4831 = cljs.core.assoc.call(null, tff, new cljs.core.Keyword(null, "state", "state", 1123661827), updated_state_4830);
-    cljs.core.swap_BANG_.call(null, state, cljs.core.assoc, tff.call(null, new cljs.core.Keyword(null, "id", "id", 1013907597)), updated_dff_4831)
+    var updated_state_4831 = cljs.core.assoc.call(null, state, new cljs.core.Keyword(null, "data", "data", 1016980252), cljs.core.vec.call(null, cljs.core.map.call(null, cljs.core.not, data)));
+    var updated_dff_4832 = cljs.core.assoc.call(null, tff, new cljs.core.Keyword(null, "state", "state", 1123661827), updated_state_4831);
+    cljs.core.swap_BANG_.call(null, circuits.core.state_atom, cljs.core.assoc, tff.call(null, new cljs.core.Keyword(null, "id", "id", 1013907597)), updated_dff_4832)
   }else {
   }
   return cljs.core.PersistentArrayMap.fromArray([new cljs.core.Keyword(null, "q", "q", 1013904355), data, new cljs.core.Keyword(null, "q-bar", "q-bar", 1119700009), cljs.core.vec.call(null, cljs.core.map.call(null, cljs.core.not, data))], true)
