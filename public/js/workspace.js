@@ -18,10 +18,9 @@ function clearCanvas() {
     removeComponent("rect");
     removeComponent("circle");
     removeComponent("line");
+    removeComponent("image");
 }
 function drawComponents() {
-    removeComponent("image");
-
     var component = d3.select("#workspace")
         .selectAll("g.component")
         .data(d3.values(data))
@@ -39,7 +38,9 @@ function drawComponents() {
         "dflipflop": "../svg/default/08-dff.svg",
         "tflipflop": "../svg/default/09-tff.svg",
         "decoder": "../svg/default/10-decoder.svg",
-        "register": "../svg/default/11-register.svg"
+        "register": "../svg/default/11-register.svg",
+        "inputpin": "../svg/default/12-inpin.svg",
+        "outputpin": "../svg/default/13-outpin.svg"
     };
 
     component.append("svg:image")
