@@ -10,7 +10,7 @@ function draw() {
     drawPins(pins);
     drawLinks(links);
     if (selectedPin)
-        circle(selectedPin);
+        circle(selectedPin).classed("selected", true);
 }
 
 function clearCanvas() {
@@ -27,24 +27,9 @@ function drawComponents() {
         .data(d3.values(data))
         .enter().append("svg:g");
 
-    var svgMap = {
-        "notgate": "../svg/default/00-not.svg",
-        "andgate": "../svg/default/01-and.svg",
-        "orgate": "../svg/default/02-or.svg",
-        "nandgate": "../svg/default/03-nand.svg",
-        "norgate": "../svg/default/04-nor.svg",
-        "xorgate": "../svg/default/05-xor.svg",
-        "xnorgate": "../svg/default/06-xnor.svg",
-        "mux": "../svg/default/07-mux.svg",
-        "dflipflop": "../svg/default/08-dff.svg",
-        "tflipflop": "../svg/default/09-tff.svg",
-        "decoder": "../svg/default/10-decoder.svg",
-        "register": "../svg/default/11-register.svg"
-    };
-
     component.append("svg:image")
         .attr("xlink:href", function (d) {
-            return svgMap[d.species]
+            return "../svg/default/"+d.species+".svg";
         })
         .attr("width", function (d) {
             return d.display.size;
@@ -149,25 +134,29 @@ function drawLinks(links) {
 var selectedPin;
 
 function selectPin(pin) {
-    if(pin == null && (!pin.parent || pin.parent === selectedPin.parent) && pin.field === selectedPin.field) {
+    if(!isDefined(pin))
+        return;
+    if(isDefined(selectedPin) && isDefined(pin) && (!pin.parent || pin.parent === selectedPin.parent) && pin.field === selectedPin.field) {
         selectedPin = null;
     }
-    else if ((typeof selectedPin === "undefined") || selectedPin == null) {
+    else if (!isDefined(selectedPin)) {
         selectedPin = pin;
-        return;
     }
-    else if (!!selectedPin && !!pin && (typeof pin.index !== "undefined") && (typeof selectedPin.index === "undefined") ) {
+    else if (isDefined(selectedPin) && isDefined(pin) && isDefined(pin.index) && !isDefined(selectedPin.index) ) {
         console.log("source:", pin)
         console.log("target:", selectedPin)
         addConnection(pin, selectedPin);
     }
-    else if (!!selectedPin && !!pin && (typeof pin.index === "undefined") && (typeof selectedPin.index !== "undefined"));
+    else if (isDefined(selectedPin) && isDefined(pin) && !isDefined(pin.index) && isDefined(selectedPin.index)) {
         console.log("target:", pin)
         console.log("source:", selectedPin)
         addConnection(selectedPin, pin);
+    }
 }
 
 function addConnection(target, source) {
+    if(target == null || source == null)
+        return;
     var src={id: source.parent, field: source.field}
     var dst = {id: target.parent, field: target.field, index: target.index}
     data = circuits.js.add_connection(src, dst, data);
@@ -377,6 +366,10 @@ function circle(point) {
             return d.x2
         })
         .attr("color", "#A00")
+}
+
+function isDefined(x) {
+    return typeof x !== "undefined" && x !== null;
 }
 
 function setup() {
