@@ -331,7 +331,7 @@ function makeFlipFlopPins(ff) {
     return {left:  addFieldAndIndex(ff.inputs.data.connections, "data"), bottom:  addFieldAndIndex(ff.inputs.enable.connections, "enable"), right: r};
 };
 
-var currentSelection;
+var currentSelection = "undefined";
 
 function selectComponent() {
     this.parentNode.appendChild(this);
@@ -342,6 +342,7 @@ function selectComponent() {
 
         currentSelection = selectTarget.id;
     }, 10);
+
 }
 
 function line(container) {
@@ -385,9 +386,9 @@ function setup() {
         circuitRef.set(data);
     });
     d3.select("#workspace-container").on("click", function () {
-        if (currentSelection != -1) {
+        if (currentSelection !== "undefined") {
             d3.select(".selected").classed("selected", false);
-            currentSelection = -1;
+            currentSelection = "undefined";
         }
     });
 }
