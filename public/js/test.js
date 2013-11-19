@@ -19,5 +19,12 @@ circ = js.add_connection_js(
   {id: and0, field: q},
   {id: orgate0, field: data, index: 0},
   circ)
+data
+data = {}
+data.inputpin0.state.data[0] = true
+data.inputpin1.state.data[0] = true
+console.log(circuits.js.evaluate("outputpin0", data).result.data[0][0])
 
+
+currentSelection
 
