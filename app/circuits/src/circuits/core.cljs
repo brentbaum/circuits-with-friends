@@ -9,7 +9,7 @@
   (reset! state component-map))
 
 (defn clear-state [] (reset! state {}))
-(clear-state)
+
 (defn generate-id  [species circuit]
     (let  [same-species  (filter #(=  (% :species) species)  (vals circuit))
                    same-count  (count same-species)]
@@ -22,14 +22,11 @@
     (eval-fn component)))
 
 (defn evaluate  [id state]
-  (.log js/console "id: " id)
-  (.log js/console "state: " (str state))
   (if (valid/validate-state state)
     (let [newstate  (set-state state)
           component (newstate (keyword id))
           result  (evaluate-component (newstate (keyword id)))
           ret-val {:result result :state state}
-                    a (.log js/console (str ret-val))
           cleared-state  (clear-state)
           ]
       ret-val)
@@ -47,14 +44,11 @@
   (let [
         dstid (keyword (dst :id))
         dstfield (keyword (dst :field))
-        b (.log js/console (str src "\n" dst))
         srcid (keyword (src :id))
         srcfield (keyword (src :field))
         dst-component (input-circuit dstid)
         dst-inputs (dst-component :inputs)
         dst-field (dst-inputs dstfield)
-        a (.log js/console (str "\n" dst-inputs
-                                "\n" dst-field))
         dst-vector (dst-field :connections)
 
         dst-index (dst :index)
