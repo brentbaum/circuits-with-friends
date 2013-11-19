@@ -18,10 +18,9 @@ function clearCanvas() {
     removeComponent("rect");
     removeComponent("circle");
     removeComponent("line");
+    removeComponent("image");
 }
 function drawComponents() {
-    removeComponent("image");
-
     var component = d3.select("#workspace")
         .selectAll("g.component")
         .data(d3.values(data))
