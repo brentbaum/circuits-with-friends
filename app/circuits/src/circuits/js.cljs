@@ -18,7 +18,7 @@
 (defn remove-connection [src dst circuit]
   )
 (defn evaluate [id circuit]
-  (clj->js (core/evaluate id (js->clj circuit))))
+  (clj->js (core/evaluate id (map-json circuit))))
 
 
 ; End External Interface FNs

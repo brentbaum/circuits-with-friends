@@ -9,7 +9,7 @@
   (reset! state component-map))
 
 (defn clear-state [] (reset! state {}))
-
+(clear-state)
 (defn generate-id  [species circuit]
     (let  [same-species  (filter #(=  (% :species) species)  (vals circuit))
                    same-count  (count same-species)]
@@ -22,10 +22,14 @@
     (eval-fn component)))
 
 (defn evaluate  [id state]
+  (.log js/console "id: " id)
+  (.log js/console "state: " (str state))
   (if (valid/validate-state state)
     (let [newstate  (set-state state)
-          result  (evaluate-component (@state id))
-          ret-val {:result result :state @state}
+          component (newstate (keyword id))
+          result  (evaluate-component (newstate (keyword id)))
+          ret-val {:result result :state state}
+                    a (.log js/console (str ret-val))
           cleared-state  (clear-state)
           ]
       ret-val)
@@ -43,12 +47,16 @@
   (let [
         dstid (keyword (dst :id))
         dstfield (keyword (dst :field))
+        b (.log js/console (str src "\n" dst))
         srcid (keyword (src :id))
         srcfield (keyword (src :field))
         dst-component (input-circuit dstid)
         dst-inputs (dst-component :inputs)
         dst-field (dst-inputs dstfield)
+        a (.log js/console (str "\n" dst-inputs
+                                "\n" dst-field))
         dst-vector (dst-field :connections)
+
         dst-index (dst :index)
         new-connection {:source-id srcid
                         :source-field srcfield}
@@ -78,13 +86,14 @@
 
 (defn inner-fn  [mapping]
   (let  [local-state @state
-         source-component  (local-state  (mapping :source-id))
+         source-component  (local-state  (keyword (mapping :source-id)))
          eval-fn  (function-map  (source-component :species))
          the-outputs  (eval-fn source-component)
-         result (the-outputs (mapping :source-field))]
+         result (the-outputs (keyword (mapping :source-field)))]
     result))
 (defn gen-input-field  [kvpair]
   {(key kvpair)  (map inner-fn  ((val kvpair) :connections))})
+
 (defn gen-inputs  [component]
   (let  [input-maps  (component :inputs)
          input-fields  (map gen-input-field input-maps)
@@ -172,8 +181,7 @@
          data  (state :data)]
     {:q data}))
 (defn outputpin-eval [outputpin]
-  (let [inputs (gen-inputs outputpin)
-        asdf (println inputs)]
+  (let [inputs (gen-inputs outputpin)]
     inputs))
 
 (def function-map  {"notgate" not-eval
