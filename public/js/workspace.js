@@ -1,5 +1,5 @@
 var data = {};
-
+var circuitRef = new Firebase('https://circuitswithfriends.firebaseIO.com/circuits');
 setup();
 
 function draw() {
@@ -160,6 +160,7 @@ function addConnection(target, source) {
     var dst = {id: target.parent, field: target.field, index: target.index}
     data = circuits.js.add_connection(src, dst, data);
     selectedPin = null;
+    circuitRef.set(data);
     draw();
 }
 
@@ -372,8 +373,8 @@ function isDefined(x) {
 }
 
 function setup() {
-    var circuitRef = new Firebase('https://circuitswithfriends.firebaseIO.com/circuits');
     circuitRef.on('value', function (snapshot) {
+        data = snapshot.val();
         if (!data) {
             data = {};
         }
