@@ -115,6 +115,11 @@ body {
     font-weight: bold;
 }
 
+#main-container {
+    width: 960px;
+    margin: 0 auto;
+}
+
 html {
     background: #444444;
 }

@@ -8,33 +8,34 @@
     <link rel="stylesheet" href="css/main.css"/>
 </head>
 <body>
-<ul class="component-list">
-    <li onclick="addComponent('inputpin')">INPUT</li>
-    <li onclick="addComponent('outputpin')">OUTPUT</li>
-    <li onclick="addComponent('notgate')">NOT</li>
-    <li onclick="addComponent('andgate')">AND</li>
-    <li onclick="addComponent('orgate')">OR</li>
-    <li onclick="addComponent('nandgate')">NAND</li>
-    <li onclick="addComponent('norgate')">NOR</li>
-    <li onclick="addComponent('xorgate')">XOR</li>
-    <li onclick="addComponent('xnorgate')">XNOR</li>
-    <li onclick="addComponent('mux')">MUX</li>
-    <li onclick="addComponent('dflipflop')">DFF</li>
-    <li onclick="addComponent('tflipflop')">TFF</li>
-    <li onclick="addComponent('decoder')">DECODER</li>
-    <li onclick="addComponent('register')">REGISTER</li>
-</ul>
-<div class="logo">Circuits with Friends</div>
-<div class="chart"></div>
-<div class="main">
-    <g id="workspace-container">
-        <svg id="workspace"></svg>
-    </g>
-    <div id="buttons">
-        <input type='text' id='nameInput' placeholder='Name'>
-        <input type='text' id='messageInput' placeholder='Message'>
+<div id="main-container">
+    <ul class="component-list">
+        <li onclick="addComponent('inputpin')">INPUT</li>
+        <li onclick="addComponent('outputpin')">OUTPUT</li>
+        <li onclick="addComponent('notgate')">NOT</li>
+        <li onclick="addComponent('andgate')">AND</li>
+        <li onclick="addComponent('orgate')">OR</li>
+        <li onclick="addComponent('nandgate')">NAND</li>
+        <li onclick="addComponent('norgate')">NOR</li>
+        <li onclick="addComponent('xorgate')">XOR</li>
+        <li onclick="addComponent('xnorgate')">XNOR</li>
+        <li onclick="addComponent('mux')">MUX</li>
+        <li onclick="addComponent('dflipflop')">DFF</li>
+        <li onclick="addComponent('tflipflop')">TFF</li>
+        <li onclick="addComponent('decoder')">DECODER</li>
+        <li onclick="addComponent('register')">REGISTER</li>
+    </ul>
+    <div class="logo">Circuits with Friends</div>
+    <div class="main">
+        <g id="workspace-container">
+            <svg id="workspace"></svg>
+        </g>
+        <div id="buttons">
+            <input type='text' id='nameInput' placeholder='Name'>
+            <input type='text' id='messageInput' placeholder='Message'>
+        </div>
+        <div id="chat"></div>
     </div>
-    <div id="chat"></div>
 </div>
 <!--<div class="evaluate">
     <button onclick="evaluateCircuit()"></button>
