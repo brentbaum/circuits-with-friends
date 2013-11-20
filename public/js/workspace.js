@@ -4,6 +4,7 @@
 
 var data = {};
 var circuitRef = new Firebase('https://circuitswithfriends.firebaseIO.com/circuits');
+var workspace = d3.select("#workspace");
 
 setup();
 
@@ -44,16 +45,17 @@ function move() {
     var newX = d3.event.dx + parseInt(dragTarget.attr("x"));
     var newY = d3.event.dy + parseInt(dragTarget.attr("y"));
 
-    dragTarget
-        .attr("x", function () {
-            return newX
-        })
-        .attr("y", function () {
-            return newY
-        })
+    if(newX > 0 && newY > 0 &&
+        newX < parseInt(workspace.style('width'), 10) - dragTarget.attr("width") &&
+        newY < parseInt(workspace.style('height'), 10) - dragTarget.attr("height"))
+    {
+            dragTarget
+                .attr("x", newX)
+                .attr("y", newY);
 
-    this.__data__.display.x = newX;
-    this.__data__.display.y = newY;
+            this.__data__.display.x = newX;
+            this.__data__.display.y = newY;
+    }
 
     removeSvg("line");
     removeSvg("circle");
