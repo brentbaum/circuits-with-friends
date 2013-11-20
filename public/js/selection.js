@@ -1,3 +1,8 @@
+/*
+ * Everything related to selecting components.
+ */
+
+
 var selectedPin;
 var selectedComponent;
 
