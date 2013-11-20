@@ -13,6 +13,10 @@ function draw() {
         circle(selectedPin).classed("selected", true);
 }
 
+function evaluateCircuit() {
+    alert(circuits.js.evaluate("outputpin1", data));
+}
+
 function clearCanvas() {
     removeComponent("g");
     removeComponent("rect");
@@ -142,13 +146,9 @@ function selectPin(pin) {
         selectedPin = pin;
     }
     else if (isDefined(selectedPin) && isDefined(pin) && isDefined(pin.index) && !isDefined(selectedPin.index) ) {
-        console.log("source:", pin)
-        console.log("target:", selectedPin)
         addConnection(pin, selectedPin);
     }
     else if (isDefined(selectedPin) && isDefined(pin) && !isDefined(pin.index) && isDefined(selectedPin.index)) {
-        console.log("target:", pin)
-        console.log("source:", selectedPin)
         addConnection(selectedPin, pin);
     }
 }
