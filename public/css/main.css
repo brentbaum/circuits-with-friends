@@ -90,6 +90,9 @@ body {
 .component-list {
     width: 80%;
     list-style-type:none;
+    padding-left: 0;
+    font-size: 14px;
+    vertical-align: middle;
 }
 
 .component-list li {
