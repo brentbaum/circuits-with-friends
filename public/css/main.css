@@ -64,14 +64,21 @@ body {
     position: relative;
 }
 
+#buttons {
+    float:left ;
+    margin: 0;
+    position: relative;
+}
+
 #chat {
     font-size: 12px;
     float:left;
     margin:0;
     width:33%;
-    height: 400px;
+    height: 376px;
     background: #999;
     position: relative;
+    overflow: scroll;
 }
 
 #nameInput, #messageInput {
