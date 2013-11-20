@@ -1,11 +1,6 @@
 /*
- * Contains methods which bind everything together.
+ * Has all the D3 methods for drawing stuffs.
  */
-
-var data = {};
-var circuitRef = new Firebase('https://circuitswithfriends.firebaseIO.com/circuits');
-
-setup();
 
 function draw() {
     clearCanvas();
@@ -18,26 +13,7 @@ function draw() {
         circle(selectedPin).classed("selected", true);
 }
 
-function evaluateCircuit() {
-    alert(circuits.js.evaluate("outputpin1", data));
-}
-
-function clearCanvas() {
-    removeSvg("g");
-    removeSvg("rect");
-    removeSvg("circle");
-    removeSvg("line");
-    removeSvg("image");
-}
-
-
-function removeSvg(type) {
-    d3.select("#workspace")
-        .selectAll(type)
-        .remove();
-}
-
-function move() {
+    function move() {
     this.parentNode.appendChild(this);
     var dragTarget = d3.select(this);
 
@@ -61,7 +37,35 @@ function move() {
     var links = makeLinks(pins);
     drawLinks(links);
     drawPins(pins);
-};
+}
+
+function addComponent(name) {
+    var size = 60;
+    if (name === 'inputpin' || name === 'outputpin') {
+        size = 35;
+    }
+    var display = {
+        x: 25,
+        y: 25,
+        size: size
+    }
+    data = circuits.js.add_component(name, data, display)
+    draw();
+}
+
+function clearCanvas() {
+    removeSvg("g");
+    removeSvg("rect");
+    removeSvg("circle");
+    removeSvg("line");
+    removeSvg("image");
+}
+
+function removeSvg(type) {
+    d3.select("#workspace")
+        .selectAll(type)
+        .remove();
+}
 
 function line(container) {
     return container.append("svg:line")
@@ -89,24 +93,5 @@ function circle(point) {
             return d.x2
         })
         .attr("color", "#A00")
-}
-
-function isDefined(x) {
-    return typeof x !== "undefined" && x !== null;
-}
-
-function setup() {
-    circuitRef.on('value', function (snapshot) {
-        data = snapshot.val();
-        if (!data) {
-            data = {};
-        }
-        else
-            draw();
-    });
-    d3.select("#workspace-container").on("mouseup", function () {
-        circuitRef.set(data);
-    });
-    d3.select("#workspace-container").on("click", checkDeselect);
 }
 
