@@ -7,6 +7,7 @@ function draw() {
     drawComponents();
     var pins = makePins();
     var links = makeLinks(pins);
+    highlightSelected();
     drawPins(pins);
     drawLinks(links);
     if (selectedPin)

@@ -34,21 +34,36 @@ function addConnection(target, source) {
     draw();
 }
 
-function selectComponent() {
+function selectComponent(d) {
     this.parentNode.appendChild(this);
     var selectTarget = d3.select(this);
 
     setTimeout(function () {
         selectTarget.classed("selected", true);
 
-        selectedComponent = selectTarget.id;
+        selectedComponent = d.id;
+        highlightSelected();
     }, 10);
 
 }
 
-function checkDeselect () {
-    if (selectedComponent !== "undefined") {
+function deselectComponent () {
+    if (isDefined(selectedComponent)) {
         d3.select(".selected").classed("selected", false);
-        selectedComponent = "undefined";
+        d3.select(".selected").remove();
+        selectedComponent = null;
+    }
+}
+
+function highlightSelected() {
+    if(d3.select(".selected")) {
+        var s = d3.select(".selected");
+
+        workspace.append("rect").attr("x", s.attr("x"))
+            .attr("y", s.attr("y"))
+            .attr("width", s.attr("width"))
+            .attr("height", s.attr("height"))
+            .classed("selected", true)
+
     }
 }

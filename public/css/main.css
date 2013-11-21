@@ -12,8 +12,9 @@ body {
 }
 
 #workspace rect.selected {
-    fill: #777;
-    stroke: #666;
+    fill: steelblue;
+    opacity: .3;
+    pointer-events: none;
 }
 
 #workspace line {
@@ -37,6 +38,7 @@ body {
 
 #workspace circle.selected {
     opacity: .3;
+    pointer-events: none;
 }
 
 #workspace line.selected {
@@ -91,7 +93,7 @@ body {
     width: 80%;
     list-style-type:none;
     padding-left: 0;
-    font-size: 14px;
+    font-size: 15px;
     vertical-align: middle;
 }
 

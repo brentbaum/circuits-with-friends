@@ -20,7 +20,10 @@ function draw() {
 }
 
 function evaluateCircuit() {
-    alert(circuits.js.evaluate("outputpin1", data));
+    var output = circuits.js.evaluate(data);
+    var state = output.state;
+    var result = output.result;
+    console.log(state,result);
 }
 
 function clearCanvas() {
@@ -109,7 +112,7 @@ function setup() {
     d3.select("#workspace-container").on("mouseup", function () {
         circuitRef.set(data);
     });
-    d3.select("#workspace-container").on("click", checkDeselect);
+    d3.select("#workspace-container").on("click", deselectComponent);
 }
 
 $(document).ready(function() {
