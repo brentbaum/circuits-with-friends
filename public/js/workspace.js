@@ -113,6 +113,6 @@ function setup() {
 }
 
 $(document).ready(function() {
-    alert("ready!");
+    //put modal code here.
 })
 
