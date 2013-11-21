@@ -112,3 +112,7 @@ function setup() {
     d3.select("#workspace-container").on("click", checkDeselect);
 }
 
+$(document).ready(function() {
+    alert("ready!");
+})
+
