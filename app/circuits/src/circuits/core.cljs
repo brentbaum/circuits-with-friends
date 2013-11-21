@@ -17,17 +17,13 @@
 (declare function-map gen-inputs)
 
 (defn evaluate-component  [component]
-  (.log js/console "evaluate component\n")
   (let  [component-type  (component :species)
          eval-fn  (function-map component-type)
          result (eval-fn component)]
     result))
 
 (defn find-output-components [circuit]
-  (into {} (map (fn [kvpair] (if (=
-                                  ((val kvpair) :species)
-                                  "outputpin")
-                               (val kvpair))) circuit)))
+  (into {} (filter #(= "outputpin" ((val %) :species)) circuit)))
 
 (defn remove-component [id circuit]
   (dissoc circuit (keyword id)))
@@ -36,7 +32,7 @@
   (if (valid/validate-state state)
     (let [newstate  (reset! state-atom state)
           components (find-output-components newstate)
-          result (map evaluate-component components)
+          result (evaluate-component (val (first components)))
           ]
       {:result result :state @state-atom})
     nil))
@@ -159,7 +155,6 @@
     {:q data}))
 
 (defn d-flipflop-eval [dff]
-  (.log js/console "dff eval\n")
   (let [state (dff :state)
         data (state :data)
         inputs (gen-inputs dff)
@@ -169,7 +164,6 @@
             updated-dff (assoc dff :state updated-state)
             updated-state (assoc @state-atom (keyword (dff :id)) updated-dff)]
         (reset! state-atom updated-state)))
-    (.log js/console (str "during\n" ((@state-atom :dflipflop0) :state)))
     {:q data :q-bar (vec (map not data))}))
 (defn t-flipflop-eval [tff]
   (let [state (tff :state)

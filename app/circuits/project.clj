@@ -18,5 +18,6 @@
                         :source-paths ["src"]
                         :compiler {
                                    :output-to "../../public/js/circuits.js"
-                                   :optimizations :advanced}}
+                                   :optimizations :whitespace
+                                   :pretty-print true}}
                        ]})
