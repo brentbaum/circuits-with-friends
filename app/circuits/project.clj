@@ -1,16 +1,22 @@
 (defproject circuits "0.1.0-ALPHA"
+  :description "Real-Time collaborative circuit designer!"
   :url "http://circuitswithfriends.com"
-  :license  {:name "Eclipse Public License"
-             :url "http://www.eclipse.org/legal/epl-v10.html"}
-  :plugins  [[lein-autoexpect "1.0"]
-             [lein-cljsbuild "1.0.0-alpha2"]]
-  :cljsbuild {:builds [{:source-paths ["src/circuits"]
-                        :compiler {:output-to "../../public/js/circuits.js"
-                                   :optimizations :whitespace
-                                   :pretty-print true}}]}
 
-  :dependencies  [[org.clojure/clojure "1.5.1"]
-                  [org.clojure/clojurescript "0.0-2014"]
-                  [org.clojure/math.numeric-tower "0.0.2"]
-                  [expectations "1.4.56"]
-                  ])
+  :dependencies [[org.clojure/clojure "1.5.1"]
+                 [org.clojure/clojurescript "0.0-2030"]]
+
+  :plugins [[lein-cljsbuild "1.0.0-alpha2"]]
+  :cljsbuild {
+              :builds [{:id "debug"
+                        :source-paths ["src"]
+                        :compiler {
+                                   :output-to "circuits.js"
+                                   :output-dir "out"
+                                   :optimizations :whitespace
+                                   :source-map true}}
+                       {:id "release"
+                        :source-paths ["src"]
+                        :compiler {
+                                   :output-to "../../public/js/circuits.js"
+                                   :optimizations :advanced}}
+                       ]})
