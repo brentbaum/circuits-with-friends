@@ -17,6 +17,11 @@ body {
     pointer-events: none;
 }
 
+#workspace rect.delete-button {
+    fill: red;
+    opacity: .8;
+}
+
 #workspace line {
     stroke: steelblue;
     stroke-width: 2;

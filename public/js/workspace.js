@@ -25,6 +25,11 @@ function evaluateCircuit() {
     var result = output.result;
     console.log(state,result);
 }
+function clearCircuit() {
+    data = {};
+    circuitRef.set(data);
+    draw();
+}
 
 function clearCanvas() {
     removeSvg("g");
