@@ -6,21 +6,24 @@
 
 ; External Interface Functions
 
-(defn add-component [species circuit display]
+(defn ^:export add-component [species circuit display]
   (let [circuit-map (map-json circuit)
         display-map (map-json display)]
     (clj->js (core/add-component species circuit-map display-map))))
-(defn add-connection [src dst circuit]
+
+(defn ^:export add-connection [src dst circuit]
   (let [src-map (map-json src)
         dst-map (map-json dst)
         circuit-map (map-json circuit)]
     (clj->js (core/add-connection src-map dst-map circuit-map))))
-(defn remove-connection [src dst circuit]
+
+(defn ^:export remove-connection [src dst circuit]
   )
-(defn evaluate [circuit]
+
+(defn ^:export evaluate [circuit]
   (clj->js (core/evaluate (map-json circuit))))
 
-(defn remove-component [id circuit]
+(defn ^:export remove-component [id circuit]
   (clj->js (core/remove-component id (map-json circuit))))
 
 
