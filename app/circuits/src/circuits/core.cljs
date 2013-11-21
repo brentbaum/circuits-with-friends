@@ -3,33 +3,42 @@
             [circuits.comp-logic :as logic]
             [circuits.comp-builder :as build]
             [circuits.test-data :as t]))
-(def state (atom {}))
+(def state-atom (atom {}))
 
 (defn set-state  [component-map]
-  (reset! state component-map))
+  (reset! state-atom component-map))
 
-(defn clear-state [] (reset! state {}))
+(defn clear-state [] (reset! state-atom {}))
 
 (defn generate-id  [species circuit]
-    (let  [same-species  (filter #(=  (% :species) species)  (vals circuit))
-                   same-count  (count same-species)]
-          (keyword  (str species same-count))))
+  (let  [same-species  (filter #(=  (% :species) species)  (vals circuit))
+         same-count  (count same-species)]
+    (keyword  (str species same-count))))
 (declare function-map gen-inputs)
 
 (defn evaluate-component  [component]
+  (.log js/console "evaluate component\n")
   (let  [component-type  (component :species)
-         eval-fn  (function-map component-type)]
-    (eval-fn component)))
+         eval-fn  (function-map component-type)
+         result (eval-fn component)]
+    result))
 
-(defn evaluate  [id state]
+(defn find-output-components [circuit]
+  (into {} (map (fn [kvpair] (if (=
+                                  ((val kvpair) :species)
+                                  "outputpin")
+                               (val kvpair))) circuit)))
+
+(defn remove-component [id circuit]
+  (dissoc circuit (keyword id)))
+
+(defn evaluate  [state]
   (if (valid/validate-state state)
-    (let [newstate  (set-state state)
-          component (newstate (keyword id))
-          result  (evaluate-component (newstate (keyword id)))
-          ret-val {:result result :state state}
-          cleared-state  (clear-state)
+    (let [newstate  (reset! state-atom state)
+          components (find-output-components newstate)
+          result (map evaluate-component components)
           ]
-      ret-val)
+      {:result result :state @state-atom})
     nil))
 
 (defn add-component [species circuit display]
@@ -79,24 +88,22 @@
     new-circuit))
 
 (defn inner-fn  [mapping]
-  (let  [local-state @state
-         source-component  (local-state  (keyword (mapping :source-id)))
+  (let  [source-component  (@state-atom (keyword (mapping :source-id)))
          eval-fn  (function-map  (source-component :species))
          the-outputs  (eval-fn source-component)
          result (the-outputs (keyword (mapping :source-field)))]
     result))
 (defn gen-input-field  [kvpair]
-  {(key kvpair)  (map inner-fn  ((val kvpair) :connections))})
+  {(key kvpair)  (doall (map inner-fn  ((val kvpair) :connections)))})
 
 (defn gen-inputs  [component]
   (let  [input-maps  (component :inputs)
-         input-fields  (map gen-input-field input-maps)
+         input-fields  (doall (map gen-input-field input-maps))
          result (if (> (count input-fields) 1)
                   (apply conj input-fields)
                   (first input-fields))]
     result))
 
-;; for collections with only 1 value
 ;; Eval functions for every component
 
 (defn and-eval  [andgate]
@@ -148,17 +155,21 @@
     (if enabled
       (let [updated-state (assoc state :data (first (inputs :data)))
             updated-register (assoc register :state updated-state)]
-        (swap! state assoc (register :id) updated-register)))
+        (swap! state-atom assoc (register :id) updated-register)))
     {:q data}))
+
 (defn d-flipflop-eval [dff]
+  (.log js/console "dff eval\n")
   (let [state (dff :state)
         data (state :data)
         inputs (gen-inputs dff)
         enabled (inputs :enable)]
     (if enabled
       (let [updated-state (assoc state :data (vec (first (inputs :data))))
-            updated-dff (assoc dff :state updated-state)]
-        (swap! state assoc (dff :id) updated-dff)))
+            updated-dff (assoc dff :state updated-state)
+            updated-state (assoc @state-atom (keyword (dff :id)) updated-dff)]
+        (reset! state-atom updated-state)))
+    (.log js/console (str "during\n" ((@state-atom :dflipflop0) :state)))
     {:q data :q-bar (vec (map not data))}))
 (defn t-flipflop-eval [tff]
   (let [state (tff :state)
@@ -167,8 +178,8 @@
         enabled (inputs :enable)]
     (if enabled
       (let [updated-state (assoc state :data (vec (map not data)))
-            updated-dff (assoc tff :state updated-state)]
-        (swap! state assoc (tff :id) updated-dff)))
+            updated-tff (assoc tff :state updated-state)]
+        (swap! state-atom assoc (tff :id) updated-tff)))
     {:q data :q-bar (vec (map not data))}))
 (defn inputpin-eval  [inputpin]
   (let  [state  (inputpin :state)
