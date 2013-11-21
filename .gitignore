@@ -1,0 +1,6 @@
+.idea/*
+.DS_Store
+/app/target
+pom.xml
+.lein-*
+.env

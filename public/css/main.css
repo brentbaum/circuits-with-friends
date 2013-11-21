@@ -12,8 +12,9 @@ body {
 }
 
 #workspace rect.selected {
-    fill: #777;
-    stroke: #666;
+    fill: steelblue;
+    opacity: .3;
+    pointer-events: none;
 }
 
 #workspace line {
@@ -37,6 +38,7 @@ body {
 
 #workspace circle.selected {
     opacity: .3;
+    pointer-events: none;
 }
 
 #workspace line.selected {
@@ -65,9 +67,11 @@ body {
 }
 
 #buttons {
-    float:left ;
+    float:left;
     margin: 0;
     position: relative;
+    height: 20px;
+    padding-bottom: 5px;
 }
 
 #chat {
@@ -75,7 +79,7 @@ body {
     float:left;
     margin:0;
     width:33%;
-    height: 376px;
+    height: 375px;
     background: #999;
     position: relative;
     overflow: scroll;
@@ -88,6 +92,9 @@ body {
 .component-list {
     width: 80%;
     list-style-type:none;
+    padding-left: 0;
+    font-size: 15px;
+    vertical-align: middle;
 }
 
 .component-list li {
@@ -113,8 +120,9 @@ body {
     font-weight: bold;
 }
 
-#main {
-    width: 800px;
+#main-container {
+    width: 960px;
+    margin: 0 auto;
 }
 
 html {

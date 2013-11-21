@@ -1,3 +1,7 @@
+/*
+ * Methods for drawing / adding pins.
+ */
+
 function makePins() {
     return d3.values(data).reduce(function (prev, component) {
         return prev.concat(makeComponentPins(component));

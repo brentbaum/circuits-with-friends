@@ -1,3 +1,7 @@
+/*
+ * Methods for drawing / adding components.
+ */
+
 function drawComponents() {
     var component = d3.select("#workspace")
         .selectAll("g.component")
