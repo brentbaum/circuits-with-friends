@@ -23,6 +23,7 @@ function removeComponent() {
   console.log("selection", selectedComponent)
   if (!!selectedComponent) {
     data = circuits.js.remove_component(selectedComponent, data)
+    circuitRef.set(data);
   }
   draw();
 }
