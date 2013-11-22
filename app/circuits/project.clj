@@ -7,6 +7,11 @@
 
   :plugins [[lein-cljsbuild "1.0.0-alpha2"]]
   :cljsbuild {
+              :repl-listen-port 9000
+              :repl-launch-commands
+              {"simple" ["/Applications/Firefox.app/Contents/MacOS/firefox"
+                         "-jsconsole" 
+                         "http://localhost:8888/index.html"]}
               :builds [{:id "debug"
                         :source-paths ["src"]
                         :compiler {
@@ -18,6 +23,5 @@
                         :source-paths ["src"]
                         :compiler {
                                    :output-to "../../public/js/circuits.js"
-                                   :optimizations :whitespace
-                                   :pretty-print true}}
+                                   :optimizations :advanced}}
                        ]})

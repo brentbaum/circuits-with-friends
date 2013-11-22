@@ -19,6 +19,14 @@ function draw() {
         circle(selectedPin).classed("selected", true);
 }
 
+function removeComponent() {
+  console.log("selection", selectedComponent)
+  if (!!selectedComponent) {
+    data = circuits.js.remove_component(selectedComponent, data)
+  }
+  draw();
+}
+
 function evaluateCircuit() {
     var output = circuits.js.evaluate(data);
     var state = output.state;
