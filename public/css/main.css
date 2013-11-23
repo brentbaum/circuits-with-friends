@@ -133,3 +133,8 @@ body {
 html {
     background: #444444;
 }
+
+.buttons {
+    width: 960px;
+    margin: 0 auto;
+}
