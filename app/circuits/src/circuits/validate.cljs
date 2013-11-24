@@ -5,10 +5,10 @@
     (let  [keyss  (keys -map)]
           (=  (count keyss)  (count  (distinct keyss)))))
 
-(defn validate-component  [component]
-    )
+(defn validate-connection [src dst circuit]
+  )
 
-(defn validate-state  [proposed-state]
+(defn validate-state  [circuit]
     ;(let  [unique-keys?  (unique-keys? proposed-state)]
           ;(every? true?  [unique-keys? ,,,])))
   true)

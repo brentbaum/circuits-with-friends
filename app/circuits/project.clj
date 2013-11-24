@@ -18,7 +18,7 @@
                                    :output-to "circuits.js"
                                    :output-dir "out"
                                    :optimizations :whitespace
-                                   :source-map true}}
+                                   :source-map "hello"}}
                        {:id "release"
                         :source-paths ["src"]
                         :compiler {

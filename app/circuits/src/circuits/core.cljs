@@ -2,7 +2,10 @@
   (:require [circuits.validate :as valid]
             [circuits.comp-logic :as logic]
             [circuits.comp-builder :as build]
-            [circuits.test-data :as t]))
+            [circuits.test-data :as t]
+            [clojure.browser.repl :as repl]))
+(repl/connect "http://localhost:9000/repl") 
+
 (def state-atom (atom {}))
 
 (defn set-state  [component-map]
@@ -49,6 +52,7 @@
   (let [
         dstid (keyword (dst :id))
         dstfield (keyword (dst :field))
+       ; testt (-> dstid input-circuit :inputs dstfield :connections)
         srcid (keyword (src :id))
         srcfield (keyword (src :field))
         dst-component (input-circuit dstid)
