@@ -63,7 +63,13 @@ function highlightSelected() {
             .attr("y", s.attr("y"))
             .attr("width", s.attr("width"))
             .attr("height", s.attr("height"))
-            .classed("selected", true)
+            .classed("selected", true);
 
+        /*workspace.append("rect")
+            .attr("x", s.attr("x") + parseInt(s.style("width"), 10)-5)
+            .attr("y", 0)
+            .attr("height", 5)
+            .attr('width', 5)
+            .classed("delete-button", true)*/
     }
 }
