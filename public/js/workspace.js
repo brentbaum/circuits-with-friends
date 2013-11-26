@@ -18,8 +18,13 @@ function removeComponent() {
   console.log("selection", selectedComponent)
   if (!!selectedComponent) {
     data = circuits.js.remove_component(selectedComponent, data)
-    circuitRef.set(data);
+    pushData();
   }
+}
+
+// Abstraction level is over 9,000!
+function pushData() {
+  circuitRef.set(data);
   draw();
 }
 
