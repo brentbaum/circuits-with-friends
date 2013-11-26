@@ -3,10 +3,12 @@ function makeLinks(pins) {
     pins.forEach(function (pin) {
         if (!!pin["source-id"]) {
             var source = findSource(pins, pin["source-id"], pin["source-field"])
-            links.push({
-                x1: pin.x1, y1: pin.y1, target: pin,
-                y2: source.y1, x2: source.x1, source: source
-            })
+            if(!!source) {
+                links.push({
+                    x1: pin.x1, y1: pin.y1, target: pin,
+                    y2: source.y1, x2: source.x1, source: source
+                })
+            }
         }
     })
     return links;

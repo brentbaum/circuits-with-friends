@@ -15,7 +15,7 @@ function draw() {
     var links = makeLinks(pins);
     drawPins(pins);
     drawLinks(links);
-    if (selectedPin)
+    if (!!selectedPin)
         circle(selectedPin).classed("selected", true);
 }
 

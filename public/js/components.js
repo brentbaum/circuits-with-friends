@@ -9,9 +9,7 @@ function drawComponents() {
         .enter().append("svg:g");
 
     component.append("svg:image")
-        .attr("xlink:href", function (d) {
-            return "../svg/default/"+d.species+".svg";
-        })
+        .attr("xlink:href", getSVG)
         .attr("width", function (d) {
             return d.display.size;
         })
@@ -26,6 +24,7 @@ function drawComponents() {
         })
         .call(d3.behavior.drag().on("drag", move))
         .on("click", selectComponent);
+
 }
 
 function addComponent(name) {
@@ -40,4 +39,10 @@ function addComponent(name) {
     }
     data = circuits.js.add_component(name, data, display)
     draw();
+}
+
+function getSVG(d) {
+    if(d.species === "inputpin" && d.state[0])
+        return "../svg/glow/"+ d.species + ".svg";
+    return "../svg/default/"+d.species+".svg";
 }
