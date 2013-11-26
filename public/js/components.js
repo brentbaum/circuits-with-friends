@@ -24,7 +24,6 @@ function drawComponents() {
         })
         .call(d3.behavior.drag().on("drag", move))
         .on("click", selectComponent);
-
 }
 
 function addComponent(name) {

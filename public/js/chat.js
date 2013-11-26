@@ -1,4 +1,4 @@
-var chatRef = new Firebase('https://circuitswithfriends.firebaseIO.com/chat/');
+var chatRef;
 $('#messageInput').keypress(function (e) {
     if (e.keyCode == 13) {
         var name = $('#nameInput').val();
