@@ -32,7 +32,9 @@ function evaluateCircuit() {
     var output = circuits.js.evaluate(data);
     var state = output.state;
     var result = output.result;
-    console.log(state,result);
+    console.log(result);
+    data = state;
+    pushData();
 }
 function clearCircuit() {
     data = {};

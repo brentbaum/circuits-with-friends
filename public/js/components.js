@@ -41,7 +41,7 @@ function addComponent(name) {
 }
 
 function getSVG(d) {
-    if(d.species === "inputpin" && !!d.state && d.state.data[0])
+    if(!!d.state && d.state.data.length === 1 && d.state.data[0])
         return "../svg/glow/"+ d.species + ".svg";
     return "../svg/default/"+d.species+".svg";
 }
