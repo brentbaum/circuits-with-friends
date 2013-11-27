@@ -10,7 +10,7 @@
               :repl-listen-port 9000
               :repl-launch-commands
               {"simple" ["/Applications/Firefox.app/Contents/MacOS/firefox"
-                         "-jsconsole" 
+                         "-jsconsole"
                          "http://localhost:8888/index.html"]}
               :builds [{:id "debug"
                         :source-paths ["src"]
@@ -23,5 +23,6 @@
                         :source-paths ["src"]
                         :compiler {
                                    :output-to "../../public/js/circuits.js"
-                                   :optimizations :advanced}}
+                                   :optimizations :advanced
+                                   }}
                        ]})

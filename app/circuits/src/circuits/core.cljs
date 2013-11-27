@@ -4,9 +4,11 @@
             [circuits.comp-builder :as build]
             [circuits.test-data :as t]
             [clojure.browser.repl :as repl]))
-(repl/connect "http://localhost:9000/repl") 
+;(repl/connect "http://localhost:9000/repl")
 
 (def state-atom (atom {}))
+(def state-buffer (atom {}))
+(def eval-cache (atom {}))
 
 (defn set-state  [component-map]
   (reset! state-atom component-map))
@@ -16,10 +18,13 @@
 (defn generate-id  [species circuit]
   (let  [same-species  (filter #(=  (% :species) species)  (vals circuit))
          same-count  (count same-species)]
-    (keyword  (str species same-count))))
+    (keyword (str species same-count))))
 (declare function-map gen-inputs)
 
 (defn evaluate-component  [component]
+  ;(.log js/console (str "Evaluating component" (component :id) "\n"))
+  ;(.log js/console (str "Eval Cache: \n" @eval-cache "\n"))
+  ;(.log js/console (str "State Buffer: \n" @state-buffer "\n"))
   (let  [component-type  (component :species)
          eval-fn  (function-map component-type)
          result (eval-fn component)]
@@ -34,10 +39,12 @@
 (defn evaluate  [state]
   (if (valid/validate-state state)
     (let [newstate  (reset! state-atom state)
+          cleared-cache (reset! eval-cache {})
           components (find-output-components newstate)
-          result (evaluate-component (val (first components)))
+          result (doall (map evaluate-component (vals components)))
+          final-state (into @state-atom @state-buffer)
           ]
-      {:result result :state @state-atom})
+      {:result result :state final-state})
     nil))
 
 (defn add-component [species circuit display]
@@ -96,25 +103,33 @@
 (defn gen-input-field  [kvpair]
   {(key kvpair)  (doall (map inner-fn  ((val kvpair) :connections)))})
 
+(defn get-inputs [component]
+  (let [lookup-result (@eval-cache (keyword (component :id)))]
+    (if lookup-result
+      lookup-result
+      (gen-inputs component))))
+
 (defn gen-inputs  [component]
   (let  [input-maps  (component :inputs)
          input-fields  (doall (map gen-input-field input-maps))
          result (if (> (count input-fields) 1)
                   (apply conj input-fields)
                   (first input-fields))]
+    ;; Update eval-cache to we don't double-evaluate components
+    (swap! eval-cache assoc (keyword (component :id)) result)
     result))
 
 ;; Eval functions for every component
 
 (defn and-eval  [andgate]
-  (let [inputs (gen-inputs andgate)]
+  (let [inputs (get-inputs andgate)]
     {:q (logic/do-and (inputs :data))}))
 (defn nand-eval [nandgate]
   (let [and-value (and-eval nandgate)
         negated (not and-value)]
     {:q negated}))
 (defn or-eval [orgate]
-  (let [inputs (gen-inputs orgate)]
+  (let [inputs (get-inputs orgate)]
     {:q (logic/do-or (inputs :data))}))
 (defn nor-eval [norgate]
   (let [or-value (or-eval norgate)
@@ -122,7 +137,7 @@
     {:q negated}))
 
 (defn xor-eval [xorgate]
-  (let [inputs (gen-inputs xorgate)]
+  (let [inputs (get-inputs xorgate)]
     {:q (logic/do-xor (inputs :data))}))
 (defn xnor-eval [xnorgate]
   (let [xor-value (xor-eval xnorgate)
@@ -131,53 +146,61 @@
 
 ;; TODO consider enable
 (defn decoder-eval [decoder]
-  (let [input (gen-inputs decoder)]
+  (let [input (get-inputs decoder)]
     {:q (logic/do-decode (input :data))}))
 
 (defn mux-eval  [mux]
-  (let  [inputs  (gen-inputs mux)
+  (let  [inputs  (get-inputs mux)
          data  (inputs :data)
          control  (flatten  (inputs :control))
          result (logic/do-mux data control)]
     {:q result}))
+
 (defn not-eval [notgate]
-  (let [inputs (gen-inputs notgate)
+  (let [inputs (get-inputs notgate)
         data (:data inputs)
         only-one (first data)]
     {:q (vec (map not only-one))}))
 
+;; TODO Keep track of state updates to be made in a separate map
+;; Don't actually write the updates until the end of the evaluation sequence
+;; This will prevent corruption of values
+;; i,e, 2 output pins connected to the same DFF showing different values because
+;; by the time the second one is evaluating, the state of the DFF has been updated.
+;; This is wrong. Wait to write state changes until all outputs have been eval'd
 ;; Memory Components
 (defn register-eval [register]
   (let [state (register :state)
         data (state :data)
-        inputs (gen-inputs register)
+        inputs (get-inputs register)
         enabled (inputs :enable)]
     (if enabled
       (let [updated-state (assoc state :data (first (inputs :data)))
             updated-register (assoc register :state updated-state)]
-        (swap! state-atom assoc (register :id) updated-register)))
+        (swap! state-buffer assoc (register :id) updated-register)))
     {:q data}))
 
 (defn d-flipflop-eval [dff]
+  (.log js/console "DFF Eval called")
   (let [state (dff :state)
         data (state :data)
-        inputs (gen-inputs dff)
+        inputs (get-inputs dff)
         enabled (inputs :enable)]
     (if enabled
       (let [updated-state (assoc state :data (vec (first (inputs :data))))
             updated-dff (assoc dff :state updated-state)
-            updated-state (assoc @state-atom (keyword (dff :id)) updated-dff)]
-        (reset! state-atom updated-state)))
+            updated-state (assoc @state-buffer (keyword (dff :id)) updated-dff)]
+        (reset! state-buffer updated-state)))
     {:q data :q-bar (vec (map not data))}))
 (defn t-flipflop-eval [tff]
   (let [state (tff :state)
         data (state :data)
-        inputs (gen-inputs tff)
+        inputs (get-inputs tff)
         enabled (inputs :enable)]
     (if enabled
       (let [updated-state (assoc state :data (vec (map not data)))
             updated-tff (assoc tff :state updated-state)]
-        (swap! state-atom assoc (tff :id) updated-tff)))
+        (swap! state-buffer assoc (tff :id) updated-tff)))
     {:q data :q-bar (vec (map not data))}))
 (defn inputpin-eval  [inputpin]
   (let  [state  (inputpin :state)
