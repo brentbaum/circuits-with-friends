@@ -106,11 +106,11 @@ function oa(a) {
   }
   -1 != a.indexOf("\x26") && (a = a.replace(qa, "\x26amp;"));
   -1 != a.indexOf("\x3c") && (a = a.replace(ra, "\x26lt;"));
-  -1 != a.indexOf("\x3e") && (a = a.replace(ta, "\x26gt;"));
-  -1 != a.indexOf('"') && (a = a.replace(ua, "\x26quot;"));
+  -1 != a.indexOf("\x3e") && (a = a.replace(sa, "\x26gt;"));
+  -1 != a.indexOf('"') && (a = a.replace(ta, "\x26quot;"));
   return a
 }
-var qa = /&/g, ra = /</g, ta = />/g, ua = /\"/g, pa = /[&<>\"]/;
+var qa = /&/g, ra = /</g, sa = />/g, ta = /\"/g, pa = /[&<>\"]/;
 function va(a) {
   Error.captureStackTrace ? Error.captureStackTrace(this, va) : this.stack = Error().stack || "";
   a && (this.message = String(a))
@@ -440,13 +440,13 @@ function jb(a) {
   return b.call(null, a)
 }
 var kb = {};
-function mb(a, b) {
+function lb(a, b) {
   if(a ? a.v : a) {
     return a.v(a, b)
   }
   var c;
-  c = mb[p(null == a ? null : a)];
-  if(!c && (c = mb._, !c)) {
+  c = lb[p(null == a ? null : a)];
+  if(!c && (c = lb._, !c)) {
     throw x.call(null, "IWithMeta.-with-meta", a);
   }
   return c.call(null, a, b)
@@ -810,7 +810,7 @@ function F(a) {
 function H(a) {
   return null == a ? null : a && (a.d & 128 || a.Xa) ? Xa.call(null, a) : D.call(null, F.call(null, a))
 }
-var L = function() {
+var K = function() {
   function a(a, b) {
     return a === b || pb.call(null, a, b)
   }
@@ -870,7 +870,7 @@ pb["null"] = function(a, b) {
   return null == b
 };
 kb["null"] = !0;
-mb["null"] = g(null);
+lb["null"] = g(null);
 ib["null"] = !0;
 jb["null"] = g(null);
 Ra["null"] = g(null);
@@ -1030,7 +1030,7 @@ n.V = function() {
   return this.i + 1 < this.b.length ? new Sb(this.b, this.i + 1) : null
 };
 n.w = function(a, b) {
-  return N.call(null, b, this)
+  return M.call(null, b, this)
 };
 n.Ka = function() {
   var a = Qa.call(null, this);
@@ -1122,7 +1122,7 @@ n.r = function() {
   return Zb.call(null, this)
 };
 n.w = function(a, b) {
-  return N.call(null, b, this)
+  return M.call(null, b, this)
 };
 n.toString = function() {
   return Nb.call(null, this)
@@ -1504,7 +1504,7 @@ var cc = function qc(b, c) {
       return new Ga(this.h, this.Na, this.Vb, c)
     });
     return new Ga(c, b, qc, null)
-  }(), c) : mb.call(null, b, c)
+  }(), c) : lb.call(null, b, c)
 };
 function sc(a) {
   return(a ? a.d & 131072 || a.Gb || (a.d ? 0 : w.call(null, ib, a)) : w.call(null, ib, a)) ? jb.call(null, a) : null
@@ -1796,7 +1796,7 @@ function ac(a, b) {
       if(null == d) {
         return!1
       }
-      if(L.call(null, E.call(null, c), E.call(null, d))) {
+      if(K.call(null, E.call(null, c), E.call(null, d))) {
         c = H.call(null, c), d = H.call(null, d)
       }else {
         return new t(null, "else", "else", 1017020587) ? !1 : null
@@ -2010,7 +2010,7 @@ n.u = f("h");
 n.A = function() {
   return cc.call(null, G, this.h)
 };
-function N(a, b) {
+function M(a, b) {
   var c = null == b;
   return(c ? c : b && (b.d & 64 || b.pa)) ? new $c(null, a, b, null) : new $c(null, a, D.call(null, b), null)
 }
@@ -2116,7 +2116,7 @@ n.V = function() {
   return null == this.p ? null : H.call(null, this.p)
 };
 n.w = function(a, b) {
-  return N.call(null, b, this)
+  return M.call(null, b, this)
 };
 n.toString = function() {
   return Nb.call(null, this)
@@ -2257,7 +2257,7 @@ n.V = function() {
   return null == a ? null : a
 };
 n.w = function(a, b) {
-  return N.call(null, b, this)
+  return M.call(null, b, this)
 };
 n.toString = function() {
   return Nb.call(null, this)
@@ -2325,12 +2325,12 @@ function qd(a, b) {
   }
 }
 var sd = function rd(b) {
-  return null == b ? null : null == H.call(null, b) ? D.call(null, E.call(null, b)) : new t(null, "else", "else", 1017020587) ? N.call(null, E.call(null, b), rd.call(null, H.call(null, b))) : null
+  return null == b ? null : null == H.call(null, b) ? D.call(null, E.call(null, b)) : new t(null, "else", "else", 1017020587) ? M.call(null, E.call(null, b), rd.call(null, H.call(null, b))) : null
 }, td = function() {
   function a(a, b) {
     return new R(null, function() {
       var c = D.call(null, a);
-      return c ? Cc.call(null, c) ? kd.call(null, nd.call(null, c), d.call(null, od.call(null, c), b)) : N.call(null, E.call(null, c), d.call(null, F.call(null, c), b)) : b
+      return c ? Cc.call(null, c) ? kd.call(null, nd.call(null, c), d.call(null, od.call(null, c), b)) : M.call(null, E.call(null, c), d.call(null, F.call(null, c), b)) : b
     }, null, null)
   }
   function b(a) {
@@ -2351,7 +2351,7 @@ var sd = function rd(b) {
       return function u(a, b) {
         return new R(null, function() {
           var c = D.call(null, a);
-          return c ? Cc.call(null, c) ? kd.call(null, nd.call(null, c), u.call(null, od.call(null, c), b)) : N.call(null, E.call(null, c), u.call(null, F.call(null, c), b)) : v(b) ? u.call(null, E.call(null, b), H.call(null, b)) : null
+          return c ? Cc.call(null, c) ? kd.call(null, nd.call(null, c), u.call(null, od.call(null, c), b)) : M.call(null, E.call(null, c), u.call(null, F.call(null, c), b)) : v(b) ? u.call(null, E.call(null, b), H.call(null, b)) : null
         }, null, null)
       }.call(null, d.call(null, a, c), e)
     }
@@ -2387,25 +2387,25 @@ var sd = function rd(b) {
   return d
 }(), ud = function() {
   function a(a, b, c, d) {
-    return N.call(null, a, N.call(null, b, N.call(null, c, d)))
+    return M.call(null, a, M.call(null, b, M.call(null, c, d)))
   }
   function b(a, b, c) {
-    return N.call(null, a, N.call(null, b, c))
+    return M.call(null, a, M.call(null, b, c))
   }
   function c(a, b) {
-    return N.call(null, a, b)
+    return M.call(null, a, b)
   }
   function d(a) {
     return D.call(null, a)
   }
   var e = null, h = function() {
     function a(c, d, e, h, k) {
-      var M = null;
-      4 < arguments.length && (M = J(Array.prototype.slice.call(arguments, 4), 0));
-      return b.call(this, c, d, e, h, M)
+      var N = null;
+      4 < arguments.length && (N = J(Array.prototype.slice.call(arguments, 4), 0));
+      return b.call(this, c, d, e, h, N)
     }
     function b(a, c, d, e, h) {
-      return N.call(null, a, N.call(null, c, N.call(null, d, N.call(null, e, sd.call(null, h)))))
+      return M.call(null, a, M.call(null, c, M.call(null, d, M.call(null, e, sd.call(null, h)))))
     }
     a.k = 4;
     a.g = function(a) {
@@ -2501,51 +2501,51 @@ function zd(a, b, c) {
   if(9 === b) {
     return a.Db ? a.Db(c, d, e, h, k, a, l, m, q) : a.call(null, c, d, e, h, k, a, l, m, q)
   }
-  var s = A.call(null, u), K = B.call(null, u);
+  var s = A.call(null, u), L = B.call(null, u);
   if(10 === b) {
     return a.rb ? a.rb(c, d, e, h, k, a, l, m, q, s) : a.call(null, c, d, e, h, k, a, l, m, q, s)
   }
-  var u = A.call(null, K), M = B.call(null, K);
+  var u = A.call(null, L), N = B.call(null, L);
   if(11 === b) {
     return a.sb ? a.sb(c, d, e, h, k, a, l, m, q, s, u) : a.call(null, c, d, e, h, k, a, l, m, q, s, u)
   }
-  var K = A.call(null, M), I = B.call(null, M);
+  var L = A.call(null, N), I = B.call(null, N);
   if(12 === b) {
-    return a.tb ? a.tb(c, d, e, h, k, a, l, m, q, s, u, K) : a.call(null, c, d, e, h, k, a, l, m, q, s, u, K)
+    return a.tb ? a.tb(c, d, e, h, k, a, l, m, q, s, u, L) : a.call(null, c, d, e, h, k, a, l, m, q, s, u, L)
   }
-  var M = A.call(null, I), fa = B.call(null, I);
+  var N = A.call(null, I), fa = B.call(null, I);
   if(13 === b) {
-    return a.ub ? a.ub(c, d, e, h, k, a, l, m, q, s, u, K, M) : a.call(null, c, d, e, h, k, a, l, m, q, s, u, K, M)
+    return a.ub ? a.ub(c, d, e, h, k, a, l, m, q, s, u, L, N) : a.call(null, c, d, e, h, k, a, l, m, q, s, u, L, N)
   }
-  var I = A.call(null, fa), sa = B.call(null, fa);
+  var I = A.call(null, fa), ua = B.call(null, fa);
   if(14 === b) {
-    return a.vb ? a.vb(c, d, e, h, k, a, l, m, q, s, u, K, M, I) : a.call(null, c, d, e, h, k, a, l, m, q, s, u, K, M, I)
+    return a.vb ? a.vb(c, d, e, h, k, a, l, m, q, s, u, L, N, I) : a.call(null, c, d, e, h, k, a, l, m, q, s, u, L, N, I)
   }
-  var fa = A.call(null, sa), Da = B.call(null, sa);
+  var fa = A.call(null, ua), Da = B.call(null, ua);
   if(15 === b) {
-    return a.wb ? a.wb(c, d, e, h, k, a, l, m, q, s, u, K, M, I, fa) : a.call(null, c, d, e, h, k, a, l, m, q, s, u, K, M, I, fa)
+    return a.wb ? a.wb(c, d, e, h, k, a, l, m, q, s, u, L, N, I, fa) : a.call(null, c, d, e, h, k, a, l, m, q, s, u, L, N, I, fa)
   }
-  var sa = A.call(null, Da), Pa = B.call(null, Da);
+  var ua = A.call(null, Da), Pa = B.call(null, Da);
   if(16 === b) {
-    return a.xb ? a.xb(c, d, e, h, k, a, l, m, q, s, u, K, M, I, fa, sa) : a.call(null, c, d, e, h, k, a, l, m, q, s, u, K, M, I, fa, sa)
+    return a.xb ? a.xb(c, d, e, h, k, a, l, m, q, s, u, L, N, I, fa, ua) : a.call(null, c, d, e, h, k, a, l, m, q, s, u, L, N, I, fa, ua)
   }
-  var Da = A.call(null, Pa), lb = B.call(null, Pa);
+  var Da = A.call(null, Pa), mb = B.call(null, Pa);
   if(17 === b) {
-    return a.yb ? a.yb(c, d, e, h, k, a, l, m, q, s, u, K, M, I, fa, sa, Da) : a.call(null, c, d, e, h, k, a, l, m, q, s, u, K, M, I, fa, sa, Da)
+    return a.yb ? a.yb(c, d, e, h, k, a, l, m, q, s, u, L, N, I, fa, ua, Da) : a.call(null, c, d, e, h, k, a, l, m, q, s, u, L, N, I, fa, ua, Da)
   }
-  var Pa = A.call(null, lb), ec = B.call(null, lb);
+  var Pa = A.call(null, mb), ec = B.call(null, mb);
   if(18 === b) {
-    return a.zb ? a.zb(c, d, e, h, k, a, l, m, q, s, u, K, M, I, fa, sa, Da, Pa) : a.call(null, c, d, e, h, k, a, l, m, q, s, u, K, M, I, fa, sa, Da, Pa)
+    return a.zb ? a.zb(c, d, e, h, k, a, l, m, q, s, u, L, N, I, fa, ua, Da, Pa) : a.call(null, c, d, e, h, k, a, l, m, q, s, u, L, N, I, fa, ua, Da, Pa)
   }
-  lb = A.call(null, ec);
+  mb = A.call(null, ec);
   ec = B.call(null, ec);
   if(19 === b) {
-    return a.Ab ? a.Ab(c, d, e, h, k, a, l, m, q, s, u, K, M, I, fa, sa, Da, Pa, lb) : a.call(null, c, d, e, h, k, a, l, m, q, s, u, K, M, I, fa, sa, Da, Pa, lb)
+    return a.Ab ? a.Ab(c, d, e, h, k, a, l, m, q, s, u, L, N, I, fa, ua, Da, Pa, mb) : a.call(null, c, d, e, h, k, a, l, m, q, s, u, L, N, I, fa, ua, Da, Pa, mb)
   }
   var fc = A.call(null, ec);
   B.call(null, ec);
   if(20 === b) {
-    return a.Bb ? a.Bb(c, d, e, h, k, a, l, m, q, s, u, K, M, I, fa, sa, Da, Pa, lb, fc) : a.call(null, c, d, e, h, k, a, l, m, q, s, u, K, M, I, fa, sa, Da, Pa, lb, fc)
+    return a.Bb ? a.Bb(c, d, e, h, k, a, l, m, q, s, u, L, N, I, fa, ua, Da, Pa, mb, fc) : a.call(null, c, d, e, h, k, a, l, m, q, s, u, L, N, I, fa, ua, Da, Pa, mb, fc)
   }
   throw Error("Only up to 20 arguments supported on functions");
 }
@@ -2578,13 +2578,13 @@ var rc = function() {
     return a.apply(a, pd.call(null, b))
   }
   var e = null, h = function() {
-    function a(c, d, e, h, k, M) {
+    function a(c, d, e, h, k, N) {
       var I = null;
       5 < arguments.length && (I = J(Array.prototype.slice.call(arguments, 5), 0));
       return b.call(this, c, d, e, h, k, I)
     }
     function b(a, c, d, e, h, k) {
-      c = N.call(null, c, N.call(null, d, N.call(null, e, N.call(null, h, sd.call(null, k)))));
+      c = M.call(null, c, M.call(null, d, M.call(null, e, M.call(null, h, sd.call(null, k)))));
       d = a.k;
       return a.g ? (e = qd.call(null, c, d + 1), e <= d ? zd.call(null, a, e, c) : a.g(c)) : a.apply(a, pd.call(null, c))
     }
@@ -2714,7 +2714,7 @@ function Ed(a, b) {
           }
           return kd.call(null, md.call(null, q), d.call(null, b + m, od.call(null, k)))
         }
-        return N.call(null, a.call(null, b, E.call(null, k)), d.call(null, b + 1, F.call(null, k)))
+        return M.call(null, a.call(null, b, E.call(null, k)), d.call(null, b + 1, F.call(null, k)))
       }
       return null
     }, null, null)
@@ -2724,13 +2724,13 @@ var S = function() {
   function a(a, b, c, e) {
     return new R(null, function() {
       var q = D.call(null, b), s = D.call(null, c), u = D.call(null, e);
-      return q && s && u ? N.call(null, a.call(null, E.call(null, q), E.call(null, s), E.call(null, u)), d.call(null, a, F.call(null, q), F.call(null, s), F.call(null, u))) : null
+      return q && s && u ? M.call(null, a.call(null, E.call(null, q), E.call(null, s), E.call(null, u)), d.call(null, a, F.call(null, q), F.call(null, s), F.call(null, u))) : null
     }, null, null)
   }
   function b(a, b, c) {
     return new R(null, function() {
       var e = D.call(null, b), q = D.call(null, c);
-      return e && q ? N.call(null, a.call(null, E.call(null, e), E.call(null, q)), d.call(null, a, F.call(null, e), F.call(null, q))) : null
+      return e && q ? M.call(null, a.call(null, E.call(null, e), E.call(null, q)), d.call(null, a, F.call(null, e), F.call(null, q))) : null
     }, null, null)
   }
   function c(a, b) {
@@ -2747,24 +2747,24 @@ var S = function() {
           }
           return kd.call(null, md.call(null, s), d.call(null, a, od.call(null, c)))
         }
-        return N.call(null, a.call(null, E.call(null, c)), d.call(null, a, F.call(null, c)))
+        return M.call(null, a.call(null, E.call(null, c)), d.call(null, a, F.call(null, c)))
       }
       return null
     }, null, null)
   }
   var d = null, e = function() {
     function a(c, d, e, h, u) {
-      var K = null;
-      4 < arguments.length && (K = J(Array.prototype.slice.call(arguments, 4), 0));
-      return b.call(this, c, d, e, h, K)
+      var L = null;
+      4 < arguments.length && (L = J(Array.prototype.slice.call(arguments, 4), 0));
+      return b.call(this, c, d, e, h, L)
     }
     function b(a, c, e, h, k) {
       return d.call(null, function(b) {
         return rc.call(null, a, b)
-      }, function M(a) {
+      }, function N(a) {
         return new R(null, function() {
           var b = d.call(null, D, a);
-          return Ad.call(null, Cd, b) ? N.call(null, d.call(null, E, b), M.call(null, d.call(null, F, b))) : null
+          return Ad.call(null, Cd, b) ? M.call(null, d.call(null, E, b), N.call(null, d.call(null, F, b))) : null
         }, null, null)
       }.call(null, hc.call(null, k, h, e, c)))
     }
@@ -2806,7 +2806,7 @@ var S = function() {
   return new R(null, function() {
     if(0 < b) {
       var d = D.call(null, c);
-      return d ? N.call(null, E.call(null, d), Fd.call(null, b - 1, F.call(null, d))) : null
+      return d ? M.call(null, E.call(null, d), Fd.call(null, b - 1, F.call(null, d))) : null
     }
     return null
   }, null, null)
@@ -2834,7 +2834,7 @@ var Id = function() {
   }
   function b(a) {
     return new R(null, function() {
-      return N.call(null, a, c.call(null, a))
+      return M.call(null, a, c.call(null, a))
     }, null, null)
   }
   var c = null, c = function(c, e) {
@@ -2854,7 +2854,7 @@ function Jd(a) {
   return function c(a, e) {
     return new R(null, function() {
       var h = D.call(null, a);
-      return h ? N.call(null, E.call(null, h), c.call(null, F.call(null, h), e)) : D.call(null, e) ? c.call(null, E.call(null, e), F.call(null, e)) : null
+      return h ? M.call(null, E.call(null, h), c.call(null, F.call(null, h), e)) : D.call(null, e) ? c.call(null, E.call(null, e), F.call(null, e)) : null
     }, null, null)
   }.call(null, null, a)
 }
@@ -2911,7 +2911,7 @@ var Kd = function() {
       }
       e = E.call(null, d);
       d = F.call(null, d);
-      return v(b.call(null, e)) ? N.call(null, e, Ld.call(null, b, d)) : Ld.call(null, b, d)
+      return v(b.call(null, e)) ? M.call(null, e, Ld.call(null, b, d)) : Ld.call(null, b, d)
     }
     return null
   }, null, null)
@@ -2922,7 +2922,7 @@ function Nd(a, b) {
 function Od(a, b, c) {
   return function e(c) {
     return new R(null, function() {
-      return N.call(null, c, v(a.call(null, c)) ? Kd.call(null, e, b.call(null, c)) : null)
+      return M.call(null, c, v(a.call(null, c)) ? Kd.call(null, e, b.call(null, c)) : null)
     }, null, null)
   }.call(null, c)
 }
@@ -2940,7 +2940,7 @@ var Rd = function() {
       var m = D.call(null, l);
       if(m) {
         var q = Gd.call(null, a, m);
-        return a === P.call(null, q) ? N.call(null, q, d.call(null, a, b, c, Hd.call(null, b, m))) : Ta.call(null, G, Gd.call(null, a, td.call(null, q, c)))
+        return a === P.call(null, q) ? M.call(null, q, d.call(null, a, b, c, Hd.call(null, b, m))) : Ta.call(null, G, Gd.call(null, a, td.call(null, q, c)))
       }
       return null
     }, null, null)
@@ -2950,7 +2950,7 @@ var Rd = function() {
       var l = D.call(null, c);
       if(l) {
         var m = Gd.call(null, a, l);
-        return a === P.call(null, m) ? N.call(null, m, d.call(null, a, b, Hd.call(null, b, l))) : null
+        return a === P.call(null, m) ? M.call(null, m, d.call(null, a, b, Hd.call(null, b, l))) : null
       }
       return null
     }, null, null)
@@ -3208,7 +3208,7 @@ n.V = function() {
   return Jb.call(null, this)
 };
 n.w = function(a, b) {
-  return N.call(null, b, this)
+  return M.call(null, b, this)
 };
 n.toString = function() {
   return Nb.call(null, this)
@@ -3341,7 +3341,7 @@ n.H = function(a, b, c) {
 n.C = function() {
   var a = this;
   return function c(d) {
-    return d === a.end ? null : N.call(null, z.call(null, a.ia, d), new R(null, function() {
+    return d === a.end ? null : M.call(null, z.call(null, a.ia, d), new R(null, function() {
       return c.call(null, d + 1)
     }, null, null))
   }.call(null, a.start)
@@ -3539,7 +3539,7 @@ we.prototype.q = g(!1);
 var xe = new we;
 function ye(a, b) {
   return Ic.call(null, Ac.call(null, b) ? P.call(null, a) === P.call(null, b) ? Ad.call(null, Cd, S.call(null, function(a) {
-    return L.call(null, mc.call(null, b, E.call(null, a), xe), dc.call(null, a))
+    return K.call(null, mc.call(null, b, E.call(null, a), xe), dc.call(null, a))
   }, a)) : null : null)
 }
 function ze(a) {
@@ -3615,7 +3615,7 @@ function De(a, b, c) {
     if(b <= d) {
       return-1
     }
-    if(L.call(null, c, a[d])) {
+    if(K.call(null, c, a[d])) {
       return d
     }
     if(new t(null, "else", "else", 1017020587)) {
@@ -3657,7 +3657,7 @@ n.V = function() {
   return this.i < this.b.length - 2 ? new Ge(this.b, this.i + 2, this.P) : null
 };
 n.w = function(a, b) {
-  return N.call(null, b, this)
+  return M.call(null, b, this)
 };
 n.toString = function() {
   return Nb.call(null, this)
@@ -3718,7 +3718,7 @@ n.L = function(a, b, c) {
 };
 n.na = function(a, b, c) {
   a = Ee.call(null, this, b);
-  return-1 === a ? this.c < Ke ? (c = Fe.call(null, this, b, c), new Ie(this.h, this.c + 1, c, null)) : mb.call(null, $a.call(null, Qd.call(null, Le, this), b, c), this.h) : c === this.b[a + 1] ? this : new t(null, "else", "else", 1017020587) ? (b = this.b.slice(), b[a + 1] = c, new Ie(this.h, this.c, b, null)) : null
+  return-1 === a ? this.c < Ke ? (c = Fe.call(null, this, b, c), new Ie(this.h, this.c + 1, c, null)) : lb.call(null, $a.call(null, Qd.call(null, Le, this), b, c), this.h) : c === this.b[a + 1] ? this : new t(null, "else", "else", 1017020587) ? (b = this.b.slice(), b[a + 1] = c, new Ie(this.h, this.c, b, null)) : null
 };
 n.call = function() {
   var a = null;
@@ -3759,7 +3759,7 @@ n.v = function(a, b) {
 };
 n.u = f("h");
 n.A = function() {
-  return mb.call(null, U, this.h)
+  return lb.call(null, U, this.h)
 };
 n.Ja = function(a, b) {
   if(0 <= Ee.call(null, this, b)) {
@@ -3771,7 +3771,7 @@ n.Ja = function(a, b) {
       if(e >= c) {
         return new Ie(this.h, this.c - 1, d, null)
       }
-      if(L.call(null, b, this.b[e])) {
+      if(K.call(null, b, this.b[e])) {
         e += 2
       }else {
         if(new t(null, "else", "else", 1017020587)) {
@@ -3859,7 +3859,7 @@ function Ne() {
   this.X = !1
 }
 function Oe(a, b) {
-  return a === b ? !0 : ad.call(null, a, b) ? !0 : new t(null, "else", "else", 1017020587) ? L.call(null, a, b) : null
+  return a === b ? !0 : ad.call(null, a, b) ? !0 : new t(null, "else", "else", 1017020587) ? K.call(null, a, b) : null
 }
 var Pe = function() {
   function a(a, b, c, k, l) {
@@ -4111,7 +4111,7 @@ n.sa = function(a, b, c) {
   return-1 === a ? this : 1 === this.c ? null : new t(null, "else", "else", 1017020587) ? new af(null, this.Z, this.c - 1, Qe.call(null, this.b, Oc.call(null, a, 2))) : null
 };
 n.Q = function(a, b, c, d, e) {
-  return b === this.Z ? (a = $e.call(null, this.b, this.c, c), -1 === a ? (a = 2 * this.c, b = Array(a + 2), Ec.call(null, this.b, 0, b, 0, a), b[a] = c, b[a + 1] = d, e.X = !0, new af(null, this.Z, this.c + 1, b)) : L.call(null, this.b[a], d) ? this : new af(null, this.Z, this.c, Pe.call(null, this.b, a + 1, d))) : (new Te(null, 1 << (this.Z >>> a & 31), [null, this])).Q(a, b, c, d, e)
+  return b === this.Z ? (a = $e.call(null, this.b, this.c, c), -1 === a ? (a = 2 * this.c, b = Array(a + 2), Ec.call(null, this.b, 0, b, 0, a), b[a] = c, b[a + 1] = d, e.X = !0, new af(null, this.Z, this.c + 1, b)) : K.call(null, this.b[a], d) ? this : new af(null, this.Z, this.c, Pe.call(null, this.b, a + 1, d))) : (new Te(null, 1 << (this.Z >>> a & 31), [null, this])).Q(a, b, c, d, e)
 };
 n.ga = function(a, b, c, d) {
   a = $e.call(null, this.b, this.c, c);
@@ -4162,7 +4162,7 @@ n.r = function() {
   return null != a ? a : this.j = a = Zb.call(null, this)
 };
 n.w = function(a, b) {
-  return N.call(null, b, this)
+  return M.call(null, b, this)
 };
 n.toString = function() {
   return Nb.call(null, this)
@@ -4244,7 +4244,7 @@ n.r = function() {
   return null != a ? a : this.j = a = Zb.call(null, this)
 };
 n.w = function(a, b) {
-  return N.call(null, b, this)
+  return M.call(null, b, this)
 };
 n.toString = function() {
   return Nb.call(null, this)
@@ -4370,7 +4370,7 @@ n.toString = function() {
 n.C = function() {
   if(0 < this.c) {
     var a = null != this.root ? this.root.ra() : null;
-    return this.I ? N.call(null, T([null, this.O], !0), a) : a
+    return this.I ? M.call(null, T([null, this.O], !0), a) : a
   }
   return null
 };
@@ -4383,7 +4383,7 @@ n.v = function(a, b) {
 };
 n.u = f("h");
 n.A = function() {
-  return mb.call(null, Le, this.h)
+  return lb.call(null, Le, this.h)
 };
 n.Ja = function(a, b) {
   if(null == b) {
@@ -4540,7 +4540,7 @@ n.V = function() {
   return null == a ? null : new jf(a, this.P)
 };
 n.w = function(a, b) {
-  return N.call(null, b, this)
+  return M.call(null, b, this)
 };
 n.toString = function() {
   return Nb.call(null, this)
@@ -4988,7 +4988,7 @@ var Cf = function() {
     return Bf.call(null, a, b.call(null, a.state))
   }
   var e = null, h = function() {
-    function a(c, d, e, h, k, M) {
+    function a(c, d, e, h, k, N) {
       var I = null;
       5 < arguments.length && (I = J(Array.prototype.slice.call(arguments, 5), 0));
       return b.call(this, c, d, e, h, k, I)
@@ -5142,7 +5142,7 @@ var Kf = function() {
                             return b ? kd.call(null, md.call(null, k), fc.call(null, od.call(null, a))) : kd.call(null, md.call(null, k), null)
                           }
                           k = E.call(null, a);
-                          return N.call(null, T([d.call(null, k), I.call(null, e[k])], !0), fc.call(null, F.call(null, a)))
+                          return M.call(null, T([d.call(null, k), I.call(null, e[k])], !0), fc.call(null, F.call(null, a)))
                         }
                         return null
                       }
@@ -5394,18 +5394,18 @@ n.Nb = function(a, b, c) {
       if(ca(c)) {
         k = {message:c, name:"Unknown error", lineNumber:"Not available", fileName:l, stack:"Not available"}
       }else {
-        var u, K, m = !1;
+        var u, L, m = !1;
         try {
           u = c.lineNumber || c.Dc || "Not available"
-        }catch(M) {
+        }catch(N) {
           u = "Not available", m = !0
         }
         try {
-          K = c.fileName || c.filename || c.sourceURL || aa.$googDebugFname || l
+          L = c.fileName || c.filename || c.sourceURL || aa.$googDebugFname || l
         }catch(I) {
-          K = "Not available", m = !0
+          L = "Not available", m = !0
         }
-        k = !m && c.lineNumber && c.fileName && c.stack ? c : {message:c.message, name:c.name, lineNumber:u, fileName:K, stack:c.stack || "Not available"}
+        k = !m && c.lineNumber && c.fileName && c.stack ? c : {message:c.message, name:c.name, lineNumber:u, fileName:L, stack:c.stack || "Not available"}
       }
       e = "Message: " + oa(k.message) + '\nUrl: \x3ca href\x3d"view-source:' + k.fileName + '" target\x3d"_new"\x3e' + k.fileName + "\x3c/a\x3e\nLine: " + k.lineNumber + "\n\nBrowser stack:\n" + oa(k.stack + "-\x3e ") + "[end]\n\nJS stack traversal:\n" + oa(yg(h) + "-\x3e ")
     }catch(fa) {
@@ -5545,7 +5545,7 @@ function Ah(a) {
   return rc.call(null, S, oe, a)
 }
 function Bh(a) {
-  return L.call(null, P.call(null, a), 1)
+  return K.call(null, P.call(null, a), 1)
 }
 function Ch(a) {
   return Ad.call(null, Gc, a)
@@ -5671,7 +5671,7 @@ Af.a(0);
 var Ph = Af.a(U), Qh = Af.a(U), Rh = Af.a(U);
 function Sh(a, b) {
   var c = Md(function(b) {
-    return L.f(b.a ? b.a(Sf) : b.call(null, Sf), a)
+    return K.f(b.a ? b.a(Sf) : b.call(null, Sf), a)
   }, kf(b)), c = P(c);
   return dd.a([y(a), y(c)].join(""))
 }
@@ -5681,7 +5681,7 @@ function Th(a) {
 }
 function Vh(a) {
   return Qd(U, Md(function(a) {
-    return L.f("outputpin", Tc(a).call(null, Sf))
+    return K.f("outputpin", Tc(a).call(null, Sf))
   }, a))
 }
 function Wh(a) {
@@ -5717,9 +5717,11 @@ function bi(a) {
   return r([Z, Eh(a.a ? a.a(V) : a.call(null, V))])
 }
 var Uh = nc("andgate register decoder xnorgate xorgate tflipflop inputpin orgate mux outputpin nandgate dflipflop norgate notgate".split(" "), [$h, function(a) {
-  var b = a.a ? a.a(W) : a.call(null, W), c = b.a ? b.a(V) : b.call(null, V), d = Yh(a), e = d.a ? d.a(Tf) : d.call(null, Tf);
-  v(e) && (b = Q.l(b, V, E(d.a ? d.a(V) : d.call(null, V))), b = Q.l(a, W, b), Cf.D(Qh, Q, a.a ? a.a($) : a.call(null, $), b));
-  return r([Z, c])
+  var b = a.a ? a.a(W) : a.call(null, W);
+  b.a ? b.a(V) : b.call(null, V);
+  var c = Yh(a), d = c.a ? c.a(Tf) : c.call(null, Tf);
+  v(d) && (b = Q.l(b, V, E(c.a ? c.a(V) : c.call(null, V))), b = Q.l(a, W, b), Cf.D(Qh, Q, a.a ? a.a($) : a.call(null, $), b));
+  return r([Z, E(c.a ? c.a(V) : c.call(null, V))])
 }, function(a) {
   a = Yh(a);
   a = a.a ? a.a(V) : a.call(null, V);
@@ -5729,9 +5731,10 @@ var Uh = nc("andgate register decoder xnorgate xorgate tflipflop inputpin orgate
   a = bi(a);
   return r([Z, Ja(a)])
 }, bi, function(a) {
+  console.log([y("TFF eval called on component "), y(a.a ? a.a($) : a.call(null, $))].join(""));
   var b = a.a ? a.a(W) : a.call(null, W), c = b.a ? b.a(V) : b.call(null, V), d = Yh(a), d = d.a ? d.a(Tf) : d.call(null, Tf);
   v(d) && (b = Q.l(b, V, ne(S.f(Ja, c))), b = Q.l(a, W, b), Cf.D(Qh, Q, a.a ? a.a($) : a.call(null, $), b));
-  return r([Z, c, Qf, ne(S.f(Ja, c))])
+  return r([Z, ne(S.f(Ja, c)), Qf, ne(S.f(Ja, c))])
 }, function(a) {
   a = a.a ? a.a(W) : a.call(null, W);
   a = a.a ? a.a(V) : a.call(null, V);
@@ -5745,14 +5748,14 @@ var Uh = nc("andgate register decoder xnorgate xorgate tflipflop inputpin orgate
 }, function(a) {
   var b = Zh(a), c = Q.l(a, $f, b.a ? b.a(V) : b.call(null, V));
   Cf.D(Qh, Q, a.a ? a.a($) : a.call(null, $), c);
-  return b
+  return b.a ? b.a(V) : b.call(null, V)
 }, function(a) {
   a = $h(a);
   return r([Z, Ja(a)])
 }, function(a) {
   var b = a.a ? a.a(W) : a.call(null, W), c = b.a ? b.a(V) : b.call(null, V), d = Yh(a), e = d.a ? d.a(Tf) : d.call(null, Tf);
   v(e) && (b = Q.l(b, V, ne(E(d.a ? d.a(V) : d.call(null, V)))), b = Q.l(a, W, b), a = Q.l(Ub(Qh), dd.a(a.a ? a.a($) : a.call(null, $)), b), Bf(Qh, a));
-  return r([Z, c, Qf, ne(S.f(Ja, c))])
+  return r([Z, E(d.a ? d.a(V) : d.call(null, V)), Qf, ne(S.f(Ja, c))])
 }, function(a) {
   a = ai(a);
   return r([Z, Ja(a)])
@@ -5770,7 +5773,7 @@ la("circuits.js.add_component", function(a, b, c) {
   var d = ci(c);
   c = Gf;
   var e = Sh(a, b);
-  a = L.f(a, "andgate") ? Ng : L.f(a, "nandgate") ? Og : L.f(a, "orgate") ? Pg : L.f(a, "norgate") ? Qg : L.f(a, "xorgate") ? Rg : L.f(a, "xnorgate") ? Sg : L.f(a, "mux") ? Vg : L.f(a, "decoder") ? Ug : L.f(a, "notgate") ? Tg : L.f(a, "dflipflop") ? Wg : L.f(a, "tflipflop") ? Xg : L.f(a, "register") ? Yg : L.f(a, "inputpin") ? Zg : L.f(a, "outputpin") ? $g : null;
+  a = K.f(a, "andgate") ? Ng : K.f(a, "nandgate") ? Og : K.f(a, "orgate") ? Pg : K.f(a, "norgate") ? Qg : K.f(a, "xorgate") ? Rg : K.f(a, "xnorgate") ? Sg : K.f(a, "mux") ? Vg : K.f(a, "decoder") ? Ug : K.f(a, "notgate") ? Tg : K.f(a, "dflipflop") ? Wg : K.f(a, "tflipflop") ? Xg : K.f(a, "register") ? Yg : K.f(a, "inputpin") ? Zg : K.f(a, "outputpin") ? $g : null;
   a = a.a ? a.a(e) : a.call(null, e);
   a = Q.l(a, Lf, d);
   b = Q.l(b, e, a);
@@ -5792,8 +5795,10 @@ la("circuits.js.evaluate", function(a) {
   if(v(!0)) {
     a = Bf(Ph, a);
     Bf(Rh, U);
+    Bf(Qh, U);
     a = Vh(a);
-    a = Pd(nf.a(S.f(Th, kf(a))));
+    a = nf.a(S.f(Th, kf(a)));
+    a = Qd(U, a);
     var c = Qd(Ub(Ph), Ub(Qh));
     a = r([Wf, a, W, c])
   }else {

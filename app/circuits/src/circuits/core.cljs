@@ -37,11 +37,13 @@
   (if (valid/validate-state state)
     (let [newstate  (reset! state-atom state)
           cleared-cache (reset! eval-cache {})
+          cleared-state-buffer (reset! state-buffer {})
           components (find-output-components newstate)
-          result (flatten (doall (map evaluate-component (vals components))))
+          result (doall (map evaluate-component (vals components)))
+          flattened (into {} result)
           final-state (into @state-atom @state-buffer)
           ]
-      {:result result :state final-state})
+      {:result flattened :state final-state})
     nil))
 
 (defn add-component [species circuit display]
@@ -175,7 +177,7 @@
       (let [updated-state (assoc state :data (first (inputs :data)))
             updated-register (assoc register :state updated-state)]
         (swap! state-buffer assoc (register :id) updated-register)))
-    {:q data}))
+    {:q (first (inputs :data))}))
 
 (defn d-flipflop-eval [dff]
   (let [state (dff :state)
@@ -187,8 +189,10 @@
             updated-dff (assoc dff :state updated-state)
             updated-state (assoc @state-buffer (keyword (dff :id)) updated-dff)]
         (reset! state-buffer updated-state)))
-    {:q data :q-bar (vec (map not data))}))
+    {:q (first (inputs :data)) :q-bar (vec (map not data))}))
+;; TODO fix t flip flop so it doesn't toggle when T is 0
 (defn t-flipflop-eval [tff]
+  (.log js/console (str "TFF eval called on component " (tff :id)))
   (let [state (tff :state)
         data (state :data)
         inputs (get-inputs tff)
@@ -197,7 +201,7 @@
       (let [updated-state (assoc state :data (vec (map not data)))
             updated-tff (assoc tff :state updated-state)]
         (swap! state-buffer assoc (tff :id) updated-tff)))
-    {:q data :q-bar (vec (map not data))}))
+    {:q (vec (map not data)) :q-bar (vec (map not data))}))
 (defn inputpin-eval  [inputpin]
   (let  [state  (inputpin :state)
          data  (state :data)]
@@ -206,7 +210,7 @@
   (let [inputs (gen-inputs outputpin)
         updated-outputpin (assoc outputpin :value (inputs :data))]
     (swap! state-buffer assoc (outputpin :id) updated-outputpin)
-    inputs))
+    (inputs :data)))
 
 (def function-map  {"notgate" not-eval
                     "andgate" and-eval
