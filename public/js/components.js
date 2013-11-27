@@ -41,7 +41,12 @@ function addComponent(name) {
 }
 
 function getSVG(d) {
-    if(!!d.state && d.state.data.length === 1 && d.state.data[0])
+    if (d.species === 'outputpin') {
+       if (!!d.value && d.value.length === 1 && d.value[0])
+	       return "../svg/glow/outputpin.svg"
+ 	       return "../svg/default/outputpin.svg" 
+    }
+    if(!!d.state && !!d.state.data && d.state.data.length === 1 && d.state.data[0])
         return "../svg/glow/"+ d.species + ".svg";
     return "../svg/default/"+d.species+".svg";
 }

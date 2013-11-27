@@ -112,7 +112,7 @@
   (let [
         outputs {:q {:word-length 1
                      :num-pins 1}}]
-    {:id id :label id :species "outputpin"
+    {:id id :value [false]  :label id :species "outputpin"
      :inputs {:data {:word-length 1
                      :num-pins 1
                      :connections [{}]}} :outputs outputs :state {}})) 

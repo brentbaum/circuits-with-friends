@@ -22,13 +22,10 @@
 (declare function-map gen-inputs)
 
 (defn evaluate-component  [component]
-  ;(.log js/console (str "Evaluating component" (component :id) "\n"))
-  ;(.log js/console (str "Eval Cache: \n" @eval-cache "\n"))
-  ;(.log js/console (str "State Buffer: \n" @state-buffer "\n"))
   (let  [component-type  (component :species)
          eval-fn  (function-map component-type)
          result (eval-fn component)]
-    result))
+    {(keyword (component :id)) result}))
 
 (defn find-output-components [circuit]
   (into {} (filter #(= "outputpin" ((val %) :species)) circuit)))
@@ -41,7 +38,7 @@
     (let [newstate  (reset! state-atom state)
           cleared-cache (reset! eval-cache {})
           components (find-output-components newstate)
-          result (doall (map evaluate-component (vals components)))
+          result (flatten (doall (map evaluate-component (vals components))))
           final-state (into @state-atom @state-buffer)
           ]
       {:result result :state final-state})
@@ -59,7 +56,7 @@
   (let [
         dstid (keyword (dst :id))
         dstfield (keyword (dst :field))
-       ; testt (-> dstid input-circuit :inputs dstfield :connections)
+        ; testt (-> dstid input-circuit :inputs dstfield :connections)
         srcid (keyword (src :id))
         srcfield (keyword (src :field))
         dst-component (input-circuit dstid)
@@ -94,14 +91,14 @@
                               new-invec)]
     new-circuit))
 
-(defn inner-fn  [mapping]
-  (let  [source-component  (@state-atom (keyword (mapping :source-id)))
-         eval-fn  (function-map  (source-component :species))
-         the-outputs  (eval-fn source-component)
-         result (the-outputs (keyword (mapping :source-field)))]
+(defn inner-fn [mapping]
+  (let [source-component (@state-atom (keyword (mapping :source-id)))
+        eval-fn  (function-map (source-component :species))
+        the-outputs (eval-fn source-component)
+        result (the-outputs (keyword (mapping :source-field)))]
     result))
-(defn gen-input-field  [kvpair]
-  {(key kvpair)  (doall (map inner-fn  ((val kvpair) :connections)))})
+(defn gen-input-field [kvpair]
+  {(key kvpair) (doall (map inner-fn  ((val kvpair) :connections)))})
 
 (defn get-inputs [component]
   (let [lookup-result (@eval-cache (keyword (component :id)))]
@@ -109,12 +106,12 @@
       lookup-result
       (gen-inputs component))))
 
-(defn gen-inputs  [component]
-  (let  [input-maps  (component :inputs)
-         input-fields  (doall (map gen-input-field input-maps))
-         result (if (> (count input-fields) 1)
-                  (apply conj input-fields)
-                  (first input-fields))]
+(defn gen-inputs [component]
+  (let [input-maps (component :inputs)
+        input-fields (doall (map gen-input-field input-maps))
+        result (if (> (count input-fields) 1)
+                 (apply conj input-fields)
+                 (first input-fields))]
     ;; Update eval-cache to we don't double-evaluate components
     (swap! eval-cache assoc (keyword (component :id)) result)
     result))
@@ -181,7 +178,6 @@
     {:q data}))
 
 (defn d-flipflop-eval [dff]
-  (.log js/console "DFF Eval called")
   (let [state (dff :state)
         data (state :data)
         inputs (get-inputs dff)
@@ -207,7 +203,9 @@
          data  (state :data)]
     {:q data}))
 (defn outputpin-eval [outputpin]
-  (let [inputs (gen-inputs outputpin)]
+  (let [inputs (gen-inputs outputpin)
+        updated-outputpin (assoc outputpin :value (inputs :data))]
+    (swap! state-buffer assoc (outputpin :id) updated-outputpin)
     inputs))
 
 (def function-map  {"notgate" not-eval
