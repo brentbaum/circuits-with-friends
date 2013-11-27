@@ -161,12 +161,6 @@
         only-one (first data)]
     {:q (vec (map not only-one))}))
 
-;; TODO Keep track of state updates to be made in a separate map
-;; Don't actually write the updates until the end of the evaluation sequence
-;; This will prevent corruption of values
-;; i,e, 2 output pins connected to the same DFF showing different values because
-;; by the time the second one is evaluating, the state of the DFF has been updated.
-;; This is wrong. Wait to write state changes until all outputs have been eval'd
 ;; Memory Components
 (defn register-eval [register]
   (let [state (register :state)
@@ -191,6 +185,7 @@
         (reset! state-buffer updated-state)))
     {:q (first (inputs :data)) :q-bar (vec (map not data))}))
 ;; TODO fix t flip flop so it doesn't toggle when T is 0
+;; TODO also figure out why TFFs fail when there are 2 of them
 (defn t-flipflop-eval [tff]
   (.log js/console (str "TFF eval called on component " (tff :id)))
   (let [state (tff :state)
