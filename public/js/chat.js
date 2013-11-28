@@ -4,8 +4,7 @@ angular.module('circuitApp.controllers').
             $scope.messages = [];
             $scope.name = "Guest";
             $scope.text = "";
-            var chatRef = new Firebase('https://circuitswithfriends.firebaseIO.com/' + sessionService.id + '/chat');
-            angularFire(chatRef, $scope, 'messages');
+            angularFire(sessionService.chatRef, $scope, 'messages');
             $('#messageInput').keypress(function (e) {
                 if (e.keyCode == 13) {
                     $scope.messages.push({name: $scope.name, text: $scope.text});

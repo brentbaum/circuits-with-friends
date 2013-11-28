@@ -14,7 +14,7 @@ function draw() {
         circle(selectedPin).classed("selected", true);
 }
 
-    function move() {
+function move() {
     this.parentNode.appendChild(this);
     var dragTarget = d3.select(this);
 
