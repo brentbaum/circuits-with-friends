@@ -2,6 +2,33 @@
  * Contains methods which bind everything together.
  */
 
+angular.module('myApp.controllers', []).
+    controller('WorkspaceCtrl', [function () {
+        function setup() {
+            var id = window.location.hash;
+            if (id === "")
+                id = randString(5);
+            else
+                id = id.substring(1);
+            window.history.pushState("", "Circuits with Friends", "/#" + id);
+            circuitRef = new Firebase('https://circuitswithfriends.firebaseIO.com/' + id + '/circuits');
+            chatRef = new Firebase('https://circuitswithfriends.firebaseIO.com/' + id + '/chat');
+            circuitRef.on('value', function (snapshot) {
+                data = snapshot.val();
+                if (!data) {
+                    data = {};
+                }
+                else
+                    draw();
+            });
+            d3.select("#workspace-container").on("mouseup", function () {
+                circuitRef.set(data);
+            });
+            d3.select("#workspace-container").on("click", deselectComponent);
+        }
+        setup();
+    }])
+
 
 function draw() {
     clearCanvas();
@@ -15,17 +42,17 @@ function draw() {
 }
 
 function removeComponent() {
-  console.log("selection", selectedComponent)
-  if (!!selectedComponent) {
-    data = circuits.js.remove_component(selectedComponent, data)
-    pushData();
-  }
+    console.log("selection", selectedComponent)
+    if (!!selectedComponent) {
+        data = circuits.js.remove_component(selectedComponent, data)
+        pushData();
+    }
 }
 
 // Abstraction level is over 9,000!
 function pushData() {
-  circuitRef.set(data);
-  draw();
+    circuitRef.set(data);
+    draw();
 }
 
 function evaluateCircuit() {
@@ -64,16 +91,15 @@ function move() {
     var newX = d3.event.dx + parseInt(dragTarget.attr("x"));
     var newY = d3.event.dy + parseInt(dragTarget.attr("y"));
 
-    if(newX > 0 && newY > 0 &&
+    if (newX > 0 && newY > 0 &&
         newX < parseInt(workspace.style('width'), 10) - dragTarget.attr("width") &&
-        newY < parseInt(workspace.style('height'), 10) - dragTarget.attr("height"))
-    {
-            dragTarget
-                .attr("x", newX)
-                .attr("y", newY);
+        newY < parseInt(workspace.style('height'), 10) - dragTarget.attr("height")) {
+        dragTarget
+            .attr("x", newX)
+            .attr("y", newY);
 
-            this.__data__.display.x = newX;
-            this.__data__.display.y = newY;
+        this.__data__.display.x = newX;
+        this.__data__.display.y = newY;
     }
 
     removeSvg("line");
@@ -117,8 +143,7 @@ function isDefined(x) {
 }
 
 
-
-$(document).ready(function() {
+$(document).ready(function () {
     //put modal code here.
 })
 
