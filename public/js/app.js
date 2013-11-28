@@ -2,7 +2,7 @@
 
 
 angular.module('circuitApp', [
-        'ngRoute',
+        'angularFire',
         'circuitApp.services',
         'circuitApp.directives',
         'circuitApp.controllers'

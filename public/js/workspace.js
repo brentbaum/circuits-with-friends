@@ -2,43 +2,34 @@
  * Contains methods which bind everything together.
  */
 
-angular.module('myApp.controllers', []).
-    controller('WorkspaceCtrl', [function () {
-        function setup() {
-            var id = window.location.hash;
-            if (id === "")
-                id = randString(5);
-            else
-                id = id.substring(1);
-            window.history.pushState("", "Circuits with Friends", "/#" + id);
-            circuitRef = new Firebase('https://circuitswithfriends.firebaseIO.com/' + id + '/circuits');
-            chatRef = new Firebase('https://circuitswithfriends.firebaseIO.com/' + id + '/chat');
-            circuitRef.on('value', function (snapshot) {
-                data = snapshot.val();
-                if (!data) {
-                    data = {};
-                }
-                else
-                    draw();
-            });
-            d3.select("#workspace-container").on("mouseup", function () {
-                circuitRef.set(data);
-            });
+angular.module('circuitApp.controllers', []).
+    controller('WorkspaceCtrl', [ '$scope', 'angularFire',
+        function ($scope, angularFire) {
+            var id = checkSession();
+
+            $scope.circuitRef = new Firebase('https://circuitswithfriends.firebaseIO.com/' + id + '/circuits');
+            angularFire(circuitRef, $scope, 'data');
+
+            $scope.chatRef = new Firebase('https://circuitswithfriends.firebaseIO.com/' + id + '/chat');
+            angularFire(chatRef, $scope, 'chats');
+
             d3.select("#workspace-container").on("click", deselectComponent);
-        }
-        setup();
-    }])
 
+            $scope.data = {};
 
-function draw() {
-    clearCanvas();
-    drawComponents();
-    var pins = makePins();
-    var links = makeLinks(pins);
-    drawPins(pins);
-    drawLinks(links);
-    if (!!selectedPin)
-        circle(selectedPin).classed("selected", true);
+            function clearCircuit() {
+                $scope.data = {};
+            }
+        }])
+
+function checkSession() {
+    var id = window.location.hash;
+    if (id === "")
+        id = randString(5);
+    else
+        id = id.substring(1);
+    window.history.pushState("", "Circuits with Friends", "/#" + id);
+    return id;
 }
 
 function removeComponent() {
@@ -49,12 +40,6 @@ function removeComponent() {
     }
 }
 
-// Abstraction level is over 9,000!
-function pushData() {
-    circuitRef.set(data);
-    draw();
-}
-
 function evaluateCircuit() {
     var output = circuits.js.evaluate(data);
     var state = output.state;
@@ -62,11 +47,6 @@ function evaluateCircuit() {
     console.log(result);
     data = state;
     pushData();
-}
-function clearCircuit() {
-    data = {};
-    circuitRef.set(data);
-    draw();
 }
 
 function clearCanvas() {
