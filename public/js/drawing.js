@@ -3,7 +3,7 @@
  */
 
 angular.module('circuitApp.directives', ['d3'])
-    .directive('workspace', ['d3Service', function(d3Service) {
+    .directive('workspace', ['d3Service', 'stateService', function(d3Service, stateService) {
         function removeSvg(type) {
             workspace
                 .selectAll(type)
@@ -25,22 +25,24 @@ angular.module('circuitApp.directives', ['d3'])
                 label: '@',
                 onClick: '&'
             },
+            template:'<g id="workspace-container"> <svg id="workspace"></svg>  </g>',
             link: function(scope, element, attrs) {
                 d3Service.d3().then(function(d3) {
 
                     var workspace = d3.select("#workspace");
+
                     scope.$watch('data', function(newData) {
                         scope.draw(newData);
                     }, true);
                     scope.move = move;
-                    scope.draw = draw;
+                    scope.draw = draw(data);
                     scope.drawComponents = drawComponents;
                     scope.circle = circle;
                     scope.line = line;
                 });
             }};
     }])
-    .factory('sessionService', function() {
+    .factory('stateService', function() {
 
 
     });
