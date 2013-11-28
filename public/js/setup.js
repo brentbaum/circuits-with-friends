@@ -2,9 +2,23 @@ angular.module('circuitRef.services', [])
     .factory('sessionService', function() {
         var sService = {}
 
-        sService.createId = randString;
+        sService.getSessionId = function() {
+            if(!sService.id) {
+                sService.createSession();
+            }
+            return sService.id;
+        };
 
-        //factory function body that constructs shinyNewServiceInstance
+        sService.createSession = function() {
+            var id = window.location.hash;
+            if (id === "")
+                id = randString(5);
+            else
+                id = id.substring(1);
+            window.history.pushState("", "Circuits with Friends", "/#" + id);
+            sService.id = id;
+        }
+
         return sService;
     });
 

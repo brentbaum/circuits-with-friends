@@ -3,15 +3,12 @@
  */
 
 angular.module('circuitApp.controllers', []).
-    controller('WorkspaceCtrl', [ '$scope', 'angularFire',
-        function ($scope, angularFire) {
-            var id = checkSession();
+    controller('WorkspaceCtrl', [ '$scope', 'sessionService', 'angularFire',
+        function ($scope, sessionService, angularFire) {
+            var id = sessionService.getSessionId();
 
-            $scope.circuitRef = new Firebase('https://circuitswithfriends.firebaseIO.com/' + id + '/circuits');
+            var circuitRef = new Firebase('https://circuitswithfriends.firebaseIO.com/' + id + '/circuits');
             angularFire(circuitRef, $scope, 'data');
-
-            $scope.chatRef = new Firebase('https://circuitswithfriends.firebaseIO.com/' + id + '/chat');
-            angularFire(chatRef, $scope, 'chats');
 
             d3.select("#workspace-container").on("click", deselectComponent);
 
@@ -21,16 +18,6 @@ angular.module('circuitApp.controllers', []).
                 $scope.data = {};
             }
         }])
-
-function checkSession() {
-    var id = window.location.hash;
-    if (id === "")
-        id = randString(5);
-    else
-        id = id.substring(1);
-    window.history.pushState("", "Circuits with Friends", "/#" + id);
-    return id;
-}
 
 function removeComponent() {
     console.log("selection", selectedComponent)

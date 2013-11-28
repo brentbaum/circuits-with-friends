@@ -1,4 +1,12 @@
-var chatRef;
+angular.module('circuitApp.controllers', []).
+    controller('ChatCtrl', [ '$scope', 'sessionService', 'angularFire',
+        function($scope, sessionService, angularFire) {
+
+            $scope.messages = [];
+            var chatRef = new Firebase('https://circuitswithfriends.firebaseIO.com/' + sessionService.id + '/chat');
+            angularFire(chatRef, $scope, 'messages');
+
+        }]);
 $('#messageInput').keypress(function (e) {
     if (e.keyCode == 13) {
         var name = $('#nameInput').val();
@@ -7,11 +15,3 @@ $('#messageInput').keypress(function (e) {
         $('#messageInput').val('');
     }
 });
-chatRef.on('child_added', function (snapshot) {
-    var message = snapshot.val();
-    displayChatMessage(message.name, message.text);
-});
-function displayChatMessage(name, text) {
-    $('<div/>').text(text).prepend($('<em/>').text(name + ': ')).appendTo($('#chat'));
-    $('#chat')[0].scrollTop = $('#chat')[0].scrollHeight;
-}
