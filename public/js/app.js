@@ -2,9 +2,10 @@
 
 
 angular.module('circuitApp', [
-        'angularFire',
+        'firebase',
         'circuitApp.services',
         'circuitApp.directives',
         'circuitApp.controllers'
     ]);
 
+angular.module('circuitApp.directives', [])

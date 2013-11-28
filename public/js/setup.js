@@ -1,4 +1,4 @@
-angular.module('circuitRef.services', [])
+angular.module('circuitApp.services', [])
     .factory('sessionService', function() {
         var sService = {}
 

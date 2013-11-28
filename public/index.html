@@ -2,14 +2,12 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <script src='https://cdn.firebase.com/v0/firebase.js'></script>
-        <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js'></script>
         <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro:300,400' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="css/main.css"/>
         <link rel="stylesheet" href="css/modal.css">
     </head>
     <body>
-        <div id="main-container">
+        <div id="main-container" ng-app="circuitApp">
             <ul class="component-list">
                 <li onclick="addComponent('inputpin')">INPUT</li>
                 <li onclick="addComponent('outputpin')">OUTPUT</li>
@@ -31,14 +29,16 @@
                 <g id="workspace-container">
                     <svg id="workspace"></svg>
                 </g>
-                <div id="chathead">
-                    <input type='text' id='nameInput' placeholder='Name'>
-                    <input type='text' id='messageInput' placeholder='Message'>
-                </div>
-                <div ng-controller="chatCtrl" id="chat">
-                    <div ng-repeat="message in messages">
-                        <em/>
-                        {{message.sender}}: {{message.body}}
+                <div ng-controller="ChatCtrl">
+                    <div id="chathead">
+                        <input type='text' id='nameInput' ng-model="name" ng-trim="true" placeholder='Name'>
+                        <input type='text' id='messageInput' ng-model="text" placeholder='Message'>
+                    </div>
+                    <div id="chat">
+                        <div ng-repeat="message in messages">
+                            <em/>
+                            {{message.name}}: {{message.text}}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -52,20 +52,21 @@
             </div>
         </div>
 
-        <script src="http://code.angularjs.org/1.2.3/angular.min.js"></script>
-        <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js'></script>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.3/angular.js"></script>
         <script src='https://cdn.firebase.com/v0/firebase.js'></script>
-        <script src="//cdn.firebase.com/libs/angularfire/0.3.0/angularfire.min.js"></script>
+        <script src="http://cdn.firebase.com/libs/angularfire/0.3.0/angularfire.min.js"></script>
+        <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js'></script>
         <script src="js/circuits.js"></script>
         <script src="js/d3.v3.js"></script>
+        <script src="js/app.js"></script>
         <script src="js/selection.js"></script>
         <script src="js/pins.js"></script>
         <script src="js/links.js"></script>
         <script src="js/components.js"></script>
         <script src="js/drawing.js"></script>
         <script src="js/setup.js"></script>
-        <script src="js/chat.js"></script>
         <script src="js/workspace.js"></script>
-        <script type='text/javascript' id='lt_ws' src='http://localhost:52012/socket.io/lighttable/ws.js'></script>
+        <script src="js/chat.js"></script>
     </body>
 </html>
