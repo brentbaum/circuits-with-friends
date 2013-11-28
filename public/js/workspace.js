@@ -15,23 +15,25 @@ angular.module('circuitApp.controllers', []).
                 $scope.data = {};
             }
 
-            $scope.selectedComponent = null;
-
-            function removeComponent() {
-                console.log("selection", $scope.selectedComponent);
-                if (isDefined($scope.selectedComponent)) {
-                    $scope.data = circuits.js.remove_component(selectedComponent, data);
-                }
-            }
+            $scope.removeComponent = removeComponent;
+            $scope.addComponent = addComponent;
+            $scope.selectPin = selectPin;
 
             $scope.evaluateCircuit = function() {
                 var output = circuits.js.evaluate(data);
                 console.log(output.result);
                 $scope.data = output.state;
             }
+
         }])
 
 function isDefined(x) {
     return typeof x !== "undefined" && x !== null;
+}
+
+function removeComponent() {
+    if (isDefined($scope.selectedComponent)) {
+        $scope.data = circuits.js.remove_component($scope.selectedComponent, $scope.data);
+    }
 }
 
