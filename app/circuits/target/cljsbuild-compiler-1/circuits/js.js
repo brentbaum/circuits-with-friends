@@ -20,3 +20,6 @@ goog.exportSymbol('circuits.js.evaluate', circuits.js.evaluate);
 circuits.js.remove_component = (function remove_component(id,circuit){return cljs.core.clj__GT_js(circuits.core.remove_component(id,circuits.js.map_json(circuit)));
 });
 goog.exportSymbol('circuits.js.remove_component', circuits.js.remove_component);
+circuits.js.set_field = (function set_field(id,circuit,key_,val_){return cljs.core.clj__GT_js(circuits.core.set_field(cljs.core.keyword.cljs$core$IFn$_invoke$arity$1(id),circuits.js.map_json(circuit),cljs.core.keyword.cljs$core$IFn$_invoke$arity$1(key_),val_));
+});
+goog.exportSymbol('circuits.js.set_field', circuits.js.set_field);

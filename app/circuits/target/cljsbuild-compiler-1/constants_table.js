@@ -6,6 +6,7 @@ cljs.core.constant$keyword$58 = new cljs.core.Keyword(null,"print","print");
 cljs.core.constant$keyword$15 = new cljs.core.Keyword(null,"data","data");
 cljs.core.constant$keyword$40 = new cljs.core.Keyword(null,"or0","or0");
 cljs.core.constant$keyword$32 = new cljs.core.Keyword(null,"display","display");
+cljs.core.constant$keyword$74 = new cljs.core.Keyword(null,"tflipflop0","tflipflop0");
 cljs.core.constant$keyword$25 = new cljs.core.Keyword(null,"state","state");
 cljs.core.constant$keyword$27 = new cljs.core.Keyword(null,"control","control");
 cljs.core.constant$keyword$35 = new cljs.core.Keyword(null,"wordLength","wordLength");

@@ -26,5 +26,6 @@
 (defn ^:export remove-component [id circuit]
   (clj->js (core/remove-component id (map-json circuit))))
 
-
+(defn ^:export set-field [id circuit key- val-]
+  (clj->js (core/set-field (keyword id) (map-json circuit) (keyword key-) val-)))
 ; End External Interface FNs
