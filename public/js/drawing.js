@@ -3,7 +3,7 @@
  */
 
 angular.module('circuitApp.directives', ['d3'])
-    .directive('workspace', ['d3Service', 'stateService', function(d3Service, stateService) {
+    .directive('workspace', ['stateService', 'd3', function(stateService, d3) {
         function removeSvg(type) {
             workspace
                 .selectAll(type)
@@ -27,19 +27,17 @@ angular.module('circuitApp.directives', ['d3'])
             },
             template:'<g id="workspace-container"> <svg id="workspace"></svg>  </g>',
             link: function(scope, element, attrs) {
-                d3Service.d3().then(function(d3) {
+                var workspace = d3.select("#workspace");
 
-                    var workspace = d3.select("#workspace");
-
-                    scope.$watch('data', function(newData) {
-                        scope.draw(newData);
-                    }, true);
-                    scope.move = move;
-                    scope.draw = draw(data);
-                    scope.drawComponents = drawComponents;
-                    scope.circle = circle;
-                    scope.line = line;
-                });
+                scope.$watch('data', function(newData) {
+                    scope.draw(newData);
+                }, true);
+                scope.clearCanvas = clearCanvas;
+                scope.move = move;
+                scope.draw = draw();
+                scope.drawComponents = drawComponents;
+                scope.circle = circle;
+                scope.line = line;
             }};
     }])
     .factory('stateService', function() {
@@ -48,8 +46,8 @@ angular.module('circuitApp.directives', ['d3'])
     });
 
 
-function draw(data) {
-    clearCanvas();
+function draw() {
+    scope.clearCanvas();
     scope.drawComponents();
     var pins = makePins();
     var links = makeLinks(pins);
@@ -116,6 +114,35 @@ function circle(point) {
             return d.x2
         })
         .attr("color", "#A00")
+}
+
+function drawLinks(links) {
+    var connection = d3.select("#workspace")
+        .selectAll("line.link")
+        .data(links).enter();
+
+    line(connection);
+
+    var c1 = connection
+        .append("svg:circle")
+        .attr("r", 2.5)
+        .attr("cx", function (d) {
+            return d.target.x1;
+        })
+        .attr("cy", function (d) {
+            return d.target.y1;
+        })
+
+    var c2 = connection
+        .append("svg:circle")
+        .attr("r", 2.5)
+        .attr("cx", function (d) {
+            return d.source.x1;
+        })
+        .attr("cy", function (d) {
+            return d.source.y1;
+        })
+
 }
 
 function drawComponents(data, moveAction, selectAction) {

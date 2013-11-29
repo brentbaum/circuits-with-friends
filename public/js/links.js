@@ -22,33 +22,3 @@ function findSource(pins, id, field) {
     })
     return result;
 }
-
-function drawLinks(links) {
-    var connection = d3.select("#workspace")
-        .selectAll("line.link")
-        .data(links).enter();
-
-    line(connection);
-
-    var c1 = connection
-        .append("svg:circle")
-        .attr("r", 2.5)
-        .attr("cx", function (d) {
-            return d.target.x1;
-        })
-        .attr("cy", function (d) {
-            return d.target.y1;
-        })
-
-    var c2 = connection
-        .append("svg:circle")
-        .attr("r", 2.5)
-        .attr("cx", function (d) {
-            return d.source.x1;
-        })
-        .attr("cy", function (d) {
-            return d.source.y1;
-        })
-
-}
-

@@ -3,8 +3,8 @@
  */
 
 angular.module('circuitApp.controllers', []).
-    controller('WorkspaceCtrl', [ '$scope', 'sessionService', 'angularFire',
-        function ($scope, sessionService, angularFire) {
+    controller('WorkspaceCtrl', [ '$scope', 'sessionService', 'angularFire', 'd3',
+        function ($scope, sessionService, angularFire, d3) {
             var id = sessionService.getSessionId();
 
             angularFire(sessionService.circuitRef, $scope, 'data');
