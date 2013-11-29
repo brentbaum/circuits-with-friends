@@ -4,20 +4,6 @@
 
 angular.module('circuitApp.directives', ['d3'])
     .directive('workspace', ['stateService', 'd3', function(stateService, d3) {
-        function removeSvg(type) {
-            workspace
-                .selectAll(type)
-                .remove();
-        }
-
-        function clearCanvas() {
-            removeSvg("g");
-            removeSvg("rect");
-            removeSvg("circle");
-            removeSvg("line");
-            removeSvg("image");
-        }
-
         return {
             restrict: 'EA',
             scope: {
@@ -29,34 +15,110 @@ angular.module('circuitApp.directives', ['d3'])
             link: function(scope, element, attrs) {
                 var workspace = d3.select("#workspace");
 
-                scope.$watch('data', function(newData) {
-                    scope.draw(newData);
+                scope.dragging = false;
+
+                scope.$watch('data', function() {
+                    if(!scope.dragging)
+                        scope.draw(false);
+                    else
+                        scope.draw(true);
                 }, true);
-                scope.clearCanvas = clearCanvas;
+
                 scope.move = move;
-                scope.draw = draw();
-                scope.drawComponents = drawComponents;
+
+                scope.updateAfterDrag = function() {
+                    var newX = d3.event.dx + parseInt(dragTarget.attr("x"));
+                    var newY = d3.event.dy + parseInt(dragTarget.attr("y"));
+                    this.__data__.display.x = newX;
+                    this.__data__.display.y = newY;
+                };
+                scope.draw = function(isDragging) {
+                    scope.clearCanvas();
+                    if(!isDragging)
+                        scope.drawComponents();
+                    var pins = makePins();
+                    var links = makeLinks(pins);
+                    highlightSelected();
+                    drawPins(pins);
+                    drawLinks(links);
+                    if (selectedPin)
+                        circle(selectedPin).classed("selected", true);
+                }
                 scope.circle = circle;
                 scope.line = line;
+
+                scope.removeSvg = function removeSvg(type) {
+                    d3.select("#workspace")
+                        .selectAll(type)
+                        .remove();
+                }
+
+                scope.clearCanvas = function() {
+                    scope.removeSvg("g");
+                    scope.removeSvg("rect");
+                    scope.removeSvg("circle");
+                    scope.removeSvg("line");
+                    scope.removeSvg("image");
+                }
+
+                scope.drawLinks = function(links) {
+                    var connection = d3.select("#workspace")
+                        .selectAll("line.link")
+                        .data(links).enter();
+
+                    line(connection);
+
+                    connection
+                        .append("svg:circle")
+                        .attr("r", 2.5)
+                        .attr("cx", function (d) {
+                            return d.target.x1;
+                        })
+                        .attr("cy", function (d) {
+                            return d.target.y1;
+                        })
+
+                    connection
+                        .append("svg:circle")
+                        .attr("r", 2.5)
+                        .attr("cx", function (d) {
+                            return d.source.x1;
+                        })
+                        .attr("cy", function (d) {
+                            return d.source.y1;
+                        })
+
+                }
+
+                scope.drawComponents = function(data, moveAction, selectAction) {
+                    var component = d3.select("#workspace")
+                        .selectAll("g.component")
+                        .data(d3.values(data))
+                        .enter().append("svg:g");
+
+                    component.append("svg:image")
+                        .attr("xlink:href", getSVG)
+                        .attr("width", function (d) {
+                            return d.display.size;
+                        })
+                        .attr("height", function (d) {
+                            return d.display.size;
+                        })
+                        .attr("x", function (d) {
+                            return d.display.x;
+                        })
+                        .attr("y", function (d) {
+                            return d.display.y;
+                        })
+                        .call(d3.behavior.drag().on("drag", move).on("dragend", scope.updateAfterDrag()))
+                        .on("click", selectAction);
+                }
             }};
     }])
     .factory('stateService', function() {
 
 
     });
-
-
-function draw() {
-    scope.clearCanvas();
-    scope.drawComponents();
-    var pins = makePins();
-    var links = makeLinks(pins);
-    highlightSelected();
-    drawPins(pins);
-    drawLinks(links);
-    if (selectedPin)
-        circle(selectedPin).classed("selected", true);
-}
 
 function move() {
     this.parentNode.appendChild(this);
@@ -73,19 +135,23 @@ function move() {
             return newY
         })
 
-    removeSvg("line");
-    removeSvg("circle");
+    scope.removeSvg("line");
+    scope.removeSvg("circle");
     var pins = makePins();
     var links = makeLinks(pins);
     drawLinks(links);
     drawPins(pins);
 }
 
-function updateAfterMove() {
-    var newX = d3.event.dx + parseInt(dragTarget.attr("x"));
-    var newY = d3.event.dy + parseInt(dragTarget.attr("y"));
-    this.__data__.display.x = newX;
-    this.__data__.display.y = newY;
+function getSVG(d) {
+    if (d.species === 'outputpin') {
+        if (!!d.value && d.value.length === 1 && d.value[0][0])
+            return "../svg/glow/outputpin.svg";
+        return "../svg/default/outputpin.svg";
+    }
+    if (!!d.state && !!d.state.data && d.state.data.length === 1 && d.state.data[0])
+        return "../svg/glow/"+ d.species + ".svg";
+    return "../svg/default/"+d.species+".svg";
 }
 
 function line(container) {
@@ -105,7 +171,7 @@ function line(container) {
 }
 
 function circle(point) {
-    workspace
+    d3.select("#workspace")
         .data(point).append("svg:circle")
         .attr("cx", function (d) {
             return d.x1
@@ -114,68 +180,4 @@ function circle(point) {
             return d.x2
         })
         .attr("color", "#A00")
-}
-
-function drawLinks(links) {
-    var connection = d3.select("#workspace")
-        .selectAll("line.link")
-        .data(links).enter();
-
-    line(connection);
-
-    var c1 = connection
-        .append("svg:circle")
-        .attr("r", 2.5)
-        .attr("cx", function (d) {
-            return d.target.x1;
-        })
-        .attr("cy", function (d) {
-            return d.target.y1;
-        })
-
-    var c2 = connection
-        .append("svg:circle")
-        .attr("r", 2.5)
-        .attr("cx", function (d) {
-            return d.source.x1;
-        })
-        .attr("cy", function (d) {
-            return d.source.y1;
-        })
-
-}
-
-function drawComponents(data, moveAction, selectAction) {
-    var component = workspace
-        .selectAll("g.component")
-        .data(d3.values(data))
-        .enter().append("svg:g");
-
-    component.append("svg:image")
-        .attr("xlink:href", getSVG)
-        .attr("width", function (d) {
-            return d.display.size;
-        })
-        .attr("height", function (d) {
-            return d.display.size;
-        })
-        .attr("x", function (d) {
-            return d.display.x;
-        })
-        .attr("y", function (d) {
-            return d.display.y;
-        })
-        .call(d3.behavior.drag().on("dragend", moveAction))
-        .on("click", selectAction);
-}
-
-function getSVG(d) {
-    if (d.species === 'outputpin') {
-        if (!!d.value && d.value.length === 1 && d.value[0][0])
-            return "../svg/glow/outputpin.svg";
-        return "../svg/default/outputpin.svg";
-    }
-    if (!!d.state && !!d.state.data && d.state.data.length === 1 && d.state.data[0])
-        return "../svg/glow/"+ d.species + ".svg";
-    return "../svg/default/"+d.species+".svg";
 }
