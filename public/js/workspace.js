@@ -9,6 +9,11 @@ angular.module('circuitApp.controllers', []).
 
             angularFire(sessionService.circuitRef, $scope, 'data');
 
+            $scope.$watch('data', function(d) {
+                console.log(d);
+                sessionService.data = d;
+            });
+
             d3.select("#workspace-container").on("click", deselectComponent);
 
             function clearCircuit() {

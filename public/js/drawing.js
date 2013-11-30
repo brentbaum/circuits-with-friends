@@ -3,7 +3,7 @@
  */
 
 angular.module('circuitApp.directives', ['d3'])
-    .directive('workspace', ['calculateService', 'd3', function(calculateService, d3) {
+    .directive('workspace', ['calculateService', 'sessionService', 'd3', function(calculateService, sessionService, d3) {
         return {
             restrict: 'EA',
             scope: {
@@ -15,9 +15,11 @@ angular.module('circuitApp.directives', ['d3'])
             link: function(scope, element, attrs) {
                 var workspace = d3.select("#workspace");
 
+                var data = sessionService.data;
+
                 scope.dragging = false;
 
-                scope.$watch('data', function() {
+                scope.$watch('data', function(d) {
                     if(!scope.dragging)
                         scope.draw(false);
                     else
@@ -26,24 +28,13 @@ angular.module('circuitApp.directives', ['d3'])
 
                 scope.move = move;
 
-                scope.updateAfterDrag = function() {
-                    if(isDefined(this.parentNode)) {
-                        this.parentNode.appendChild(this);
-                        var dragTarget = d3.select(this);
-
-                        var newX = parseInt(dragTarget.attr("x"));
-                        var newY = parseInt(dragTarget.attr("y"));
-                        this.__data__.display.x = newX;
-                        this.__data__.display.y = newY;
-                    }
-                };
                 scope.draw = function(isDragging) {
                     scope.clearCanvas();
                     if(!isDragging)
                         scope.drawComponents();
-                    var pins = calculateService.makePins();
+                    var pins = calculateService.makePins(data);
                     var links = calculateService.makeLinks(pins);
-                    highlightSelected();
+                    scope.highlightSelected();
                     drawPins(pins);
                     drawLinks(links);
                     if (selectedPin)
@@ -118,6 +109,30 @@ angular.module('circuitApp.directives', ['d3'])
                         .call(d3.behavior.drag().on("drag", move).on("dragend", scope.updateAfterDrag()))
                         .on("click", selectAction);
                 }
+
+                scope.updateAfterDrag = function() {
+                    if(isDefined(this.parentNode)) {
+                        this.parentNode.appendChild(this);
+                        var dragTarget = d3.select(this);
+
+                        var newX = parseInt(dragTarget.attr("x"));
+                        var newY = parseInt(dragTarget.attr("y"));
+                        this.__data__.display.x = newX;
+                        this.__data__.display.y = newY;
+                    }
+                };
+                scope.highlightSelected = function() {
+                    if(d3.select(".selected")) {
+                        var s = d3.select(".selected");
+
+                        d3.select("#workspace").append("rect").attr("x", s.attr("x"))
+                            .attr("y", s.attr("y"))
+                            .attr("width", s.attr("width"))
+                            .attr("height", s.attr("height"))
+                            .classed("selected", true));
+                    }
+                }
+
             }};
     }])
 
