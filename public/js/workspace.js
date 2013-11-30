@@ -19,7 +19,7 @@ angular.module('circuitApp.controllers', []).
             d3.select("#workspace-container").on("click", deselectComponent);
 
             function clearCircuit() {
-                sessionService.data = {};
+                $scope.data = {};
             }
 
             $scope.addComponent = function(species) {
@@ -50,6 +50,7 @@ angular.module('circuitApp.controllers', []).
                 $scope.data = output.state;
             }
 
+            $scope.speciesList = ['inputpin', 'outputpin', 'notgate', 'andgate', 'orgate', 'nandgate', 'norgate', 'xorgate', 'xnorgate', 'mux', 'dflipflop', 'tflipflop', 'decoder', 'register'];
         }])
 
 function isDefined(x) {

@@ -9,20 +9,7 @@
     <body ng-app="circuitApp">
         <div id="main-container" ng-cloak ng-controller="WorkspaceCtrl">
             <ul class="component-list">
-                <li ng-click="addComponent('inputpin')">INPUT</li>
-                <li ng-click="addComponent('outputpin')">OUTPUT</li>
-                <li ng-click="addComponent('notgate')">NOT</li>
-                <li ng-click="addComponent('andgate')">AND</li>
-                <li ng-click="addComponent('orgate')">OR</li>
-                <li ng-click="addComponent('nandgate')">NAND</li>
-                <li ng-click="addComponent('norgate')">NOR</li>
-                <li ng-click="addComponent('xorgate')">XOR</li>
-                <li ng-click="addComponent('xnorgate')">XNOR</li>
-                <li ng-click="addComponent('mux')">MUX</li>
-                <li ng-click="addComponent('dflipflop')">DFF</li>
-                <li ng-click="addComponent('tflipflop')">TFF</li>
-                <li ng-click="addComponent('decoder')">DECODER</li>
-                <li ng-click="addComponent('register')">REGISTER</li>
+                <li ng-repeat="comp in speciesList" ng-click="addComponent(comp)">{{ comp.toUpperCase() }}</li>
             </ul>
             <div class="logo">Circuits with Friends</div>
             <div class="main">
