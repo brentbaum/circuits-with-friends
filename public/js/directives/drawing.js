@@ -17,7 +17,8 @@ angular.module('circuitApp.directives', ['d3'])
 
                 scope.dragging = false;
 
-                scope.$watch('sessionService.data', function(d) {
+                scope.$watch(function () { return sessionService.data; }, function(d) {
+                    console.log(d);
                     if(!scope.dragging)
                         scope.draw(false);
                     else
@@ -129,6 +130,9 @@ angular.module('circuitApp.directives', ['d3'])
                         })
                         .attr("y", function (d) {
                             return d.display.y;
+                        })
+                        .attr("ng-class", function(d) {
+                            return "{true:'selected', false:''}[" + d.id + "==selectedComponent]";
                         })
                         .call(d3.behavior.drag().on("drag", scope.move).on("dragend", scope.updateAfterDrag))
                         .on("click", selectComponent);

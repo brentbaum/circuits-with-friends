@@ -6,7 +6,7 @@
 function selectPin(pin, selectedPin) {
     if(!isDefined(pin))
         return;
-    if(isDefined($scope.selectedPin) && isDefined(pin) && (!pin.parent || pin.parent === selectedPin.parent) && pin.field === selectedPin.field) {
+    if(isDefined(selectedPin) && isDefined(pin) && (!pin.parent || pin.parent === selectedPin.parent) && pin.field === selectedPin.field) {
         selectedPin = null;
     }
     else if (!isDefined(selectedPin)) {

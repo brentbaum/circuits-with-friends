@@ -36,8 +36,8 @@ angular.module('circuitApp.controllers', []).
             }
 
             $scope.removeComponent = function() {
-                if (isDefined($scope.selectedComponent)) {
-                    $scope.data = circuits.js.remove_component($scope.selectedComponent, $scope.data);
+                if (sessionService.selectedComponent != -1) {
+                    $scope.data = circuits.js.remove_component(sessionService.selectedComponent, $scope.data);
                 }
             }
 

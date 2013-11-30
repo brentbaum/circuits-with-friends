@@ -1,5 +1,5 @@
 /*
- * Methods for drawing / adding pins.
+ * Methods for adding pins.
  */
 
 function makePins(data) {
@@ -8,33 +8,6 @@ function makePins(data) {
         p.concat(makeComponentPins(data[key]));
     }
     return p;
-}
-
-function drawPins(pinTrist) {
-    var p = d3.select("#workspace")
-        .selectAll("g.p")
-        .data(pinTrist)
-        .enter();
-    line(p).classed("pin", true)
-        .classed("connected", function (d) {
-            return !!d["source-id"];
-        });
-    p.append("circle")
-        .attr("cx", function(d) {
-            if(typeof d.x1 === "undefined")
-                return -100;
-            return (d.x1+ d.x2)/2;
-        })
-        .attr("cy", function(d) {
-            if(typeof d.x1 === "undefined")
-                return -100;
-            return (d.y1+ d.y2)/2;
-        })
-        .attr("r", 10)
-        .classed("selection-background", true)
-        .on("click", function (d) {
-            selectPin(d);
-        })
 }
 
 function makeComponentPins(component) {
