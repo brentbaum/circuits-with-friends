@@ -18,7 +18,6 @@ angular.module('circuitApp.directives', ['d3'])
                 scope.dragging = false;
 
                 scope.$watch(function () { return sessionService.data; }, function(d) {
-                    console.log(d);
                     if(!scope.dragging)
                         scope.draw(false);
                     else
@@ -27,6 +26,8 @@ angular.module('circuitApp.directives', ['d3'])
 
                 scope.circle = circle;
                 scope.line = line;
+
+                d3.select("#workspace-container").on("click", scope.deselectComponent);
 
                 scope.draw = function(isDragging) {
                     scope.clearCanvas();
@@ -135,7 +136,7 @@ angular.module('circuitApp.directives', ['d3'])
                             return "{true:'selected', false:''}[" + d.id + "==selectedComponent]";
                         })
                         .call(d3.behavior.drag().on("drag", scope.move).on("dragend", scope.updateAfterDrag))
-                        .on("click", selectComponent);
+                        .on("click", scope.selectComponent);
                 }
 
                 scope.updateAfterDrag = function() {
@@ -176,6 +177,16 @@ angular.module('circuitApp.directives', ['d3'])
                         .attr("y", function () {
                             return newY
                         })
+                }
+
+                scope.selectComponent = function(d) {
+                    setTimeout(function () {
+                        sessionService.selectedCompenent = d.id;
+                    }, 10);
+                }
+
+                scope.deselectComponent = function () {
+                    sessionService.selectedCompenent = -1;
                 }
             }};
     }])

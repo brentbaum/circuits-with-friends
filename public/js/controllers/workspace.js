@@ -15,9 +15,6 @@ angular.module('circuitApp.controllers', []).
 
             angularFire(sessionService.circuitRef, $scope, 'data');
 
-
-            d3.select("#workspace-container").on("click", deselectComponent);
-
             function clearCircuit() {
                 $scope.data = {};
             }

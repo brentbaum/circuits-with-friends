@@ -29,27 +29,6 @@ function addConnection(target, source) {
     return circuits.js.add_connection(src, dst, $scope.data);
 }
 
-function selectComponent(d) {
-    this.parentNode.appendChild(this);
-    var selectTarget = d3.select(this);
-
-    setTimeout(function () {
-        selectTarget.classed("selected", true);
-
-        selectedComponent = d.id;
-        highlightSelected();
-    }, 10);
-
-}
-
-function deselectComponent () {
-    if (isDefined(selectedComponent)) {
-        d3.select(".selected").classed("selected", false);
-        d3.select(".selected").remove();
-        selectedComponent = null;
-    }
-}
-
 function highlightSelected() {
     if(d3.select(".selected")) {
         var s = d3.select(".selected");

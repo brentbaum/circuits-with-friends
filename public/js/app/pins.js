@@ -5,6 +5,7 @@
 function makePins(data) {
     var p = [];
     for(var key in data) {
+        console.log(key)
         p.concat(makeComponentPins(data[key]));
     }
     return p;
@@ -67,6 +68,9 @@ function makeComponentPins(component) {
 }
 
 function addFieldAndIndex(connections, field) {
+    if(!connections) {
+        connections = [{}, {}];
+    }
     for(var x = 0; x < connections.length; x++) {
         connections[x].field = field;
         connections[x].index = x;
