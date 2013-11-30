@@ -15,33 +15,30 @@ angular.module('circuitApp.directives', ['d3'])
             link: function(scope, element, attrs) {
                 var workspace = d3.select("#workspace");
 
-                var data = sessionService.data;
-
                 scope.dragging = false;
 
-                scope.$watch('data', function(d) {
+                scope.$watch('sessionService.data', function(d) {
                     if(!scope.dragging)
                         scope.draw(false);
                     else
                         scope.draw(true);
                 }, true);
 
-                scope.move = move;
+                scope.circle = circle;
+                scope.line = line;
 
                 scope.draw = function(isDragging) {
                     scope.clearCanvas();
                     if(!isDragging)
                         scope.drawComponents();
-                    var pins = calculateService.makePins(data);
-                    var links = calculateService.makeLinks(pins);
                     scope.highlightSelected();
-                    drawPins(pins);
-                    drawLinks(links);
-                    if (selectedPin)
-                        circle(selectedPin).classed("selected", true);
+                    var pins = calculateService.makePins(sessionService.data);
+                    var links = calculateService.makeLinks(pins);
+                    scope.drawPins(pins);
+                    scope.drawLinks(links);
+                    //if (isDefined(scope.selectedPin))
+                    //    circle(scope.selectedPin).classed("selected", true);
                 }
-                scope.circle = circle;
-                scope.line = line;
 
                 scope.removeSvg = function removeSvg(type) {
                     d3.select("#workspace")
@@ -86,10 +83,37 @@ angular.module('circuitApp.directives', ['d3'])
 
                 }
 
-                scope.drawComponents = function(data, moveAction, selectAction) {
+                scope.drawPins = function(pinTrist) {
+                    var p = d3.select("#workspace")
+                        .selectAll("g.p")
+                        .data(pinTrist)
+                        .enter();
+
+                    line(p).classed("pin", true)
+                        .classed("connected", function (d) {
+                            return !!d["source-id"];
+                        });
+
+                    p.append("circle")
+                        .attr("cx", function(d) {
+                            if(typeof d.x1 === "undefined")
+                                return -100;
+                            return (d.x1+ d.x2)/2;
+                        })
+                        .attr("cy", function(d) {
+                            if(typeof d.x1 === "undefined")
+                                return -100;
+                            return (d.y1+ d.y2)/2;
+                        })
+                        .attr("r", 10)
+                        .classed("selection-background", true)
+                        .on("click", selectPin)
+                }
+
+                scope.drawComponents = function() {
                     var component = d3.select("#workspace")
                         .selectAll("g.component")
-                        .data(d3.values(data))
+                        .data(d3.values(sessionService.data))
                         .enter().append("svg:g");
 
                     component.append("svg:image")
@@ -106,8 +130,8 @@ angular.module('circuitApp.directives', ['d3'])
                         .attr("y", function (d) {
                             return d.display.y;
                         })
-                        .call(d3.behavior.drag().on("drag", move).on("dragend", scope.updateAfterDrag()))
-                        .on("click", selectAction);
+                        .call(d3.behavior.drag().on("drag", scope.move).on("dragend", scope.updateAfterDrag))
+                        .on("click", selectComponent);
                 }
 
                 scope.updateAfterDrag = function() {
@@ -121,8 +145,9 @@ angular.module('circuitApp.directives', ['d3'])
                         this.__data__.display.y = newY;
                     }
                 };
+
                 scope.highlightSelected = function() {
-                    if(d3.select(".selected")) {
+                    if(!d3.select(".selected").empty()) {
                         var s = d3.select(".selected");
 
                         d3.select("#workspace").append("rect").attr("x", s.attr("x"))
@@ -133,31 +158,23 @@ angular.module('circuitApp.directives', ['d3'])
                     }
                 }
 
+                scope.move = function() {
+                    this.parentNode.appendChild(this);
+                    var dragTarget = d3.select(this);
+
+                    var newX = d3.event.dx + parseInt(dragTarget.attr("x"));
+                    var newY = d3.event.dy + parseInt(dragTarget.attr("y"));
+
+                    dragTarget
+                        .attr("x", function () {
+                            return newX
+                        })
+                        .attr("y", function () {
+                            return newY
+                        })
+                }
             }};
     }])
-
-function move() {
-    this.parentNode.appendChild(this);
-    var dragTarget = d3.select(this);
-
-    var newX = d3.event.dx + parseInt(dragTarget.attr("x"));
-    var newY = d3.event.dy + parseInt(dragTarget.attr("y"));
-
-    dragTarget
-        .attr("x", function () {
-            return newX
-        })
-        .attr("y", function () {
-            return newY
-        })
-
-    scope.removeSvg("line");
-    scope.removeSvg("circle");
-    var pins = makePins();
-    var links = makeLinks(pins);
-    drawLinks(links);
-    drawPins(pins);
-}
 
 function getSVG(d) {
     if (d.species === 'outputpin') {
