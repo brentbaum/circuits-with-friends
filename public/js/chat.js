@@ -8,7 +8,6 @@ angular.module('circuitApp.controllers').
             $('#messageInput').keypress(function (e) {
                 if (e.keyCode == 13) {
                     $scope.messages.push({name: $scope.name, text: $scope.text});
-                    console.log($scope.text);
                     $scope.text = "";
                     $scope.$apply();
                 }
