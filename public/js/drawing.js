@@ -3,7 +3,7 @@
  */
 
 angular.module('circuitApp.directives', ['d3'])
-    .directive('workspace', ['stateService', 'd3', function(stateService, d3) {
+    .directive('workspace', ['calculateService', 'd3', function(calculateService, d3) {
         return {
             restrict: 'EA',
             scope: {
@@ -27,17 +27,22 @@ angular.module('circuitApp.directives', ['d3'])
                 scope.move = move;
 
                 scope.updateAfterDrag = function() {
-                    var newX = d3.event.dx + parseInt(dragTarget.attr("x"));
-                    var newY = d3.event.dy + parseInt(dragTarget.attr("y"));
-                    this.__data__.display.x = newX;
-                    this.__data__.display.y = newY;
+                    if(isDefined(this.parentNode)) {
+                        this.parentNode.appendChild(this);
+                        var dragTarget = d3.select(this);
+
+                        var newX = parseInt(dragTarget.attr("x"));
+                        var newY = parseInt(dragTarget.attr("y"));
+                        this.__data__.display.x = newX;
+                        this.__data__.display.y = newY;
+                    }
                 };
                 scope.draw = function(isDragging) {
                     scope.clearCanvas();
                     if(!isDragging)
                         scope.drawComponents();
-                    var pins = makePins();
-                    var links = makeLinks(pins);
+                    var pins = calculateService.makePins();
+                    var links = calculateService.makeLinks(pins);
                     highlightSelected();
                     drawPins(pins);
                     drawLinks(links);
@@ -115,10 +120,6 @@ angular.module('circuitApp.directives', ['d3'])
                 }
             }};
     }])
-    .factory('stateService', function() {
-
-
-    });
 
 function move() {
     this.parentNode.appendChild(this);

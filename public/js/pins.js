@@ -33,7 +33,6 @@ function drawPins(pinTrist) {
         .on("click", function (d) {
             selectPin(d);
         })
-
 }
 
 function makeComponentPins(component) {
