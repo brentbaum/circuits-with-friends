@@ -129,7 +129,7 @@ angular.module('circuitApp.directives', ['d3'])
                             .attr("y", s.attr("y"))
                             .attr("width", s.attr("width"))
                             .attr("height", s.attr("height"))
-                            .classed("selected", true));
+                            .classed("selected", true);
                     }
                 }
 
