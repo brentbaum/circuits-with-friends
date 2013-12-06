@@ -18,10 +18,7 @@ angular.module('circuitApp.directives', ['d3'])
                 scope.dragging = false;
 
                 scope.$watch(function () { return sessionService.data; }, function(d) {
-                    if(!scope.dragging)
-                        scope.draw(false);
-                    else
-                        scope.draw(true);
+                    scope.draw(scope.dragging);
                 }, true);
 
                 scope.circle = circle;
@@ -31,8 +28,11 @@ angular.module('circuitApp.directives', ['d3'])
 
                 scope.draw = function(isDragging) {
                     scope.clearCanvas();
-                    if(!isDragging)
+                    if(!isDragging) {
+                        scope.removeSvg("image");
                         scope.drawComponents();
+
+                    }
                     scope.highlightSelected();
                     var pins = calculateService.makePins(sessionService.data);
                     var links = calculateService.makeLinks(pins);
@@ -49,11 +49,9 @@ angular.module('circuitApp.directives', ['d3'])
                 }
 
                 scope.clearCanvas = function() {
-                    scope.removeSvg("g");
                     scope.removeSvg("rect");
                     scope.removeSvg("circle");
                     scope.removeSvg("line");
-                    scope.removeSvg("image");
                 }
 
                 scope.drawLinks = function(links) {
@@ -135,7 +133,7 @@ angular.module('circuitApp.directives', ['d3'])
                         .attr("ng-class", function(d) {
                             return "{true:'selected', false:''}[" + d.id + "==selectedComponent]";
                         })
-                        .call(d3.behavior.drag().on("drag", scope.move).on("dragend", scope.updateAfterDrag))
+                        .call(d3.behavior.drag().on("drag", scope.move))//.on("dragend", scope.updateAfterDrag))
                         .on("click", scope.selectComponent);
                 }
 
@@ -177,6 +175,11 @@ angular.module('circuitApp.directives', ['d3'])
                         .attr("y", function () {
                             return newY
                         })
+
+                    this.__data__.display.x = newX;
+                    this.__data__.display.y = newY;
+
+                    scope.draw(true);
                 }
 
                 scope.selectComponent = function(d) {

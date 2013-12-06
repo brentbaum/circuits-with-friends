@@ -9,7 +9,6 @@ angular.module('circuitApp.controllers', []).
             $scope.data = sessionService.data;
 
             $scope.$watch('data', function(d) {
-                console.log(d);
                 sessionService.data = d;
             });
 
@@ -37,7 +36,6 @@ angular.module('circuitApp.controllers', []).
                     $scope.data = circuits.js.remove_component(sessionService.selectedComponent, $scope.data);
                 }
             }
-
 
             $scope.selectPin = selectPin;
 
