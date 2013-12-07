@@ -30,12 +30,13 @@ angular.module('circuitApp.directives', ['d3'])
                     scope.clearCanvas();
                     if(!isDragging) {
                         scope.removeSvg("image");
+                        scope.removeSvg("g");
                         scope.drawComponents();
-
                     }
                     scope.highlightSelected();
                     var pins = calculateService.makePins(sessionService.data);
                     var links = calculateService.makeLinks(pins);
+                    //console.log(pins, links);
                     scope.drawPins(pins);
                     scope.drawLinks(links);
                     //if (isDefined(scope.selectedPin))
@@ -107,7 +108,7 @@ angular.module('circuitApp.directives', ['d3'])
                         })
                         .attr("r", 10)
                         .classed("selection-background", true)
-                        .on("click", selectPin)
+                        .on("click", scope.selectPin)
                 }
 
                 scope.drawComponents = function() {
@@ -179,17 +180,44 @@ angular.module('circuitApp.directives', ['d3'])
                     this.__data__.display.x = newX;
                     this.__data__.display.y = newY;
 
+                    console.log(this.__data__,sessionService.data[this.__data__.id])
+
                     scope.draw(true);
                 }
 
                 scope.selectComponent = function(d) {
-                    setTimeout(function () {
-                        sessionService.selectedCompenent = d.id;
-                    }, 10);
+                    sessionService.selectedComponent = d.id;
                 }
 
                 scope.deselectComponent = function () {
-                    sessionService.selectedCompenent = -1;
+                    sessionService.selectedComponent = -1;
+                }
+
+                scope.selectPin = function(pin) {
+                    var selectedPin = sessionService.selectedPin;
+                    //if(!isDefined(pin))
+                      //  return;
+                    if(isDefined(selectedPin) && isDefined(pin) && (!pin.parent || pin.parent === selectedPin.parent) && pin.field === selectedPin.field) {
+                        sessionService.selectedPin = null;
+                    }
+                    else if (!isDefined(selectedPin)) {
+                        sessionService.selectedPin = pin;
+                    }
+                    else if (isDefined(selectedPin) && isDefined(pin) && isDefined(pin.index) && !isDefined(selectedPin.index) ) {
+                        scope.addConnection(pin, selectedPin);
+                    }
+                    else if (isDefined(selectedPin) && isDefined(pin) && !isDefined(pin.index) && isDefined(selectedPin.index)) {
+                        scope.addConnection(selectedPin, pin);
+                    }
+                }
+
+                scope.addConnection = function(target, source) {
+                    if(target == null || source == null)
+                        return;
+                    var src={id: source.parent, field: source.field}
+                    var dst = {id: target.parent, field: target.field, index: target.index}
+                    sessionService.selectedPin = null;
+                    sessionService.data = circuits.js.add_connection(src, dst, sessionService.data);
                 }
             }};
     }])

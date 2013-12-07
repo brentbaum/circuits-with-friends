@@ -3,31 +3,6 @@
  * All methods belong to WorkspaceCtrl
  */
 
-function selectPin(pin, selectedPin) {
-    if(!isDefined(pin))
-        return;
-    if(isDefined(selectedPin) && isDefined(pin) && (!pin.parent || pin.parent === selectedPin.parent) && pin.field === selectedPin.field) {
-        selectedPin = null;
-    }
-    else if (!isDefined(selectedPin)) {
-        selectedPin = pin;
-    }
-    else if (isDefined(selectedPin) && isDefined(pin) && isDefined(pin.index) && !isDefined(selectedPin.index) ) {
-        $scope.addConnection(pin, selectedPin);
-    }
-    else if (isDefined(selectedPin) && isDefined(pin) && !isDefined(pin.index) && isDefined(selectedPin.index)) {
-        $scope.addConnection(selectedPin, pin);
-    }
-}
-
-function addConnection(target, source) {
-    if(target == null || source == null)
-        return;
-    var src={id: source.parent, field: source.field}
-    var dst = {id: target.parent, field: target.field, index: target.index}
-    $scope.selectedPin = null;
-    return circuits.js.add_connection(src, dst, $scope.data);
-}
 
 function highlightSelected() {
     if(d3.select(".selected")) {

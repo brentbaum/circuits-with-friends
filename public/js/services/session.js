@@ -24,7 +24,7 @@ angular.module('circuitApp.services', [])
         sService.circuitRef = new Firebase('https://circuitswithfriends.firebaseIO.com/' + sService.getSessionId() + '/circuits');
         sService.chatRef = new Firebase('https://circuitswithfriends.firebaseIO.com/' + sService.getSessionId() + '/chat');
 
-        sService.selectedCompenent = -1;
+        sService.selectedComponent = -1;
         sService.selectedPin = -1;
 
         return sService;

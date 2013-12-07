@@ -5,7 +5,6 @@
 function makePins(data) {
     var p = [];
     for(var key in data) {
-        console.log(key)
         makeComponentPins(data[key]).map(function(m){p.push(m)});
     }
     return p;
